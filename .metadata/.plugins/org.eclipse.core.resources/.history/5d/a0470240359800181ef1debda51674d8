@@ -1,0 +1,25 @@
+#include <gui/patchconfig_screen/PatchConfigView.hpp>
+
+PatchConfigView::PatchConfigView()
+{
+
+}
+
+void PatchConfigView::setupScreen()
+{
+	uint32_t nerd = 123456789;
+	Unicode::snprintf(Switch1NrBuffer, SWITCH1NR_SIZE, "%010i", nerd);
+	Switch1Nr.invalidate();
+}
+
+void PatchConfigView::tearDownScreen()
+{
+
+}
+
+
+void PatchConfigView::setControllerNr(uint8_t controllerNr)
+{
+	Unicode::snprintf(Switch1NrBuffer, SWITCH1NR_SIZE, "%03i", controllerNr);
+	Switch1Nr.invalidate();
+}

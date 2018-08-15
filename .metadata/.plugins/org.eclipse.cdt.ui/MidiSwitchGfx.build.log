@@ -1,0 +1,33 @@
+21:21:15 **** Incremental Build of configuration Default for project MidiSwitchGfx ****
+make all 
+Building file: ../target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.c
+Invoking: Cross ARM GNU C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -O2  -g -DSTM32F469xx -DST -DUSE_OS_SYSTICK -DUSE_FLOATING_POINT -DDEBUG -DUSE_FULL_ASSERT -DTRACE -DOS_USE_TRACE_SEMIHOSTING_DEBUG -DUSE_HAL_DRIVER -DHSE_VALUE=8000000 -D__TARGET_FPU_VFP -I"C:\TouchGFXProjects\MidiSwitchGfx\gui\include" -I"C:\TouchGFXProjects\MidiSwitchGfx\platform\os" -I"C:\TouchGFXProjects\MidiSwitchGfx\generated\fonts\include" -I"C:\TouchGFXProjects\MidiSwitchGfx\generated\images\include" -I"C:\TouchGFXProjects\MidiSwitchGfx\generated\texts\include" -I"C:\TouchGFXProjects\MidiSwitchGfx\touchgfx\framework\include" -I"C:\TouchGFXProjects\MidiSwitchGfx\Third_Party\FreeRTOS\Source\include" -I"C:\TouchGFXProjects\MidiSwitchGfx\Third_Party\FreeRTOS\Source\CMSIS_RTOS" -I"C:\TouchGFXProjects\MidiSwitchGfx\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM4F" -I"C:\TouchGFXProjects\MidiSwitchGfx\touchgfx\framework\include\platform\hal\simulator\sdl2\vendor" -std=gnu11 -mthumb -mno-thumb-interwork -mcpu=cortex-m4 -march=armv7e-m -Wno-psabi  -DCORE_M4 -D__irq="" -fno-exceptions -MMD -MP -MF"target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.d" -MT"target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.o" -c -o "target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.o" "../target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.c"
+../target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.c:258:7: error: expected '(' before 'void'
+ __asm void vPortSVCHandler( void )
+       ^~~~
+../target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.c:269:17: error: stray '#' in program
+         mov r0, #0
+                 ^
+../target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.c:302:25: error: stray '#' in program
+         orr     r1, r1, #( 0xf << 20 )
+                         ^
+../target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.c:436:18: error: stray '#' in program
+         tst r14, #0x10
+                  ^
+../target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.c:447:17: error: stray '#' in program
+         mov r0, #configMAX_SYSCALL_INTERRUPT_PRIORITY
+                 ^
+../target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.c:450:17: error: stray '#' in program
+         mov r0, #0
+                 ^
+../target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.c:463:18: error: stray '#' in program
+         tst r14, #0x10
+                  ^
+../target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.c:683:17: error: stray '#' in program
+         mov r1, #configMAX_SYSCALL_INTERRUPT_PRIORITY
+                 ^
+make: *** [target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/subdir.mk:20: target/os/FreeRTOS7.6.0/Source/portable/RVDS/ARM_CM4F/port.o] Error 1
+
+21:21:18 Build Failed. 9 errors, 0 warnings. (took 2s.788ms)
+
