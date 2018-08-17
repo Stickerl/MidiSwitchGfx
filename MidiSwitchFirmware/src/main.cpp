@@ -42,6 +42,7 @@ using namespace touchgfx;
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
+#include "ring_buffer.hpp"
 
 /**
  * Define the FreeRTOS task priorities and stack sizes
@@ -60,6 +61,16 @@ static void GUITask(void* params)
 
 int main(void)
 {
+    uint8_t bufferMem[17];
+    uint8_t creativerName[] = "Hello World!";
+    uint8_t readBuffer[20]= {0};
+    RingBuffer testBuffer(bufferMem[0], 17);
+    while(1)
+    {
+        testBuffer.copy_to_buffer(creativerName, sizeof(creativerName));
+        testBuffer.get_from_buffer(readBuffer, testBuffer.get_cnt());
+    }
+
     hw_init();
     touchgfx_init();
 
