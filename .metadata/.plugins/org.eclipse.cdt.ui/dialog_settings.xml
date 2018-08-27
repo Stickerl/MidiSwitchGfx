@@ -25,6 +25,7 @@
 		<item value="false" key="caseSensitive"/>
 		<item value="227191" key="searchFlags"/>
 		<list key="previousPatterns">
+			<item value="HAL_UART_IRQHandler"/>
 			<item value="BSP_QSPI_MemoryMappedMode"/>
 			<item value="QSPI_InitTypeDef"/>
 			<item value="audio"/>

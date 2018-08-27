@@ -12,7 +12,7 @@ namespace Midi_n
 {
 
 
-MidiDecoder::MidiDecoder(RingBuffer& midiRxBuffer, uint32_t& sysTime, uint32_t timeout):
+MidiDecoder::MidiDecoder(I_RingBuffer& midiRxBuffer, uint32_t& sysTime, uint32_t timeout):
     _midiRxBuffer(midiRxBuffer),
     _sysTime(sysTime),
     _timeout(timeout),

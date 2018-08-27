@@ -8,11 +8,11 @@
 #ifndef UART_UART_HPP_
 #define UART_UART_HPP_
 
-#include "stdint.h"
-#include "ring_buffer.hpp"
+#include "I_ring_buffer.hpp"
 #include "stm32f4xx_hal.h"
+#include "I_uart.hpp"
 
-class UartIrqBased{
+class UartIrqBased : public I_UartIrqBased{
 public:
     typedef enum
     {
@@ -39,20 +39,29 @@ public:
         stop_bit_cfg stop_bit;
     }uart_cfg;
 
-    UartIrqBased(uint32_t baud_rate, RingBuffer& tx_buffer, RingBuffer& rx_buffer);
-    UartIrqBased(uint32_t baud_rate, RingBuffer& tx_buffer, RingBuffer& rx_buffer, uart_cfg config);
+    UartIrqBased(uint32_t baud_rate, I_RingBuffer& tx_buffer, I_RingBuffer& rx_buffer);
+    UartIrqBased(uint32_t baud_rate, I_RingBuffer& tx_buffer, I_RingBuffer& rx_buffer, uart_cfg config);
     ~UartIrqBased();
     void change_baud_rate(uint32_t baud_rate);
+    void send(uint8_t* data, uint32_t cnt);
     void start_receive();
-    void start_send();
     void stop_receive();
-    void stop_send();
+    bool get_data(uint8_t* dest, uint32_t cnt);
+    uint32_t get_rx_cnt();
+
 
 private:
-    RingBuffer& _tx_buffer;
-    RingBuffer& _rx_buffer;
-    UART_HandleTypeDef _uart_handle;
+    I_RingBuffer& _tx_buffer;
+    I_RingBuffer& _rx_buffer;
+    UART_HandleTypeDef* _uart_handle;
+    static UART_HandleTypeDef uart1_handle;
+    static UART_HandleTypeDef uart2_handle;
+    static UART_HandleTypeDef uart3_handle;
+    static UART_HandleTypeDef uart4_handle;
+    static UART_HandleTypeDef uart5_handle;
+    static UART_HandleTypeDef uart6_handle;
     void init_uart();
+    void start_tx();
 };
 
 

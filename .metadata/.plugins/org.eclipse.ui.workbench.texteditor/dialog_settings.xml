@@ -2,19 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="SysTick_Handler" key="selection"/>
+		<item value="SIZE" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="uart"/>
+			<item value="    void start_tx();"/>
+			<item value="SIZE"/>
 			<item value="CODE"/>
 			<item value="SysTick_Handler"/>
 			<item value="__irq "/>
 			<item value="hw_init"/>
 			<item value="ResetISR"/>
-			<item value="SDL_atomic.h"/>
-			<item value="HAL_PWREx_EnableOverDrive"/>
 		</list>
 		<list key="replacehistory">
 		</list>

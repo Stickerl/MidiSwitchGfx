@@ -10,7 +10,7 @@
 #define MIDI_H_
 
 #include "stdint.h"
-#include "ring_buffer.hpp"
+#include "I_ring_buffer.hpp"
 #include "midi_defines.hpp"
 #include "I_midi_callbacks.hpp"
 
@@ -22,7 +22,7 @@ class MidiDecoder
 {
 public:
 
-    MidiDecoder(RingBuffer& midiRxBuffer, uint32_t& sysTime, uint32_t timeout);
+    MidiDecoder(I_RingBuffer& midiRxBuffer, uint32_t& sysTime, uint32_t timeout);
     ~MidiDecoder();
 
     // decode the received data
@@ -50,7 +50,7 @@ private:
     uint32_t&   _sysTime;               // sys tick relation
     uint32_t    _timeout;               // timeout in case of comunication loss
     uint32_t    prevTimeStamp;          // timestamp of the last call
-    RingBuffer& _midiRxBuffer;
+    I_RingBuffer& _midiRxBuffer;
     midi_data   curData;
 
     I_MidiControlChangeCb*      _controlChange;
