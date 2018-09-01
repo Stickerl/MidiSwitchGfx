@@ -13,7 +13,7 @@
 class I_UartIrqBased{
 public:
     I_UartIrqBased() {};
-    virtual ~I_UartIrqBased();
+    virtual ~I_UartIrqBased(){};
     virtual void change_baud_rate(uint32_t baud_rate) = 0;
     virtual void send(uint8_t* data, uint32_t cnt) = 0;
     virtual void start_receive() = 0;

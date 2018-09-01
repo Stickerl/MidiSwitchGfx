@@ -11,8 +11,6 @@ UartIrqBased::UartIrqBased(uint32_t baud_rate, I_RingBuffer& tx_buffer, I_RingBu
     _tx_buffer(tx_buffer),
     _rx_buffer(rx_buffer)
 {
-    switch
-    _uart_handle = &uart1_handle;
     _uart_handle.Init.BaudRate = baud_rate;
     _uart_handle.Init.Parity = UART_PARITY_NONE;
     _uart_handle.Init.WordLength = UART_WORDLENGTH_8B;
@@ -67,7 +65,16 @@ UartIrqBased::UartIrqBased(uint32_t baud_rate, I_RingBuffer& tx_buffer, I_RingBu
     _uart_handle.Init.BaudRate = baud_rate;
     init_uart();
 }
-void UartIrqBased::change_baud_rate(uint32_t baud_rate);
+
+UartIrqBased::~UartIrqBased()
+{
+
+}
+
+void UartIrqBased::change_baud_rate(uint32_t baud_rate)
+{
+
+}
 
 // write data to tx buffer and trigger transmission
 void UartIrqBased::send(uint8_t* data, uint32_t cnt)
@@ -75,8 +82,16 @@ void UartIrqBased::send(uint8_t* data, uint32_t cnt)
     _tx_buffer.copy_to_buffer(data, cnt);
     start_tx();
 }
-void UartIrqBased::start_receive();
-void UartIrqBased::stop_receive();
+
+void UartIrqBased::start_receive()
+{
+
+}
+
+void UartIrqBased::stop_receive()
+{
+
+}
 
 // Copy received bytes from buffer to destination
 // returns false if #bytes available < cnt
