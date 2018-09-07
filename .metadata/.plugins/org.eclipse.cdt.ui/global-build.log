@@ -6409,3 +6409,148 @@ arm-none-eabi-size --format=berkeley "MidiSwitchFirmware.elf"
 1737934	   2328	  15200	1755462	 1ac946	MidiSwitchFirmware.elf
 Finished building: MidiSwitchFirmware.siz
  
+23:20:07 **** Incremental Build of configuration Debug for project MidiSwitchFirmware ****
+make all 
+Building file: ../src/main.cpp
+Invoking: Cross ARM GNU C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m4 -march=armv7e-m -mthumb -fno-exceptions -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mcpu=cortex-m4 -mthumb -mno-thumb-interwork -Os -fno-strict-aliasing -fdata-sections -ffunction-sections -Wno-psabi -Os  -g3 -DST -DSTM32F469xx -D__irq="" -DUSE_OS_SYSTICK -DUSE_FLOATING_POINT -DCORE_M4 -DUSE_BPP=16 -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\touchgfx\framework\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\gui\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\config\gcc" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\generated\gui_generated\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\generated\fonts\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\generated\images\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\generated\texts\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\platform\os" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\os\FreeRTOS7.6.0\Source\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\os\FreeRTOS7.6.0\Source\portable\GCC\ARM_CM4F" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\gcc" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\bsp" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\platform\cortex-m\CMSIS" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\platform\hal\mcu\stm32f4cube" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\platform\hal\mcu\stm32f4cube\STM32F4xx_HAL_Driver" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\platform\hal\mcu\stm32f4cube\CMSIS" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\source\vendor\STM32469I-Discovery" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\custom\misc" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\custom\uart" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\custom\midi" -std=gnu++11 -fabi-version=0 -fno-rtti -fno-exceptions -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mcpu=cortex-m4 -mthumb -mno-thumb-interwork -Os -fno-strict-aliasing -fdata-sections -ffunction-sections -Wno-psabi -march=armv7e-m -MMD -MP -MF"src/main.d" -MT"src/main.o" -c -o "src/main.o" "../src/main.cpp"
+Finished building: ../src/main.cpp
+ 
+Building file: ../custom/uart/uart.cpp
+Invoking: Cross ARM GNU C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m4 -march=armv7e-m -mthumb -fno-exceptions -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mcpu=cortex-m4 -mthumb -mno-thumb-interwork -Os -fno-strict-aliasing -fdata-sections -ffunction-sections -Wno-psabi -Os  -g3 -DST -DSTM32F469xx -D__irq="" -DUSE_OS_SYSTICK -DUSE_FLOATING_POINT -DCORE_M4 -DUSE_BPP=16 -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\touchgfx\framework\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\gui\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\config\gcc" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\generated\gui_generated\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\generated\fonts\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\generated\images\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\generated\texts\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\platform\os" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\os\FreeRTOS7.6.0\Source\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\os\FreeRTOS7.6.0\Source\portable\GCC\ARM_CM4F" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\gcc" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\bsp" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\platform\cortex-m\CMSIS" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\platform\hal\mcu\stm32f4cube" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\platform\hal\mcu\stm32f4cube\STM32F4xx_HAL_Driver" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\platform\hal\mcu\stm32f4cube\CMSIS" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\source\vendor\STM32469I-Discovery" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\custom\misc" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\custom\uart" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\custom\midi" -std=gnu++11 -fabi-version=0 -fno-rtti -fno-exceptions -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mcpu=cortex-m4 -mthumb -mno-thumb-interwork -Os -fno-strict-aliasing -fdata-sections -ffunction-sections -Wno-psabi -march=armv7e-m -MMD -MP -MF"custom/uart/uart.d" -MT"custom/uart/uart.o" -c -o "custom/uart/uart.o" "../custom/uart/uart.cpp"
+../custom/uart/uart.cpp: In constructor 'UartIrqBased::UartIrqBased(uint32_t, I_RingBuffer&, I_RingBuffer&)':
+../custom/uart/uart.cpp:15:5: error: expected '(' before '_uart_handle'
+     _uart_handle = &uart1_handle;
+     ^~~~~~~~~~~~
+../custom/uart/uart.cpp:16:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.BaudRate = baud_rate;
+                  ^~~~
+../custom/uart/uart.cpp:17:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.Parity = UART_PARITY_NONE;
+                  ^~~~
+../custom/uart/uart.cpp:18:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.WordLength = UART_WORDLENGTH_8B;
+                  ^~~~
+../custom/uart/uart.cpp:19:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.StopBits = UART_STOPBITS_1;
+                  ^~~~
+../custom/uart/uart.cpp: In constructor 'UartIrqBased::UartIrqBased(uint32_t, I_RingBuffer&, I_RingBuffer&, UartIrqBased::uart_cfg)':
+../custom/uart/uart.cpp:31:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.WordLength = UART_WORDLENGTH_8B;
+                      ^~~~
+../custom/uart/uart.cpp:34:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.WordLength = UART_WORDLENGTH_9B;
+                      ^~~~
+../custom/uart/uart.cpp:43:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.Parity = UART_PARITY_NONE;
+                      ^~~~
+../custom/uart/uart.cpp:46:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.Parity = UART_PARITY_ODD;
+                      ^~~~
+../custom/uart/uart.cpp:49:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.Parity = UART_PARITY_EVEN;
+                      ^~~~
+../custom/uart/uart.cpp:58:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.StopBits = UART_STOPBITS_1;
+                      ^~~~
+../custom/uart/uart.cpp:61:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.StopBits = UART_STOPBITS_2;
+                      ^~~~
+../custom/uart/uart.cpp:67:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.BaudRate = baud_rate;
+                  ^~~~
+../custom/uart/uart.cpp: At global scope:
+../custom/uart/uart.cpp:70:55: error: declaration of 'virtual void UartIrqBased::change_baud_rate(uint32_t)' outside of class is not definition [-fpermissive]
+ void UartIrqBased::change_baud_rate(uint32_t baud_rate);
+                                                       ^
+../custom/uart/uart.cpp:78:34: error: declaration of 'virtual void UartIrqBased::start_receive()' outside of class is not definition [-fpermissive]
+ void UartIrqBased::start_receive();
+                                  ^
+../custom/uart/uart.cpp:79:33: error: declaration of 'virtual void UartIrqBased::stop_receive()' outside of class is not definition [-fpermissive]
+ void UartIrqBased::stop_receive();
+                                 ^
+../custom/uart/uart.cpp: In member function 'void UartIrqBased::init_uart()':
+../custom/uart/uart.cpp:96:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+                  ^~~~
+../custom/uart/uart.cpp:97:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.Mode = UART_MODE_TX_RX;
+                  ^~~~
+../custom/uart/uart.cpp:98:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.OverSampling = UART_OVERSAMPLING_16;
+                  ^~~~
+../custom/uart/uart.cpp:99:32: error: cannot convert 'UART_HandleTypeDef**' to 'UART_HandleTypeDef*' for argument '1' to 'HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef*)'
+     HAL_UART_Init(&_uart_handle);
+                                ^
+make: *** [custom/uart/subdir.mk:20: custom/uart/uart.o] Error 1
+22:02:50 **** Incremental Build of configuration Debug for project MidiSwitchFirmware ****
+make all 
+Building file: ../custom/uart/uart.cpp
+Invoking: Cross ARM GNU C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m4 -march=armv7e-m -mthumb -fno-exceptions -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mcpu=cortex-m4 -mthumb -mno-thumb-interwork -Os -fno-strict-aliasing -fdata-sections -ffunction-sections -Wno-psabi -Os  -g3 -DST -DSTM32F469xx -D__irq="" -DUSE_OS_SYSTICK -DUSE_FLOATING_POINT -DCORE_M4 -DUSE_BPP=16 -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\touchgfx\framework\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\gui\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\config\gcc" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\generated\gui_generated\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\generated\fonts\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\generated\images\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\generated\texts\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\platform\os" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\os\FreeRTOS7.6.0\Source\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\os\FreeRTOS7.6.0\Source\portable\GCC\ARM_CM4F" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\gcc" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\bsp" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\platform\cortex-m\CMSIS" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\platform\hal\mcu\stm32f4cube" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\platform\hal\mcu\stm32f4cube\STM32F4xx_HAL_Driver" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\include\platform\hal\mcu\stm32f4cube\CMSIS" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\target\bsp\source\vendor\STM32469I-Discovery" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\custom\misc" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\custom\uart" -I"C:\GitRepros\MidiSwitchGfx\MidiSwitchFirmware\custom\midi" -std=gnu++11 -fabi-version=0 -fno-rtti -fno-exceptions -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mcpu=cortex-m4 -mthumb -mno-thumb-interwork -Os -fno-strict-aliasing -fdata-sections -ffunction-sections -Wno-psabi -march=armv7e-m -MMD -MP -MF"custom/uart/uart.d" -MT"custom/uart/uart.o" -c -o "custom/uart/uart.o" "../custom/uart/uart.cpp"
+../custom/uart/uart.cpp: In constructor 'UartIrqBased::UartIrqBased(uint32_t, I_RingBuffer&, I_RingBuffer&)':
+../custom/uart/uart.cpp:15:5: error: expected '(' before '_uart_handle'
+     _uart_handle = &uart1_handle;
+     ^~~~~~~~~~~~
+../custom/uart/uart.cpp:16:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.BaudRate = baud_rate;
+                  ^~~~
+../custom/uart/uart.cpp:17:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.Parity = UART_PARITY_NONE;
+                  ^~~~
+../custom/uart/uart.cpp:18:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.WordLength = UART_WORDLENGTH_8B;
+                  ^~~~
+../custom/uart/uart.cpp:19:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.StopBits = UART_STOPBITS_1;
+                  ^~~~
+../custom/uart/uart.cpp: In constructor 'UartIrqBased::UartIrqBased(uint32_t, I_RingBuffer&, I_RingBuffer&, UartIrqBased::uart_cfg)':
+../custom/uart/uart.cpp:31:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.WordLength = UART_WORDLENGTH_8B;
+                      ^~~~
+../custom/uart/uart.cpp:34:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.WordLength = UART_WORDLENGTH_9B;
+                      ^~~~
+../custom/uart/uart.cpp:43:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.Parity = UART_PARITY_NONE;
+                      ^~~~
+../custom/uart/uart.cpp:46:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.Parity = UART_PARITY_ODD;
+                      ^~~~
+../custom/uart/uart.cpp:49:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.Parity = UART_PARITY_EVEN;
+                      ^~~~
+../custom/uart/uart.cpp:58:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.StopBits = UART_STOPBITS_1;
+                      ^~~~
+../custom/uart/uart.cpp:61:22: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+         _uart_handle.Init.StopBits = UART_STOPBITS_2;
+                      ^~~~
+../custom/uart/uart.cpp:67:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.BaudRate = baud_rate;
+                  ^~~~
+../custom/uart/uart.cpp: At global scope:
+../custom/uart/uart.cpp:70:55: error: declaration of 'virtual void UartIrqBased::change_baud_rate(uint32_t)' outside of class is not definition [-fpermissive]
+ void UartIrqBased::change_baud_rate(uint32_t baud_rate);
+                                                       ^
+../custom/uart/uart.cpp:78:34: error: declaration of 'virtual void UartIrqBased::start_receive()' outside of class is not definition [-fpermissive]
+ void UartIrqBased::start_receive();
+                                  ^
+../custom/uart/uart.cpp:79:33: error: declaration of 'virtual void UartIrqBased::stop_receive()' outside of class is not definition [-fpermissive]
+ void UartIrqBased::stop_receive();
+                                 ^
+../custom/uart/uart.cpp: In member function 'void UartIrqBased::init_uart()':
+../custom/uart/uart.cpp:96:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+                  ^~~~
+../custom/uart/uart.cpp:97:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.Mode = UART_MODE_TX_RX;
+                  ^~~~
+../custom/uart/uart.cpp:98:18: error: request for member 'Init' in '((UartIrqBased*)this)->UartIrqBased::_uart_handle', which is of pointer type 'UART_HandleTypeDef*' (maybe you meant to use '->' ?)
+     _uart_handle.Init.OverSampling = UART_OVERSAMPLING_16;
+                  ^~~~
+../custom/uart/uart.cpp:99:32: error: cannot convert 'UART_HandleTypeDef**' to 'UART_HandleTypeDef*' for argument '1' to 'HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef*)'
+     HAL_UART_Init(&_uart_handle);
+                                ^
+make: *** [custom/uart/subdir.mk:23: custom/uart/uart.o] Error 1
