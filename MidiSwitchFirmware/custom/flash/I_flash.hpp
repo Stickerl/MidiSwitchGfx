@@ -14,7 +14,7 @@ class I_Flash
 {
 public:
     I_Flash(){};
-    ~I_Flash();
+    virtual ~I_Flash(){};
 
     virtual void writeBytes(uint32_t addr, uint8_t* data, uint32_t size) = 0;   // writes a number of bytes to the flash
     virtual void writeWords(uint32_t addr, uint16_t* data, uint32_t size) = 0;  // writes uint16_t words to the flash

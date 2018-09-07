@@ -18,7 +18,7 @@ class I_MidiControlChangeCb
 public:
     I_MidiControlChangeCb();
     virtual ~I_MidiControlChangeCb(){};
-    virtual void control_change_cb(midi_data currentData);
+    virtual void control_change_cb(Midi_n::midi_data currentData);
 };
 
 class I_MidiProgrammChangeCb
@@ -26,7 +26,7 @@ class I_MidiProgrammChangeCb
 public:
     I_MidiProgrammChangeCb();
     virtual ~I_MidiProgrammChangeCb(){};
-    virtual void program_change_cb(midi_data currentData);
+    virtual void program_change_cb(Midi_n::midi_data currentData);
 };
 
 

@@ -12,7 +12,8 @@
 #include "stm32f4xx_hal.h"
 #include "I_uart.hpp"
 
-class UartIrqBased : public I_UartIrqBased{
+class UartIrqBased : public I_UartIrqBased
+{
 public:
     typedef enum
     {
@@ -49,17 +50,10 @@ public:
     bool get_data(uint8_t* dest, uint32_t cnt);
     uint32_t get_rx_cnt();
 
-
 private:
     I_RingBuffer& _tx_buffer;
     I_RingBuffer& _rx_buffer;
-    UART_HandleTypeDef* _uart_handle;
-    static UART_HandleTypeDef uart1_handle;
-    static UART_HandleTypeDef uart2_handle;
-    static UART_HandleTypeDef uart3_handle;
-    static UART_HandleTypeDef uart4_handle;
-    static UART_HandleTypeDef uart5_handle;
-    static UART_HandleTypeDef uart6_handle;
+    UART_HandleTypeDef _uart_handle;
     void init_uart();
     void start_tx();
 };
