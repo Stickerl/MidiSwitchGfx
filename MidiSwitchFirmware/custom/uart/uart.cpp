@@ -7,21 +7,20 @@
 
 #include "uart.hpp"
 
-UartIrqBased::UartIrqBased(uint32_t baud_rate, I_RingBuffer& tx_buffer, I_RingBuffer& rx_buffer):
-    _tx_buffer(tx_buffer),
-    _rx_buffer(rx_buffer)
+UartIrqBased::UartIrqBased(init_struct std_init):
+    _tx_buffer(std_init.tx_buffer),
+    _rx_buffer(std_init.rx_buffer)
 {
-    _uart_handle.Init.BaudRate = baud_rate;
+    _uart_handle.Init.BaudRate = std_init.baud_rate;
     _uart_handle.Init.Parity = UART_PARITY_NONE;
     _uart_handle.Init.WordLength = UART_WORDLENGTH_8B;
     _uart_handle.Init.StopBits = UART_STOPBITS_1;
     init_uart();
 }
 
-UartIrqBased::UartIrqBased(uint32_t baud_rate, I_RingBuffer& tx_buffer, I_RingBuffer& rx_buffer,
-                           uart_cfg config):
-    _tx_buffer(tx_buffer),
-    _rx_buffer(rx_buffer)
+UartIrqBased::UartIrqBased(init_struct std_init, uart_cfg config):
+    _tx_buffer(std_init.tx_buffer),
+    _rx_buffer(std_init.rx_buffer)
 {
     switch(config.word_length)
     {
@@ -62,7 +61,7 @@ UartIrqBased::UartIrqBased(uint32_t baud_rate, I_RingBuffer& tx_buffer, I_RingBu
         break;
     };
 
-    _uart_handle.Init.BaudRate = baud_rate;
+    _uart_handle.Init.BaudRate = std_init.baud_rate;
     init_uart();
 }
 
@@ -98,6 +97,11 @@ void UartIrqBased::stop_receive()
 bool UartIrqBased::get_data(uint8_t* dest, uint32_t cnt)
 {
     return _rx_buffer.get_from_buffer(dest, cnt);
+}
+
+void UartIrqBased::uartInterrupt()
+{
+
 }
 
 // get remaining bytes in rx buffer

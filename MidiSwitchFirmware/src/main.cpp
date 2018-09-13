@@ -44,6 +44,7 @@ using namespace touchgfx;
 #include "queue.h"
 #include "ring_buffer.hpp"
 #include "uart.hpp"
+#include "uart_irqs.h"
 #include "config_manager.hpp"
 #include "flash.hpp"
 
@@ -56,7 +57,7 @@ using namespace touchgfx;
 
 #define configMIDI_TASK_PRIORITY                 ( tskIDLE_PRIORITY + 4 )
 
-#define configMIDI_TASK_STK_SIZE                 ( 300 )
+#define configMIDI_TASK_STK_SIZE                 ( 425 )
 
 //#define CANVAS_BUFFER_SIZE (3600)
 
@@ -67,8 +68,8 @@ static void GUITask(void* params)
 
 static void MidiTask(void*params)
 {
-    //Flash flash;
-    //ConfigManager cfgManager(flash);
+    Flash flash;
+    ConfigManager cfgManager(flash);
     while(1)
     {
         vTaskDelay(100);
@@ -82,7 +83,10 @@ int main(void)
     RingBuffer<13> txBuffer;
     RingBuffer<13> rxBuffer;
 
-    UartIrqBased uart(9600, txBuffer, rxBuffer);*/
+    UartIrqs uartIrqReg;
+    //UartIrqBased::init_struct init(9600U, txBuffer, rxBuffer, uartIrqReg);
+
+    UartIrqBased uart({9600U, txBuffer, rxBuffer, uartIrqReg});
     hw_init();
     touchgfx_init();
 
@@ -115,11 +119,11 @@ int main(void)
                 NULL,
                 configGUI_TASK_PRIORITY,
                 NULL);
-    /*xTaskCreate(MidiTask, (TASKCREATE_NAME_TYPE)"MidiTask",
+    xTaskCreate(MidiTask, (TASKCREATE_NAME_TYPE)"MidiTask",
                 configMIDI_TASK_STK_SIZE,
                 NULL,
                 configMIDI_TASK_PRIORITY,
-                NULL);*/
+                NULL);
     vTaskStartScheduler();
 
     for (;;);
