@@ -2,6 +2,7 @@
 #define MODEL_HPP
 
 #include "stdint.h"
+#include "I_config_manager.hpp"
 
 class ModelListener;
 
@@ -57,11 +58,15 @@ public:
 
     uint8_t getProgramNumber();
 
+    void pushMidiState(I_ConfigManager::programConfig_t& newConfig);
+
 protected:
     /**
      * Pointer to the currently active presenter.
      */
     ModelListener* modelListener;
+
+    I_ConfigManager::programConfig_t displayedCfg;
 
     midi_data midiData;
     uint8_t configNr;

@@ -34,7 +34,7 @@ void ConfigManager::store()
     storeCfgList();
 }
 
-void ConfigManager::program_change_cb(Midi_n::midi_data currentData)
+void ConfigManager::program_change_cb(midi_data currentData)
 {
     if ((currentData.chanalNr == _chanalNr) && (currentData.bankSelect == _bankNr))
     {
@@ -54,7 +54,7 @@ void ConfigManager::program_change_cb(Midi_n::midi_data currentData)
     }
 }
 
-void ConfigManager::control_change_cb(Midi_n::midi_data currentData)
+void ConfigManager::control_change_cb(midi_data currentData)
 {
     uint8_t newOutState = 0;
     if ((currentData.chanalNr == _chanalNr) && (currentData.bankSelect == _bankNr))

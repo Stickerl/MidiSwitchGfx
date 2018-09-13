@@ -10,27 +10,24 @@
 
 #include "midi_defines.hpp"
 
-namespace Midi_n
-{
 
 class I_MidiControlChangeCb
 {
 public:
-    I_MidiControlChangeCb();
+    I_MidiControlChangeCb(){};
     virtual ~I_MidiControlChangeCb(){};
-    virtual void control_change_cb(Midi_n::midi_data currentData);
+    virtual void control_change_cb(midi_data currentData) = 0;
 };
 
 class I_MidiProgrammChangeCb
 {
 public:
-    I_MidiProgrammChangeCb();
+    I_MidiProgrammChangeCb(){};
     virtual ~I_MidiProgrammChangeCb(){};
-    virtual void program_change_cb(Midi_n::midi_data currentData);
+    virtual void program_change_cb(midi_data currentData) = 0;
 };
 
 
-} // namespace Midi_n
 
 
 #endif /* MIDI_I_MIDI_CALLBACKS_HPP_ */

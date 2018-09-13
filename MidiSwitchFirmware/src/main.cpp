@@ -44,6 +44,8 @@ using namespace touchgfx;
 #include "queue.h"
 #include "ring_buffer.hpp"
 #include "uart.hpp"
+#include "config_manager.hpp"
+#include "flash.hpp"
 
 /**
  * Define the FreeRTOS task priorities and stack sizes
@@ -52,6 +54,10 @@ using namespace touchgfx;
 
 #define configGUI_TASK_STK_SIZE                 ( 950 )
 
+#define configMIDI_TASK_PRIORITY                 ( tskIDLE_PRIORITY + 4 )
+
+#define configMIDI_TASK_STK_SIZE                 ( 300 )
+
 //#define CANVAS_BUFFER_SIZE (3600)
 
 static void GUITask(void* params)
@@ -59,15 +65,24 @@ static void GUITask(void* params)
     touchgfx::HAL::getInstance()->taskEntry();
 }
 
+static void MidiTask(void*params)
+{
+    //Flash flash;
+    //ConfigManager cfgManager(flash);
+    while(1)
+    {
+        vTaskDelay(100);
+    }
+}
 
 int main(void)
 {
-    uint8_t creativerName[] = "Hello World!";
+    /*uint8_t creativerName[] = "Hello World!";
     uint8_t readBuffer[20]= {0};
     RingBuffer<13> txBuffer;
     RingBuffer<13> rxBuffer;
 
-    UartIrqBased uart(9600, txBuffer, rxBuffer);
+    UartIrqBased uart(9600, txBuffer, rxBuffer);*/
     hw_init();
     touchgfx_init();
 
@@ -100,7 +115,11 @@ int main(void)
                 NULL,
                 configGUI_TASK_PRIORITY,
                 NULL);
-
+    /*xTaskCreate(MidiTask, (TASKCREATE_NAME_TYPE)"MidiTask",
+                configMIDI_TASK_STK_SIZE,
+                NULL,
+                configMIDI_TASK_PRIORITY,
+                NULL);*/
     vTaskStartScheduler();
 
     for (;;);

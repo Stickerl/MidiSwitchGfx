@@ -10,8 +10,7 @@
 
 #include "stdint.h"
 
-namespace Midi_n
-{
+
 
 #define MIDI_CONROL_CHANGE      0xB0                // the low byte is the chanal number
 #define MIDI_PROGRAM_CHANGE     0xC0                // the low byte is the chanal number
@@ -50,7 +49,7 @@ typedef struct
     uint8_t     programNr;          // equals patch number
 }midi_data;
 
-} // namespace Midi_n
+
 
 
 #endif /* MIDI_MIDI_DEFINES_HPP_ */

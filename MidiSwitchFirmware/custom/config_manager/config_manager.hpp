@@ -22,8 +22,8 @@ public:
 
     void init();     // reads the configuration list from the flash and sets the output to the configured default
     void store();    // stores the ram configuration list in the flash
-    void program_change_cb(Midi_n::midi_data currentData);  // implements the callback interface for the program change signal
-    void control_change_cb(Midi_n::midi_data currentData);  // implements the callback interface for the conrol change signal
+    void program_change_cb(midi_data currentData);  // implements the callback interface for the program change signal
+    void control_change_cb(midi_data currentData);  // implements the callback interface for the conrol change signal
     programConfig_t& getCurrentCfg();                       // getter for the reference to the currently active configuration
     programConfig_t& switchCfg(uint8_t programNr);          // interface to set a specific configuration active. returns the reference to the configuration
     void setChanalNr(uint8_t chanalNr);                     // setter for the chanal number

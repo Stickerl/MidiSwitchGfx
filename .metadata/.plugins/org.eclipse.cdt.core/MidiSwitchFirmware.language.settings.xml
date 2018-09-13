@@ -1434,6 +1434,9 @@
 					<entry kind="includePath" name="/MidiSwitchFirmware/custom/flash">
 						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
 					</entry>
+					<entry kind="includePath" name="/MidiSwitchFirmware/custom/config_manager">
+						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
+					</entry>
 					<entry kind="includePath" name="C:/Users/Erwin/AppData/Roaming/GNU MCU Eclipse/ARM Embedded GCC/7.2.1-1.1-20180401-0515/arm-none-eabi/include/c++/7.2.1">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>

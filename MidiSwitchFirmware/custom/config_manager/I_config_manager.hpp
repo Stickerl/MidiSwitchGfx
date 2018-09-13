@@ -10,11 +10,14 @@
 
 #include "stdint.h"
 #include "I_midi_callbacks.hpp"
+#include "midi_defines.hpp"
 
 
 #define SWITCHES_PER_PROGRAM 2
 
-class I_ConfigManager: public Midi_n::I_MidiControlChangeCb, public Midi_n::I_MidiProgrammChangeCb
+
+
+class I_ConfigManager: public I_MidiControlChangeCb, public I_MidiProgrammChangeCb
 {
 public:
     typedef struct
@@ -35,12 +38,13 @@ public:
     virtual ~I_ConfigManager(){};
 
     virtual void store() = 0;                                           // stores a configuration in the flash
-    virtual void program_change_cb(Midi_n::midi_data currentData) = 0;  // implements the callback interface for the program change signal
-    virtual void control_change_cb(Midi_n::midi_data currentData) = 0;  // implements the callback interface for the conrol change signal
+    virtual void program_change_cb(midi_data currentData);              // implements the callback interface for the program change signal
+    virtual void control_change_cb(midi_data currentData);              // implements the callback interface for the conrol change signal
     virtual programConfig_t& getCurrentCfg() = 0;                       // getter for the reference to the currently active configuration
     virtual programConfig_t& switchCfg(uint8_t programNr) = 0;          // interface to set a specific configuration active. returns the reference to the configuration
     virtual void setChanalNr(uint8_t chanalNr) = 0;                     // setter for the chanal number
     virtual void setBankNr(uint16_t bankNr) = 0;                        // setter for the bank number
+
 
 };
 
