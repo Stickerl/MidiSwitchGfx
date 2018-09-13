@@ -11,8 +11,9 @@
 #include "I_ring_buffer.hpp"
 #include "stm32f4xx_hal.h"
 #include "I_uart.hpp"
+#include "IREG_UartIrq.hpp"
 
-class UartIrqBased : public I_UartIrqBased
+class UartIrqBased : public I_UartIrqBased, public ICB_Uart
 {
 public:
     typedef enum
@@ -40,14 +41,28 @@ public:
         stop_bit_cfg stop_bit;
     }uart_cfg;
 
-    UartIrqBased(uint32_t baud_rate, I_RingBuffer& tx_buffer, I_RingBuffer& rx_buffer);
-    UartIrqBased(uint32_t baud_rate, I_RingBuffer& tx_buffer, I_RingBuffer& rx_buffer, uart_cfg config);
+    typedef struct init_struct_t {
+        uint32_t baud_rate;
+        I_RingBuffer& tx_buffer;
+        I_RingBuffer& rx_buffer;
+        IREG_UartIrq& irq_registry;
+        init_struct_t(uint32_t baud_rate_in, I_RingBuffer& tx_buffer_in,
+                      I_RingBuffer& rx_buffer_in, IREG_UartIrq& irq_registry_in):
+            baud_rate(baud_rate_in),
+            tx_buffer(tx_buffer_in),
+            rx_buffer(rx_buffer_in),
+            irq_registry(irq_registry_in){};
+    }init_struct;
+
+    UartIrqBased(init_struct std_init);
+    UartIrqBased(init_struct std_init, uart_cfg config);
     ~UartIrqBased();
     void change_baud_rate(uint32_t baud_rate);
     void send(uint8_t* data, uint32_t cnt);
     void start_receive();
     void stop_receive();
     bool get_data(uint8_t* dest, uint32_t cnt);
+    void uartInterrupt(); // override
     uint32_t get_rx_cnt();
 
 private:

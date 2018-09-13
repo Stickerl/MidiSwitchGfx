@@ -44,6 +44,7 @@ using namespace touchgfx;
 #include "queue.h"
 #include "ring_buffer.hpp"
 #include "uart.hpp"
+#include "uart_irqs.h"
 
 /**
  * Define the FreeRTOS task priorities and stack sizes
@@ -67,7 +68,10 @@ int main(void)
     RingBuffer<13> txBuffer;
     RingBuffer<13> rxBuffer;
 
-    UartIrqBased uart(9600, txBuffer, rxBuffer);
+    UartIrqs uartIrqReg;
+    //UartIrqBased::init_struct init(9600U, txBuffer, rxBuffer, uartIrqReg);
+
+    UartIrqBased uart({9600U, txBuffer, rxBuffer, uartIrqReg});
     hw_init();
     touchgfx_init();
 

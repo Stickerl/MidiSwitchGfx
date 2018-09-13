@@ -14,7 +14,7 @@ public:
     ICB_Uart(){};
     virtual ~ICB_Uart(){};
 
-    virtual void uartInterrupt();
+    virtual void uartInterrupt() = 0;
 };
 
 

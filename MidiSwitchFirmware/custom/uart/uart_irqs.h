@@ -12,19 +12,21 @@
 #include "stddef.h"
 #include "assert.h"
 #include "ICB_uart.hpp"
+#include "IREG_UartIrq.hpp"
 
-class UartIrqs{
+class UartIrqs:public IREG_UartIrq{
 public:
     UartIrqs();
     virtual ~UartIrqs();
     void register_obj(ICB_Uart* obj, uint8_t index);
-    void usart1_irq_handler();
-    void usart2_irq_handler();
-    void usart3_irq_handler();
-    void uart4_irq_handler();
-    void uart5_irq_handler();
+    static void usart1_irq_handler();
+    static void usart2_irq_handler();
+    static void usart3_irq_handler();
+    static void uart4_irq_handler();
+    static void uart5_irq_handler();
+    static ICB_Uart* uart_obj_list[5U];
 private:
-    ICB_Uart* uart_obj_list[5U];
+
 };
 
 #endif /* UART_UART_IRQS_H_ */
