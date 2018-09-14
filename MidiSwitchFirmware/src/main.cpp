@@ -55,9 +55,9 @@ using namespace touchgfx;
 
 #define configGUI_TASK_STK_SIZE                 ( 950 )
 
-#define configMIDI_TASK_PRIORITY                 ( tskIDLE_PRIORITY + 4 )
+#define configMIDI_TASK_PRIORITY                 ( configGUI_TASK_PRIORITY + 1 )
 
-#define configMIDI_TASK_STK_SIZE                 ( 425 )
+#define configMIDI_TASK_STK_SIZE                 ( 1000 )
 
 //#define CANVAS_BUFFER_SIZE (3600)
 
@@ -86,7 +86,7 @@ int main(void)
     UartIrqs uartIrqReg;
     //UartIrqBased::init_struct init(9600U, txBuffer, rxBuffer, uartIrqReg);
 
-    UartIrqBased uart({9600U, txBuffer, rxBuffer, uartIrqReg});
+    UartIrqBased uart({9600U, txBuffer, rxBuffer, uartIrqReg});*/
     hw_init();
     touchgfx_init();
 

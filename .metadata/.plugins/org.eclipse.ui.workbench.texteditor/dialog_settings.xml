@@ -2,22 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="currentData" key="selection"/>
+		<item value="ConfigManager" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="stack"/>
+			<item value="SVC_Handler"/>
 			<item value="midiCurrData"/>
 			<item value="curData"/>
 			<item value="-&gt;"/>
 			<item value="uart"/>
 			<item value="    void start_tx();"/>
 			<item value="SIZE"/>
-			<item value="CODE"/>
-			<item value="SysTick_Handler"/>
-			<item value="__irq "/>
-			<item value="hw_init"/>
 		</list>
 		<list key="replacehistory">
 			<item value="currentData"/>
