@@ -22,17 +22,8 @@ UartIrqBased::UartIrqBased(init_struct std_init, uart_cfg config):
     _tx_buffer(std_init.tx_buffer),
     _rx_buffer(std_init.rx_buffer)
 {
-    switch(config.word_length)
-    {
-    case WORD_LENGTH_8:
-        _uart_handle.Init.WordLength = UART_WORDLENGTH_8B;
-        break;
-    case WORD_LENGTH_9:
-        _uart_handle.Init.WordLength = UART_WORDLENGTH_9B;
-        break;
-    default:
-        break;
-    };
+
+    _uart_handle.Init.WordLength = UART_WORDLENGTH_8B;
 
     switch(config.parity)
     {
@@ -101,7 +92,89 @@ bool UartIrqBased::get_data(uint8_t* dest, uint32_t cnt)
 
 void UartIrqBased::uartInterrupt()
 {
+    /**
+      * @brief  This function handles UART interrupt request.
+      * @param  huart: pointer to a UART_HandleTypeDef structure that contains
+      *                the configuration information for the specified UART module.
+      * @retval None
+      */
+    uint32_t flag = 0, irq_match = 0;
 
+    flag      = __HAL_UART_GET_FLAG(&_uart_handle, UART_FLAG_PE);
+    irq_match = __HAL_UART_GET_IT_SOURCE(&_uart_handle, UART_IT_PE);
+    /* UART parity error (PE) interrupt occurred ------------------------------------*/
+    if((flag != RESET) && (irq_match != RESET))
+    {
+    __HAL_UART_CLEAR_PEFLAG(&_uart_handle);
+
+    _uart_handle.ErrorCode |= HAL_UART_ERROR_PE;
+    }
+
+    flag = __HAL_UART_GET_FLAG(&_uart_handle, UART_FLAG_FE);
+    irq_match = __HAL_UART_GET_IT_SOURCE(&_uart_handle, UART_IT_ERR);
+    /* UART frame error (FE) interrupt occurred -------------------------------------*/
+    if((flag != RESET) && (irq_match != RESET))
+    {
+    __HAL_UART_CLEAR_FEFLAG(&_uart_handle);
+
+    _uart_handle.ErrorCode |= HAL_UART_ERROR_FE;
+    }
+
+    flag = __HAL_UART_GET_FLAG(&_uart_handle, UART_FLAG_NE);
+    irq_match = __HAL_UART_GET_IT_SOURCE(&_uart_handle, UART_IT_ERR);
+    /* UART noise error interrupt occurred -------------------------------------*/
+    if((flag != RESET) && (irq_match != RESET))
+    {
+    __HAL_UART_CLEAR_NEFLAG(&_uart_handle);
+
+    _uart_handle.ErrorCode |= HAL_UART_ERROR_NE;
+    }
+
+    flag = __HAL_UART_GET_FLAG(&_uart_handle, UART_FLAG_ORE);
+    irq_match = __HAL_UART_GET_IT_SOURCE(&_uart_handle, UART_IT_ERR);
+    /* UART Over-Run interrupt occurred ----------------------------------------*/
+    if((flag != RESET) && (irq_match != RESET))
+    {
+    __HAL_UART_CLEAR_OREFLAG(&_uart_handle);
+
+    _uart_handle.ErrorCode |= HAL_UART_ERROR_ORE;
+    }
+
+    flag = __HAL_UART_GET_FLAG(&_uart_handle, UART_FLAG_RXNE);
+    irq_match = __HAL_UART_GET_IT_SOURCE(&_uart_handle, UART_IT_RXNE);
+    /* UART in mode Receiver ---------------------------------------------------*/
+    if((flag != RESET) && (irq_match != RESET))
+    {
+      _rx_buffer.copy_to_buffer((uint8_t*) &(_uart_handle.Instance->DR), 1);
+    }
+
+    flag = __HAL_UART_GET_FLAG(&_uart_handle, UART_FLAG_TXE);
+    irq_match = __HAL_UART_GET_IT_SOURCE(&_uart_handle, UART_IT_TXE);
+    /* UART in mode Transmitter ------------------------------------------------*/
+    if((flag != RESET) && (irq_match != RESET))
+    {
+    // UART_Transmit_IT(huart);
+      if(_tx_buffer.get_from_buffer((uint8_t*) &(_uart_handle.Instance->DR), 1), 1 == false)
+      {
+          __HAL_UART_DISABLE_IT(&_uart_handle, UART_IT_TXE);
+      }
+    }
+    // TODO: Nachricht nach dem Piepton, hier weitermachen
+    /*flag = __HAL_UART_GET_FLAG(&_uart_handle, UART_FLAG_TC);
+    irq_match = __HAL_UART_GET_IT_SOURCE(&_uart_handle, UART_IT_TC);
+    /* UART in mode Transmitter end --------------------------------------------
+    if((flag != RESET) && (irq_match != RESET))
+    {
+    UART_EndTransmit_IT(&_uart_handle);
+    }
+
+    if(_uart_handle.ErrorCode != HAL_UART_ERROR_NONE)
+    {
+    // Set the UART state ready to be able to start again the process
+        _uart_handle.State = HAL_UART_STATE_READY;
+
+    HAL_UART_ErrorCallback(_uart_handle);
+    }*/
 }
 
 // get remaining bytes in rx buffer

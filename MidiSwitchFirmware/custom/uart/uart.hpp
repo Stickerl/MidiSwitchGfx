@@ -24,19 +24,12 @@ public:
 
     typedef enum
     {
-        WORD_LENGTH_8 = 0,
-        WORD_LENGTH_9 = 1
-    }word_length_cfg;
-
-    typedef enum
-    {
         PARITY_NONE = 0,
         PARITY_ODD = 1,
         PARITY_EVEN = 2
     }parity_cfg;
 
     typedef struct {
-        word_length_cfg word_length;
         parity_cfg parity;
         stop_bit_cfg stop_bit;
     }uart_cfg;

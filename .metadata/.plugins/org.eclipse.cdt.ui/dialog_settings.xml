@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="${workspace_loc:/${ProjName}/custom/config_manager}" key="org.eclipse.cdt.utils.ui.controls.FileListControl"/>
+	<item value="USE_HAL_DRIVER" key="org.eclipse.cdt.utils.ui.controls.FileListControl"/>
 	<item value="197" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_x"/>
 	<item value="true" key="org.eclipse.cdt.ui.codeformatter.create_profile_dialog.open_edit"/>
 	<item value="0" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_y"/>
@@ -20,7 +20,7 @@
 		<item value="228" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration.internal">
-		<item value="180" key="size.height"/>
+		<item value="185" key="size.height"/>
 		<item value="914" key="size.width"/>
 	</section>
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
