@@ -47,6 +47,7 @@ using namespace touchgfx;
 #include "uart_irqs.h"
 #include "config_manager.hpp"
 #include "flash.hpp"
+#include "DigitalOutput.h"
 
 /**
  * Define the FreeRTOS task priorities and stack sizes
@@ -70,9 +71,11 @@ static void MidiTask(void*params)
 {
     Flash flash;
     ConfigManager cfgManager(flash);
+    DigitalOutput testPin(GPIOB, GPIO_PIN_8);
     while(1)
     {
-        vTaskDelay(100);
+        testPin.toggle();
+        vTaskDelay(500);
     }
 }
 

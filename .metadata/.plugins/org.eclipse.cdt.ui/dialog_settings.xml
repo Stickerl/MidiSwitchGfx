@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="${workspace_loc:/${ProjName}/custom/config_manager}" key="org.eclipse.cdt.utils.ui.controls.FileListControl"/>
+	<item value="&quot;${workspace_loc:/${ProjName}/custom/digital_io}&quot;" key="org.eclipse.cdt.utils.ui.controls.FileListControl"/>
 	<item value="197" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_x"/>
 	<item value="true" key="org.eclipse.cdt.ui.codeformatter.create_profile_dialog.open_edit"/>
 	<item value="0" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_y"/>
