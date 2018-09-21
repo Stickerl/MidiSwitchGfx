@@ -7,7 +7,7 @@
 #include "DigitalOutput.h"
 
 
-DigitalOutput::DigitalOutput( GPIO_TypeDef* port, uint16_t pin, bool invert):
+DigitalOutput::DigitalOutput( GPIO_TypeDef* port, uint32_t pin, bool invert, bool initState):
     _port(port),
     _pin(pin),
     _inv(invert)
@@ -61,7 +61,7 @@ DigitalOutput::DigitalOutput( GPIO_TypeDef* port, uint16_t pin, bool invert):
     GPIO_InitStructure.Speed    = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStructure.Pull     = GPIO_NOPULL;
     HAL_GPIO_Init(_port, &GPIO_InitStructure);
-    //HAL_GPIO_WritePin(Port, Pin, GPIO_PIN_RESET);
+    set(initState);
   }
 }
 

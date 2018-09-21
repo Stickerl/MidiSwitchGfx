@@ -10,10 +10,10 @@ PatchConfigViewBase::PatchConfigViewBase()  :
     savingDelayCounter(0),
     buttonCallback(this, &PatchConfigViewBase::buttonCallbackHandler),
     headlinFadeEndedCallback(this, &PatchConfigViewBase::headlinFadeEndedCallbackHandler),
-    configNrFadeEndedCallback(this, &PatchConfigViewBase::configNrFadeEndedCallbackHandler),
     programmFadeEndedCallback(this, &PatchConfigViewBase::programmFadeEndedCallbackHandler),
     switch1FadeEndedCallback(this, &PatchConfigViewBase::switch1FadeEndedCallbackHandler),
-    switch2FadeEndedCallback(this, &PatchConfigViewBase::switch2FadeEndedCallbackHandler)
+    switch2FadeEndedCallback(this, &PatchConfigViewBase::switch2FadeEndedCallbackHandler),
+    defaultOutputFadeEndedCallback(this, &PatchConfigViewBase::defaultOutputFadeEndedCallbackHandler)
 {
     ConfigBG.setXY(0, 0);
     ConfigBG.setBitmap(Bitmap(BITMAP_MIDISWITCHBGNOSHIP_ID));
@@ -66,17 +66,11 @@ PatchConfigViewBase::PatchConfigViewBase()  :
     Switch1Nr.setAlpha(0);
     Switch1Nr.setTypedText(TypedText(T_SINGLEUSEID7));
 
-    ProgramNr.setPosition(15, 152, 140, 31);
+    ProgramNr.setPosition(15, 103, 140, 31);
     ProgramNr.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
     ProgramNr.setLinespacing(0);
     ProgramNr.setAlpha(0);
     ProgramNr.setTypedText(TypedText(T_SINGLEUSEID6));
-
-    ConfigNr.setPosition(15, 102, 140, 31);
-    ConfigNr.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
-    ConfigNr.setLinespacing(0);
-    ConfigNr.setAlpha(0);
-    ConfigNr.setTypedText(TypedText(T_SINGLEUSEID4));
 
     PatchConfigHeadline.setXY(10, 10);
     PatchConfigHeadline.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
@@ -140,15 +134,7 @@ PatchConfigViewBase::PatchConfigViewBase()  :
     SaveingPopUp.add(Saveing);
 
 
-    cfgNrVal.setPosition(225, 103, 70, 31);
-    cfgNrVal.setVisible(false);
-    cfgNrVal.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
-    cfgNrVal.setLinespacing(0);
-    cfgNrVal.setTypedText(TypedText(T_SINGLEUSEID13));
-    cfgNrValBuffer[0] = 0;
-    cfgNrVal.setWildcard(cfgNrValBuffer);
-
-    progNrVal.setPosition(225, 152, 70, 31);
+    progNrVal.setPosition(225, 103, 70, 31);
     progNrVal.setVisible(false);
     progNrVal.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
     progNrVal.setLinespacing(0);
@@ -188,6 +174,12 @@ PatchConfigViewBase::PatchConfigViewBase()  :
     switch2ConValueValBuffer[0] = 0;
     switch2ConValueVal.setWildcard(switch2ConValueValBuffer);
 
+    DefaultOutput.setPosition(15, 152, 276, 29);
+    DefaultOutput.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
+    DefaultOutput.setLinespacing(0);
+    DefaultOutput.setAlpha(0);
+    DefaultOutput.setTypedText(TypedText(T_SINGLEUSEID19));
+
     add(ConfigBG);
     add(ContrastBoxes);
     add(Next);
@@ -195,19 +187,18 @@ PatchConfigViewBase::PatchConfigViewBase()  :
     add(Switch2Nr);
     add(Switch1Nr);
     add(ProgramNr);
-    add(ConfigNr);
     add(PatchConfigHeadline);
     add(OutputBox);
     add(options);
     add(Save);
     add(TeachButton);
     add(SaveingPopUp);
-    add(cfgNrVal);
     add(progNrVal);
     add(switch1ConNrVal);
     add(switch1ConValueVal);
     add(switch2ConNrVal);
     add(switch2ConValueVal);
+    add(DefaultOutput);
 }
 
 //Handles delays
@@ -241,18 +232,8 @@ void PatchConfigViewBase::afterTransition()
 
 void PatchConfigViewBase::headlinFadeEndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::TextArea>& comp)
 {
-    //ConfigNrFade
-    //When HeadlinFade completed fade ConfigNr
-    //Fade ConfigNr to alpha:255 with LinearIn easing in 200 ms (12 Ticks)
-    ConfigNr.clearFadeAnimationEndedAction();
-    ConfigNr.startFadeAnimation(255, 12, EasingEquations::linearEaseIn);
-    ConfigNr.setFadeAnimationEndedAction(configNrFadeEndedCallback);
-}
-
-void PatchConfigViewBase::configNrFadeEndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::TextArea>& comp)
-{
     //ProgrammFade
-    //When ConfigNrFade completed fade ProgramNr
+    //When HeadlinFade completed fade ProgramNr
     //Fade ProgramNr to alpha:255 with LinearIn easing in 200 ms (12 Ticks)
     ProgramNr.clearFadeAnimationEndedAction();
     ProgramNr.startFadeAnimation(255, 12, EasingEquations::linearEaseIn);
@@ -261,12 +242,12 @@ void PatchConfigViewBase::configNrFadeEndedCallbackHandler(const touchgfx::FadeA
 
 void PatchConfigViewBase::programmFadeEndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::TextArea>& comp)
 {
-    //Switch1Fade
-    //When ProgrammFade completed fade Switch1Nr
-    //Fade Switch1Nr to alpha:255 with LinearIn easing in 200 ms (12 Ticks)
-    Switch1Nr.clearFadeAnimationEndedAction();
-    Switch1Nr.startFadeAnimation(255, 12, EasingEquations::linearEaseIn);
-    Switch1Nr.setFadeAnimationEndedAction(switch1FadeEndedCallback);
+    //DefaultOutputFade
+    //When ProgrammFade completed fade DefaultOutput
+    //Fade DefaultOutput to alpha:255 with LinearIn easing in 200 ms (12 Ticks)
+    DefaultOutput.clearFadeAnimationEndedAction();
+    DefaultOutput.startFadeAnimation(255, 12, EasingEquations::linearEaseIn);
+    DefaultOutput.setFadeAnimationEndedAction(defaultOutputFadeEndedCallback);
 }
 
 void PatchConfigViewBase::switch1FadeEndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::TextArea>& comp)
@@ -305,14 +286,8 @@ void PatchConfigViewBase::switch2FadeEndedCallbackHandler(const touchgfx::FadeAn
     TeachButton.setVisible(true);
     TeachButton.invalidate();
 
-    //showCfgNrVal
-    //When ShowTeach completed show cfgNrVal
-    //Show cfgNrVal
-    cfgNrVal.setVisible(true);
-    cfgNrVal.invalidate();
-
     //showProgNrVal
-    //When showCfgNrVal completed show progNrVal
+    //When ShowTeach completed show progNrVal
     //Show progNrVal
     progNrVal.setVisible(true);
     progNrVal.invalidate();
@@ -340,6 +315,16 @@ void PatchConfigViewBase::switch2FadeEndedCallbackHandler(const touchgfx::FadeAn
     //Show switch2ConValueVal
     switch2ConValueVal.setVisible(true);
     switch2ConValueVal.invalidate();
+}
+
+void PatchConfigViewBase::defaultOutputFadeEndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::TextArea>& comp)
+{
+    //Switch1Fade
+    //When DefaultOutputFade completed fade Switch1Nr
+    //Fade Switch1Nr to alpha:255 with LinearIn easing in 200 ms (12 Ticks)
+    Switch1Nr.clearFadeAnimationEndedAction();
+    Switch1Nr.startFadeAnimation(255, 12, EasingEquations::linearEaseIn);
+    Switch1Nr.setFadeAnimationEndedAction(switch1FadeEndedCallback);
 }
 
 void PatchConfigViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)

@@ -17,7 +17,7 @@
 
 
 
-class I_ConfigManager: public I_MidiControlChangeCb, public I_MidiProgrammChangeCb
+class I_ConfigManager
 {
 public:
     typedef struct
@@ -38,8 +38,6 @@ public:
     virtual ~I_ConfigManager(){};
 
     virtual void store() = 0;                                           // stores a configuration in the flash
-    virtual void program_change_cb(midi_data currentData);              // implements the callback interface for the program change signal
-    virtual void control_change_cb(midi_data currentData);              // implements the callback interface for the conrol change signal
     virtual programConfig_t& getCurrentCfg() = 0;                       // getter for the reference to the currently active configuration
     virtual programConfig_t& switchCfg(uint8_t programNr) = 0;          // interface to set a specific configuration active. returns the reference to the configuration
     virtual void setChanalNr(uint8_t chanalNr) = 0;                     // setter for the chanal number

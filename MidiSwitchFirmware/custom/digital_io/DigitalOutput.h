@@ -17,7 +17,7 @@ class DigitalOutput : public I_DigitalOutput{
 
   public:
     // Constructor
-    DigitalOutput( GPIO_TypeDef* port, uint16_t pin, bool invert = false);
+    DigitalOutput( GPIO_TypeDef* port, uint32_t pin, bool invert = false, bool initState = false);
 
     // Destructor
     ~DigitalOutput();
@@ -35,7 +35,7 @@ class DigitalOutput : public I_DigitalOutput{
 
   private:
     GPIO_TypeDef* _port;
-    uint16_t _pin;
+    uint32_t _pin;
     bool _inv;
 };
 

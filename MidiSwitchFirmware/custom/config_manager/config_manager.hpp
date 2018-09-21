@@ -13,7 +13,7 @@
 #include "I_flash.hpp"
 
 
-class ConfigManager : public I_ConfigManager
+class ConfigManager : public I_ConfigManager, public I_MidiControlChangeCb, public I_MidiProgrammChangeCb
 {
 
 public:

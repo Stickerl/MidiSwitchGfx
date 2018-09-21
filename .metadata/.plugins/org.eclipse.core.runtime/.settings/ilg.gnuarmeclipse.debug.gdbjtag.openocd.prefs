@@ -11,5 +11,5 @@ gdb.openocd.initialReset.type=init
 gdb.openocd.preRun.other=
 gdb.openocd.preRunReset.type=halt
 gdb.server.doStart=true
-gdb.server.executable=C\:\\OpenOCD\\bin\\openocd.exe
-gdb.server.other=-f board/stm32f4xx.cfg
+gdb.server.executable=C\:\\OpenOCD\\bin-x64\\openocd.exe
+gdb.server.other=-f board/stm32f469discovery.cfg

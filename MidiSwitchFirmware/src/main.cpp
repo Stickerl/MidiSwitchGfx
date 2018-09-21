@@ -48,6 +48,7 @@ using namespace touchgfx;
 #include "config_manager.hpp"
 #include "flash.hpp"
 #include "DigitalOutput.h"
+#include "midi.hpp"
 
 /**
  * Define the FreeRTOS task priorities and stack sizes
@@ -60,7 +61,7 @@ using namespace touchgfx;
 
 #define configMIDI_TASK_STK_SIZE                 ( 1000 )
 
-//#define CANVAS_BUFFER_SIZE (3600)
+#define CANVAS_BUFFER_SIZE (3600)
 
 static void GUITask(void* params)
 {
@@ -69,13 +70,22 @@ static void GUITask(void* params)
 
 static void MidiTask(void*params)
 {
+    uint32_t midiSysTime = 0;
     Flash flash;
-    ConfigManager cfgManager(flash);
-    DigitalOutput testPin(GPIOB, GPIO_PIN_8);
+    static ConfigManager cfgManager(flash);
+    RingBuffer<13> rxBuffer;
+    Midi_n::MidiDecoder midiDecoder(rxBuffer, midiSysTime, 100u);
+    midiDecoder.register_control_change_cb(&cfgManager);
+    midiDecoder.register_program_change_cb(&cfgManager);
+    DigitalOutput testPin(GPIOG, GPIO_PIN_9);
+    uint8_t testFrame[3] = {0xB0, 0x4B, 0x00};
     while(1)
     {
+        midiSysTime++;
+        rxBuffer.copy_to_buffer(testFrame, 3u);
+        midiDecoder.decode();
         testPin.toggle();
-        vTaskDelay(500);
+        vTaskDelay(1);
     }
 }
 
