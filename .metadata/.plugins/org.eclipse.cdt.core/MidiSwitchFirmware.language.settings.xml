@@ -1009,7 +1009,7 @@
 					<entry kind="macro" name="__SQ_IBIT__" value="0">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="macro" name="__STDC_HOSTED__" value="0">
+					<entry kind="macro" name="__STDC_HOSTED__" value="1">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="__STDC_VERSION__" value="199901L">
@@ -2412,7 +2412,7 @@
 					<entry kind="macro" name="__SQ_IBIT__" value="0">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="macro" name="__STDC_HOSTED__" value="0">
+					<entry kind="macro" name="__STDC_HOSTED__" value="1">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="__STDC_UTF_16__" value="1">
