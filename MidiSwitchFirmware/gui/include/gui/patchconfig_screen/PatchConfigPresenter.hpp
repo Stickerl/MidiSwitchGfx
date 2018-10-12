@@ -29,8 +29,6 @@ public:
 
     virtual void controllerNumberChanged();
 
-    virtual void configNumberChanged();
-
     virtual void controllerValueChanged();
 
     virtual void programNumberChanged();

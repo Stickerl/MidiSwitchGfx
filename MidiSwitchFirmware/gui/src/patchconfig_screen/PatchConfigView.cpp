@@ -15,13 +15,6 @@ void PatchConfigView::tearDownScreen()
 
 }
 
-
-void PatchConfigView::setConfigNumber(uint8_t configNr)
-{
-	Unicode::snprintf(cfgNrValBuffer, CFGNRVAL_SIZE, "%i", configNr);
-	cfgNrVal.invalidate();
-}
-
 void PatchConfigView::setProgramNumber(uint8_t programNr)
 {
 	Unicode::snprintf(progNrValBuffer, PROGNRVAL_SIZE, "%i", programNr);

@@ -21,11 +21,6 @@ void PatchConfigPresenter::controllerNumberChanged()
 	view.setControllerNumber(model->getControllerNumber());
 }
 
-void PatchConfigPresenter::configNumberChanged()
-{
-	view.setConfigNumber(model->getConfigNumber());
-}
-
 void PatchConfigPresenter::controllerValueChanged()
 {
 	view.setControllerValue(model->getControllerValue());

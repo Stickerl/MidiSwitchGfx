@@ -47,7 +47,6 @@ protected:
     touchgfx::FadeAnimator< touchgfx::TextArea > Switch2Nr;
     touchgfx::FadeAnimator< touchgfx::TextArea > Switch1Nr;
     touchgfx::FadeAnimator< touchgfx::TextArea > ProgramNr;
-    touchgfx::FadeAnimator< touchgfx::TextArea > ConfigNr;
     touchgfx::FadeAnimator< touchgfx::TextArea > PatchConfigHeadline;
     touchgfx::Container OutputBox;
     touchgfx::Box OutputCfgBox;
@@ -61,18 +60,16 @@ protected:
     touchgfx::Container SaveingPopUp;
     touchgfx::Box SaveingBox;
     touchgfx::TextArea Saveing;
-    touchgfx::TextAreaWithOneWildcard cfgNrVal;
     touchgfx::TextAreaWithOneWildcard progNrVal;
     touchgfx::TextAreaWithOneWildcard switch1ConNrVal;
     touchgfx::TextAreaWithOneWildcard switch1ConValueVal;
     touchgfx::TextAreaWithOneWildcard switch2ConNrVal;
     touchgfx::TextAreaWithOneWildcard switch2ConValueVal;
+    touchgfx::FadeAnimator< touchgfx::TextArea > DefaultOutput;
 
     /*
      * Wildcard Buffers
      */
-    static const uint16_t CFGNRVAL_SIZE = 3;
-    touchgfx::Unicode::UnicodeChar cfgNrValBuffer[CFGNRVAL_SIZE];
     static const uint16_t PROGNRVAL_SIZE = 3;
     touchgfx::Unicode::UnicodeChar progNrValBuffer[PROGNRVAL_SIZE];
     static const uint16_t SWITCH1CONNRVAL_SIZE = 3;
@@ -90,10 +87,10 @@ private:
      * Interaction Handlers
      */
     void headlinFadeEndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::TextArea>& comp);
-    void configNrFadeEndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::TextArea>& comp);
     void programmFadeEndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::TextArea>& comp);
     void switch1FadeEndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::TextArea>& comp);
     void switch2FadeEndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::TextArea>& comp);
+    void defaultOutputFadeEndedCallbackHandler(const touchgfx::FadeAnimator<touchgfx::TextArea>& comp);
 
     /*
      * Callback Handler Declarations
@@ -115,10 +112,10 @@ private:
      * Interaction Callback Declarations
      */
     touchgfx::Callback < PatchConfigViewBase, const touchgfx::FadeAnimator<touchgfx::TextArea>& >  headlinFadeEndedCallback;
-    touchgfx::Callback < PatchConfigViewBase, const touchgfx::FadeAnimator<touchgfx::TextArea>& >  configNrFadeEndedCallback;
     touchgfx::Callback < PatchConfigViewBase, const touchgfx::FadeAnimator<touchgfx::TextArea>& >  programmFadeEndedCallback;
     touchgfx::Callback < PatchConfigViewBase, const touchgfx::FadeAnimator<touchgfx::TextArea>& >  switch1FadeEndedCallback;
     touchgfx::Callback < PatchConfigViewBase, const touchgfx::FadeAnimator<touchgfx::TextArea>& >  switch2FadeEndedCallback;
+    touchgfx::Callback < PatchConfigViewBase, const touchgfx::FadeAnimator<touchgfx::TextArea>& >  defaultOutputFadeEndedCallback;
 
 };
 

@@ -29,7 +29,7 @@ void MidiDecoder::decode()
     uint16_t byteCnt = _midiRxBuffer.get_cnt();
     uint8_t byte = 0x00;
 
-    if ((_sysTime - prevTimeStamp) > _timeout)
+    if ((_sysTime - prevTimeStamp) > _timeout) // TODO this is bullshit!
     {
         mainState = WAIT_ON_MESSAGE;    // reset the statemachine and ignore previous data
     }

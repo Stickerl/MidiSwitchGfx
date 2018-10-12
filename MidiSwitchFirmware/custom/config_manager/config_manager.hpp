@@ -13,7 +13,7 @@
 #include "I_flash.hpp"
 
 
-class ConfigManager : public I_ConfigManager
+class ConfigManager : public I_ConfigManager, public I_MidiControlChangeCb, public I_MidiProgrammChangeCb
 {
 
 public:
@@ -30,7 +30,7 @@ public:
     void setBankNr(uint16_t bankNr);                        // setter for the bank number
 
 private:
-    static const uint16_t NUMBER_OF_PROGRAMS = 256;
+    static const uint16_t NUMBER_OF_PROGRAMS = 128;
     static const uint32_t CFG_STORAGE_ADDR = 0;
     static const uint32_t BANK_NR_STORE_ADDR = 0;
     static const uint32_t CHANAL_NR_STORE_ADDR = 0;
