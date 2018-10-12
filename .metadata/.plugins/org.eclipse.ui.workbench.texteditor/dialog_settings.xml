@@ -8,14 +8,14 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="GPIO_Alternate_function_selection"/>
+			<item value="UART_EndTransmit_IT"/>
 			<item value="UART_Receive_IT"/>
 			<item value="/**"/>
 			<item value="__HAL_UART_GET_FLAG"/>
 			<item value="stack"/>
 			<item value="SVC_Handler"/>
 			<item value="midiCurrData"/>
-			<item value="curData"/>
-			<item value="-&gt;"/>
 		</list>
 		<list key="replacehistory">
 			<item value="currentData"/>
