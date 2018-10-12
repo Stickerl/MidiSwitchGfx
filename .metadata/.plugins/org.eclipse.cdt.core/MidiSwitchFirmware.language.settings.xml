@@ -1437,6 +1437,9 @@
 					<entry kind="includePath" name="/MidiSwitchFirmware/custom/digital_io">
 						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
 					</entry>
+					<entry kind="includePath" name="/MidiSwitchFirmware/custom/freeRTOS_wrappers">
+						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
+					</entry>
 					<entry kind="includePath" name="C:/Users/Erwin/AppData/Roaming/GNU MCU Eclipse/ARM Embedded GCC/7.2.1-1.1-20180401-0515/arm-none-eabi/include/c++/7.2.1">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
@@ -1456,6 +1459,9 @@
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="CORE_M4" value="1">
+						<flag value="BUILTIN|READONLY"/>
+					</entry>
+					<entry kind="macro" name="CPP_FREERTOS_NO_EXCEPTIONS" value="1">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="ST" value="1">

@@ -42,24 +42,15 @@ using namespace touchgfx;
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
-#include "ring_buffer.hpp"
-#include "uart.hpp"
-#include "uart_irqs.h"
-#include "config_manager.hpp"
-#include "flash.hpp"
-#include "DigitalOutput.h"
-#include "midi.hpp"
+#include "midi_task.hpp"
+
 
 /**
  * Define the FreeRTOS task priorities and stack sizes
  */
 #define configGUI_TASK_PRIORITY                 ( tskIDLE_PRIORITY + 3 )
 
-#define configGUI_TASK_STK_SIZE                 ( 950 )
-
-#define configMIDI_TASK_PRIORITY                 ( configGUI_TASK_PRIORITY + 1 )
-
-#define configMIDI_TASK_STK_SIZE                 ( 1000 )
+#define configGUI_TASK_STK_SIZE                 ( 1024 )    // allocates 4K of stack for the gui task
 
 #define CANVAS_BUFFER_SIZE (3600)
 
@@ -68,26 +59,6 @@ static void GUITask(void* params)
     touchgfx::HAL::getInstance()->taskEntry();
 }
 
-static void MidiTask(void*params)
-{
-    uint32_t midiSysTime = 0;
-    Flash flash;
-    static ConfigManager cfgManager(flash);
-    RingBuffer<13> rxBuffer;
-    Midi_n::MidiDecoder midiDecoder(rxBuffer, midiSysTime, 100u);
-    midiDecoder.register_control_change_cb(&cfgManager);
-    midiDecoder.register_program_change_cb(&cfgManager);
-    DigitalOutput testPin(GPIOG, GPIO_PIN_9);
-    uint8_t testFrame[3] = {0xB0, 0x4B, 0x00};
-    while(1)
-    {
-        midiSysTime++;
-        rxBuffer.copy_to_buffer(testFrame, 3u);
-        midiDecoder.decode();
-        testPin.toggle();
-        vTaskDelay(1);
-    }
-}
 
 int main(void)
 {
@@ -132,11 +103,8 @@ int main(void)
                 NULL,
                 configGUI_TASK_PRIORITY,
                 NULL);
-    xTaskCreate(MidiTask, (TASKCREATE_NAME_TYPE)"MidiTask",
-                configMIDI_TASK_STK_SIZE,
-                NULL,
-                configMIDI_TASK_PRIORITY,
-                NULL);
+
+    //Midi_n::MidiTask midiTask;
     vTaskStartScheduler();
 
     for (;;);
