@@ -42,7 +42,7 @@ using namespace touchgfx;
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
-#include "midi_task.hpp"
+#include "midi_task.h"
 
 
 /**
@@ -104,7 +104,8 @@ int main(void)
                 configGUI_TASK_PRIORITY,
                 NULL);
 
-    //Midi_n::MidiTask midiTask;
+    midi_task_create();
+
     vTaskStartScheduler();
 
     for (;;);
