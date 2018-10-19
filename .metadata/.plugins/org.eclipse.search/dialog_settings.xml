@@ -6,6 +6,9 @@
 	<section name="">
 		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
 	</section>
+	<section name="">
+		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
+	</section>
 	<section name="TextSearchPage">
 		<item value="12" key="HISTORY_SIZE"/>
 		<item value="false" key="CASE_SENSITIVE"/>
@@ -17,7 +20,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="portINITIAL_XPSR" key="textPattern"/>
+			<item value="GPIO_pins_define" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -29,7 +32,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="OSWrappers_cmsis" key="textPattern"/>
+			<item value="GPIO_Alternate_function_selection" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -41,7 +44,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="CODE" key="textPattern"/>
+			<item value="GPIO_pull_define" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -53,10 +56,10 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="SDL_image.h" key="textPattern"/>
+			<item value="stm32f4xx_hal.h" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
-				<item value="*.h"/>
+				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -65,7 +68,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="0x08004000" key="textPattern"/>
+			<item value="GPIO_speed_define" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -82,10 +85,10 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="SDL_atomic.h" key="textPattern"/>
+			<item value="stm32f4xx_hal_qspi.h" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
-				<item value="*.h"/>
+				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -94,10 +97,10 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="SDL_main.h" key="textPattern"/>
+			<item value="UART_EndTransmit_IT" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
-				<item value="*.h"/>
+				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -106,10 +109,10 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="SDL.h" key="textPattern"/>
+			<item value=".s" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
-				<item value="*.h"/>
+				<item value="*"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -118,7 +121,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="stm32f4xx_hal.h" key="textPattern"/>
+			<item value="startup.tcl" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -130,7 +133,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="stm32f4xx_hal_qspi.h" key="textPattern"/>
+			<item value="GPIO_mode_define" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -142,7 +145,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="TickType_t" key="textPattern"/>
+			<item value="tick" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -154,7 +157,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value=".s" key="textPattern"/>
+			<item value="sys_tick" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -184,13 +187,13 @@
 		<item value="true" key="showEnclosingDefinitions"/>
 	</section>
 	<section name="SearchDialog">
-		<item value="org.eclipse.cdt.ui.pdomSearchPage" key="PREVIOUS_PAGE"/>
+		<item value="org.eclipse.search.internal.ui.text.TextSearchPage" key="PREVIOUS_PAGE"/>
 	</section>
 	<section name="DialogBounds_SearchDialog">
 		<item value="556" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="459" key="DIALOG_HEIGHT"/>
-		<item value="818" key="DIALOG_X_ORIGIN"/>
+		<item value="732" key="DIALOG_X_ORIGIN"/>
 		<item value="217" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

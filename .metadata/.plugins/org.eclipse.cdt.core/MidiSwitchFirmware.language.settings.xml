@@ -58,27 +58,6 @@
 					<entry kind="includePath" name="/MidiSwitchFirmware/target/bsp/source/vendor/STM32469I-Discovery">
 						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
 					</entry>
-					<entry kind="includePath" name="/MidiSwitchFirmware/custom/misc">
-						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
-					</entry>
-					<entry kind="includePath" name="/MidiSwitchFirmware/custom/uart">
-						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
-					</entry>
-					<entry kind="includePath" name="/MidiSwitchFirmware/custom/midi">
-						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
-					</entry>
-					<entry kind="includePath" name="/MidiSwitchFirmware/custom/flash">
-						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
-					</entry>
-					<entry kind="includePath" name="/MidiSwitchFirmware/custom/config_manager">
-						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
-					</entry>
-					<entry kind="includePath" name="/MidiSwitchFirmware/custom/digital_io">
-						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
-					</entry>
-					<entry kind="includePath" name="/MidiSwitchFirmware/custom/tasks">
-						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
-					</entry>
 					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/lib/gcc/arm-none-eabi/6.3.1/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
@@ -1260,10 +1239,10 @@
 					<entry kind="includePath" name="/MidiSwitchFirmware/custom/config_manager">
 						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
 					</entry>
-					<entry kind="includePath" name="/MidiSwitchFirmware/custom/digital_io">
+					<entry kind="includePath" name="/MidiSwitchFirmware/custom/tasks">
 						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
 					</entry>
-					<entry kind="includePath" name="/MidiSwitchFirmware/custom/tasks">
+					<entry kind="includePath" name="/MidiSwitchFirmware/custom/digital_io">
 						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
 					</entry>
 					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/arm-none-eabi/include/c++/6.3.1">
@@ -1285,9 +1264,6 @@
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="CORE_M4" value="1">
-						<flag value="BUILTIN|READONLY"/>
-					</entry>
-					<entry kind="macro" name="CPP_FREERTOS_NO_EXCEPTIONS" value="1">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="ST" value="1">

@@ -18,8 +18,8 @@ public:
     virtual void send(uint8_t* data, uint32_t cnt) = 0;
     virtual void start_receive() = 0;
     virtual void stop_receive() = 0;
+    virtual void start_tx() = 0;
     virtual bool get_data(uint8_t* dest, uint32_t cnt) = 0;
     virtual uint32_t get_rx_cnt() = 0;
 };
-
 #endif /* UART_I_UART_HPP_ */

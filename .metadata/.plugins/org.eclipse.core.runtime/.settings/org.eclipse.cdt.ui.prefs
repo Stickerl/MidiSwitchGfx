@@ -18,6 +18,7 @@ org.eclipse.cdt.ui.formatterprofiles.version=1
 pp_directive=86,156,214
 pp_directive_bold=false
 pp_header=214,157,133
+scalability.detect=false
 semanticHighlighting.class.color=255,215,0
 semanticHighlighting.enum.color=255,215,0
 semanticHighlighting.enumerator.color=189,183,107

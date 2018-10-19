@@ -407,20 +407,20 @@ void SPI2_IRQHandler()
 
 }
 
-void USART1_IRQHandler()
-{
-
-}
+//void USART1_IRQHandler()
+//{
+//
+//}
  
-void USART2_IRQHandler()
-{
+//void USART2_IRQHandler()
+//{
+//
+//}
 
-}
-
-void USART3_IRQHandler()
-{
-
-}
+//void USART3_IRQHandler()
+//{
+//
+//}
 
 void EXTI15_10_IRQHandler() 
 {
@@ -482,15 +482,15 @@ void SPI3_IRQHandler()
 
 }
  
-void UART4_IRQHandler()
-{
+//void UART4_IRQHandler()
+//{
+//
+//}
 
-}
-
-void UART5_IRQHandler()
-{
-
-}
+//void UART5_IRQHandler()
+//{
+//
+//}
  
 void TIM6_DAC_IRQHandler()
 {
@@ -577,10 +577,10 @@ void DMA2_Stream7_IRQHandler()
 
 }
  
-void USART6_IRQHandler()
+/*void USART6_IRQHandler()
 {
 
-}
+}*/
   
 void I2C3_EV_IRQHandler()
 {
@@ -632,15 +632,15 @@ void FPU_IRQHandler()
 
 }
   
-void UART7_IRQHandler()
-{
-
-}
+//void UART7_IRQHandler()
+//{
+//
+//}
  
-void UART8_IRQHandler()
-{
-
-}
+//void UART8_IRQHandler()
+//{
+//
+//}
  
 void SPI4_IRQHandler()
 {

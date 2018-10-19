@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="&quot;${workspace_loc:/${ProjName}/custom/tasks}&quot;" key="org.eclipse.cdt.utils.ui.controls.FileListControl"/>
+	<item value="&quot;${workspace_loc:/${ProjName}/custom/digital_io}&quot;" key="org.eclipse.cdt.utils.ui.controls.FileListControl"/>
 	<item value="197" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_x"/>
 	<item value="true" key="org.eclipse.cdt.ui.codeformatter.create_profile_dialog.open_edit"/>
 	<item value="0" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_y"/>
@@ -16,11 +16,11 @@
 		<item value="893" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="438" key="DIALOG_HEIGHT"/>
-		<item value="1019" key="DIALOG_X_ORIGIN"/>
+		<item value="395" key="DIALOG_X_ORIGIN"/>
 		<item value="228" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration.internal">
-		<item value="180" key="size.height"/>
+		<item value="185" key="size.height"/>
 		<item value="914" key="size.width"/>
 	</section>
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
@@ -29,9 +29,6 @@
 		<item value="false" key="caseSensitive"/>
 		<item value="227191" key="searchFlags"/>
 		<list key="previousPatterns">
-			<item value="RCC_CLOCKTYPE_PCLK1"/>
-			<item value="configUSE_16_BIT_TICKS"/>
-			<item value="TickType_t"/>
 			<item value="OS_SysTick"/>
 			<item value="taskEntry"/>
 			<item value="HAL_UART_IRQHandler"/>
@@ -45,16 +42,6 @@
 			<item value="STM32F469"/>
 			<item value="STM32F401xE"/>
 		</list>
-	</section>
-	<section name="NewClassWizardPage">
-		<item value="true" key="stubSelected1"/>
-		<item value="true" key="stubVirtual1"/>
-		<item value="false" key="namespaceSelected"/>
-		<item value="false" key="stubInline0"/>
-		<item value="false" key="stubInline1"/>
-		<item value="" key="namespace"/>
-		<item value="false" key="testFileSelected"/>
-		<item value="true" key="stubSelected0"/>
 	</section>
 	<section name="OptionalMessageDialog.hide.">
 		<item value="1" key="askReindex.detail"/>
