@@ -14,9 +14,9 @@
 		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
 		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\GitRepros\MidiSwitchGfx"/>
 			<item value="C:\Data\Iiii_git_projects\MidiSwitchGfx\MidiSwitchFirmware"/>
 			<item value="C:\GitRepos\MidiSwitchGfx"/>
-			<item value="C:\GitRepros\MidiSwitchGfx"/>
 			<item value="C:\Users\Erwin\Desktop\trash\ClockConfig"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
