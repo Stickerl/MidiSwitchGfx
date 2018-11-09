@@ -9,7 +9,12 @@
 
 void Flash::writeBytes(uint32_t addr, uint8_t* data, uint32_t size)
 {
-
+    uint32_t address = addr;
+    for(uint32_t i = 0; i < size; i++)
+    {
+        //FLASH_Program_Byte(address, data[i]);
+        address++;
+    }
 }
 
 void Flash::writeWords(uint32_t addr, uint16_t* data, uint32_t size)

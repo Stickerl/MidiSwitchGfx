@@ -50,9 +50,9 @@ PatchConfigViewBase::PatchConfigViewBase()  :
     Next.setBitmaps(Bitmap(BITMAP_DARK_ICONS_GO_NEXT_32_ID), Bitmap(BITMAP_DARK_ICONS_GO_NEXT_32_ID));
     Next.setAlpha(200);
 
-    Pev.setPosition(15, 434, 32, 30);
-    Pev.setBitmaps(Bitmap(BITMAP_DARK_ICONS_GO_BACK_32_ID), Bitmap(BITMAP_DARK_ICONS_GO_BACK_32_ID));
-    Pev.setAlpha(200);
+    Prev.setPosition(15, 434, 32, 30);
+    Prev.setBitmaps(Bitmap(BITMAP_DARK_ICONS_GO_BACK_32_ID), Bitmap(BITMAP_DARK_ICONS_GO_BACK_32_ID));
+    Prev.setAlpha(200);
 
     Switch2Nr.setPosition(15, 252, 140, 31);
     Switch2Nr.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
@@ -183,7 +183,7 @@ PatchConfigViewBase::PatchConfigViewBase()  :
     add(ConfigBG);
     add(ContrastBoxes);
     add(Next);
-    add(Pev);
+    add(Prev);
     add(Switch2Nr);
     add(Switch1Nr);
     add(ProgramNr);
@@ -333,7 +333,7 @@ void PatchConfigViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& 
     {
 
     }
-    else if (&src == &Pev)
+    else if (&src == &Prev)
     {
 
     }

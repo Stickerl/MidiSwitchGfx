@@ -101,13 +101,13 @@ extern "C" {
 #define configMAX_PRIORITIES                    ( 5 )
 #define TASKCREATE_NAME_TYPE                    const char *
 #else
-#define configMAX_PRIORITIES                    ( ( unsigned portBASE_TYPE ) 6 )
+#define configMAX_PRIORITIES                    ( ( unsigned portBASE_TYPE ) 7 )
 #define TASKCREATE_NAME_TYPE                    signed char *
 #endif
 #define configSUPPORT_DYNAMIC_ALLOCATION        1
 #define configMINIMAL_STACK_SIZE                ( ( unsigned short ) 1024 )
 #define configTOTAL_HEAP_SIZE                   ( ( size_t ) ( 65535) )
-#define configMAX_TASK_NAME_LEN                 ( 10 )
+#define configMAX_TASK_NAME_LEN                 ( 20 )
 #define configUSE_TRACE_FACILITY                1
 #define configUSE_16_BIT_TICKS                  0
 #define configIDLE_SHOULD_YIELD                 1

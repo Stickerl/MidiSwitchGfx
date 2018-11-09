@@ -1,8 +1,11 @@
 #include <gui/patchconfig_screen/PatchConfigView.hpp>
 
-PatchConfigView::PatchConfigView()
+PatchConfigView::PatchConfigView():
+    prevButtonCb(this, &PatchConfigView::prevButtonActionCb),
+    nextButtonCb(this, &PatchConfigView::nextButtonActionCb)
 {
-
+    Prev.setAction(prevButtonCb);
+    Next.setAction(nextButtonCb);
 }
 
 void PatchConfigView::setupScreen()
@@ -31,5 +34,15 @@ void PatchConfigView::setControllerValue(uint8_t controllerVal)
 {
 	Unicode::snprintf(switch1ConValueValBuffer, SWITCH1CONVALUEVAL_SIZE, "%i", controllerVal);
 	switch1ConValueVal.invalidate();
+}
+
+void PatchConfigView::prevButtonActionCb(const AbstractButton& button)
+{
+    presenter->prevButtonPressed();
+}
+
+void PatchConfigView::nextButtonActionCb(const AbstractButton& button)
+{
+    presenter->nextButtonPressed();
 }
 

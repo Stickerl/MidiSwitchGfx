@@ -7,6 +7,7 @@
 
 
 #include "midi_task.h"
+#include "gui_queue.h"
 
 
 #define configMidi_TASK_PRIORITY                (3)
@@ -15,6 +16,7 @@
 #ifdef __cplusplus
     extern "C"{
 #endif
+
 
 void midi_task_create(void)
 {
@@ -28,20 +30,54 @@ void midi_task_create(void)
 
 void midi_task_run(void* params)
 {
+    //DigitalOutput testPin(GPIOG, GPIO_PIN_9);
     uint32_t midiSysTime = 0;
-    DigitalOutput testPin(GPIOG, GPIO_PIN_9);
+    uint32_t rxCnt = 0;
+
+    // configure the midi Uart
+    UartIrqs midiUartIrqReg;
+    UartIrqBased::Pin midiUart_tx(GPIOA, GPIO_PIN_0, GPIO_AF8_UART4);
+    UartIrqBased::Pin midiUart_rx(GPIOA, GPIO_PIN_1, GPIO_AF8_UART4);
+    RingBuffer<0> midiTxBuffer; // not used as the tx pin is not routed at the board
+    RingBuffer<128> midiRxBuffer;
+    UartIrqBased midiUart({115200, midiTxBuffer, midiRxBuffer, UartIrqBased::UART_4,
+                       midiUart_tx, midiUart_rx, midiUartIrqReg});
+    midiUart.start_receive();
+
+    // set up the connection to the gui via queues
+    GuiQueue& queueToGui = GuiQueue::getQueToGuiRef();
+    GuiQueue& queueToMidi = GuiQueue::getQueToMidiRef();
+    GuiQueue::GuiMessage_t txMsg;
+    GuiQueue::GuiMessage_t rxMsg;
+
     Flash flash;
     ConfigManager cfgManager(flash);
-    RingBuffer<128> rxBuffer;
-    Midi_n::MidiDecoder midiDecoder(rxBuffer, midiSysTime, 100u);
+
+    Midi_n::MidiDecoder midiDecoder(midiRxBuffer, midiSysTime, 100u);
     midiDecoder.register_control_change_cb(&cfgManager);
     midiDecoder.register_program_change_cb(&cfgManager);
+
+
+    txMsg.name = GuiQueue::PROG_NR;
 
     while(1)
     {
         midiSysTime++;
         midiDecoder.decode();
-        testPin.toggle();
+        if(queueToMidi.getElement(rxMsg) == true)
+        {
+            switch(rxMsg.name)
+            {
+            case GuiQueue::PROG_NR:
+                txMsg.data[0] = rxMsg.data[0];
+                queueToGui.sendElement(txMsg);
+                break;
+            default:
+                // message unknown or not implemented
+                break;
+            }
+        }
+
         vTaskDelay(10);
     }
 }

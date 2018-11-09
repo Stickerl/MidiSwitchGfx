@@ -9,6 +9,7 @@
 #define FLASH_FLASH_HPP_
 
 #include "I_flash.hpp"
+#include "stm32f4xx_hal.h"
 
 class Flash :  public I_Flash
 {

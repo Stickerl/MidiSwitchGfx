@@ -184,3 +184,5 @@ SECTIONS
 }
 
  __valid_user_code_checksum = 0 - (__stack_end__ + ResetISR + 1 + NMI_Handler + 1 + HardFault_Handler + 1 + MemManage_Handler + 1 + BusFault_Handler + 1 + UsageFault_Handler + 1);
+ 
+ 
