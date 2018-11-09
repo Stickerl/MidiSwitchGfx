@@ -5,7 +5,9 @@
 
 Model::Model() :
 modelListener(0),
-configNr(0)
+configNr(0),
+_queToMidi(GuiQueue::getQueToMidiRef()),
+_queToGui(GuiQueue::getQueToGuiRef())
 {
 	midiData.controllerNr = 0;
 	midiData.chanalNr = 0;
@@ -15,16 +17,26 @@ configNr(0)
 
 void Model::tick()
 {
-	midiData.controllerNr++;
-	midiData.controllerVal = 132;
-	midiData.programNr = 51;
-	configNr--;
-
 	modelListener->controllerNumberChanged();
 	modelListener->bankSelectionChanged();
 	modelListener->controllerValueChanged();
-	modelListener->programNumberChanged();
 	modelListener->configNumberChanged();
+
+	GuiQueue::GuiMessage_t rxMsg;
+	if(_queToGui.getElement(rxMsg) == true)
+	{
+	    switch(rxMsg.name)
+	    {
+	    case GuiQueue::PROG_NR:
+	        midiData.programNr = rxMsg.data[0];
+	        displayedCfg.progrmNr = rxMsg.data[0];
+	        modelListener->programNumberChanged();
+	        break;
+	    default:
+	        // message unknown or not implemented
+	        break;
+	    }
+	}
 }
 
 uint8_t Model::getControllerNumber()
@@ -47,7 +59,7 @@ uint8_t Model::getProgramNumber()
 	return displayedCfg.programNr;
 }
 
-void Model::pushMidiState(I_ConfigManager::programConfig_t& newConfig)
+void Model::respondMidiState(I_ConfigManager::programConfig_t& newConfig)
 {
 
     displayedCfg.programNr = newConfig.programNr;
@@ -60,6 +72,40 @@ void Model::pushMidiState(I_ConfigManager::programConfig_t& newConfig)
     }
     modelListener->configNumberChanged();
     modelListener->programNumberChanged();
+}
+
+
+void Model::requestProgramNrDecrement()
+{
+    GuiQueue::GuiMessage_t txMsg;
+    txMsg.name = GuiQueue::PROG_NR;
+    if(midiData.programNr == 0)
+    {
+        midiData.programNr = NUMBER_OF_PROGRAMS;
+    }
+    else
+    {
+        midiData.programNr--;
+    }
+    txMsg.data[0] = midiData.programNr;
+    _queToMidi.sendElement(txMsg);
+}
+
+
+void Model::requestProgramNrIncrement()
+{
+    GuiQueue::GuiMessage_t txMsg;
+    txMsg.name = GuiQueue::PROG_NR;
+    if(midiData.programNr == NUMBER_OF_PROGRAMS)
+    {
+        midiData.programNr = 0;
+    }
+    else
+    {
+        midiData.programNr++;
+    }
+    txMsg.data[0] = midiData.programNr;
+    _queToMidi.sendElement(txMsg);
 }
 
 

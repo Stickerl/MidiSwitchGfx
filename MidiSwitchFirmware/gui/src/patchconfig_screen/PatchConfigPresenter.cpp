@@ -30,3 +30,15 @@ void PatchConfigPresenter::programNumberChanged()
 {
 	view.setProgramNumber(model->getProgramNumber());
 }
+
+void PatchConfigPresenter::prevButtonPressed()
+{
+    model->requestProgramNrDecrement();
+}
+
+void PatchConfigPresenter::nextButtonPressed()
+{
+    model->requestProgramNrIncrement();
+}
+
+

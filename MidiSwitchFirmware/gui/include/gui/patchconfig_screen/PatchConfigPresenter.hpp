@@ -33,7 +33,9 @@ public:
 
     virtual void programNumberChanged();
 
+    virtual void prevButtonPressed();
 
+    virtual void nextButtonPressed();
 
 private:
     PatchConfigPresenter();

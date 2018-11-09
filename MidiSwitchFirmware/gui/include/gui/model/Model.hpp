@@ -3,6 +3,8 @@
 
 #include "stdint.h"
 #include "I_config_manager.hpp"
+#include "gui_queue.h"
+#include "global_defines.hpp"
 
 class ModelListener;
 
@@ -58,7 +60,16 @@ public:
 
     uint8_t getProgramNumber();
 
-    void pushMidiState(I_ConfigManager::programConfig_t& newConfig);
+    /*****************************************************************
+     * respond = application updates Gui
+     * request = Gui requests new data from the application
+     *****************************************************************/
+
+    void respondMidiState(I_ConfigManager::programConfig_t& newConfig);
+
+    void requestProgramNrDecrement();
+
+    void requestProgramNrIncrement();
 
 protected:
     /**
@@ -70,6 +81,8 @@ protected:
 
     midi_data midiData;
     uint8_t configNr;
+    GuiQueue& _queToMidi;
+    GuiQueue& _queToGui;
 
 };
 

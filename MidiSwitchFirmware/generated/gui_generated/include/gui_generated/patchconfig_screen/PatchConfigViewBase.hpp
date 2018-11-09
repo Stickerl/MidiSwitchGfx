@@ -43,7 +43,7 @@ protected:
     touchgfx::Box ConfigNrBox;
     touchgfx::Box HeadlineBox;
     touchgfx::Button Next;
-    touchgfx::Button Pev;
+    touchgfx::Button Prev;
     touchgfx::FadeAnimator< touchgfx::TextArea > Switch2Nr;
     touchgfx::FadeAnimator< touchgfx::TextArea > Switch1Nr;
     touchgfx::FadeAnimator< touchgfx::TextArea > ProgramNr;
@@ -70,7 +70,7 @@ protected:
     /*
      * Wildcard Buffers
      */
-    static const uint16_t PROGNRVAL_SIZE = 3;
+    static const uint16_t PROGNRVAL_SIZE = 4;
     touchgfx::Unicode::UnicodeChar progNrValBuffer[PROGNRVAL_SIZE];
     static const uint16_t SWITCH1CONNRVAL_SIZE = 3;
     touchgfx::Unicode::UnicodeChar switch1ConNrValBuffer[SWITCH1CONNRVAL_SIZE];

@@ -176,41 +176,17 @@ void UartIrqBased::pin_init(UartModuleEnum uart_module, Pin tx_pin, Pin rx_pin)
     Uart_PinCfg.Pin = tx_pin.pin_nr;
     Uart_PinCfg.Mode = GPIO_MODE_AF_PP;
     Uart_PinCfg.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOG, &Uart_PinCfg);
+    HAL_GPIO_Init(tx_pin.port, &Uart_PinCfg);
 
     // RX Pint
     enable_gpio_clk(rx_pin.port);
     Uart_PinCfg.Alternate = rx_pin.alternate;
     Uart_PinCfg.Pin = rx_pin.pin_nr;
-    HAL_GPIO_Init(GPIOG, &Uart_PinCfg);
+    HAL_GPIO_Init(rx_pin.port, &Uart_PinCfg);
 }
 
 void UartIrqBased::init_uart(UartModuleEnum uart_module)
 {
-    /*// enable USART6 CLK
-    __HAL_RCC_USART6_CLK_ENABLE();
-
-    GPIO_InitTypeDef Uart_PinCfg;
-
-    // Enable CLK for GPIOG
-    __HAL_RCC_GPIOG_CLK_ENABLE();
-
-    // Generic USART6 Pin settings
-    Uart_PinCfg.Alternate = GPIO_AF8_USART6;
-    Uart_PinCfg.Speed = GPIO_SPEED_FREQ_MEDIUM;
-
-    // Configure PG14 as USART6 TX
-    Uart_PinCfg.Pin = GPIO_PIN_14;
-    Uart_PinCfg.Mode = GPIO_MODE_AF_PP;
-    Uart_PinCfg.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOG, &Uart_PinCfg);
-
-    // Configure PG9 as USART6 RX
-    Uart_PinCfg.Pin = GPIO_PIN_9;
-    Uart_PinCfg.Mode = GPIO_MODE_AF_PP;
-    Uart_PinCfg.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOG, &Uart_PinCfg);*/
-
     // Register UART
     _irq_registry.register_obj(this, uart_module);
 
@@ -219,34 +195,42 @@ void UartIrqBased::init_uart(UartModuleEnum uart_module)
         case UART_1:
             _uart_handle.Instance = USART1;
             __HAL_RCC_USART1_CLK_ENABLE();
+            NVIC_EnableIRQ(USART1_IRQn);
             break;
         case UART_2:
             _uart_handle.Instance = USART2;
             __HAL_RCC_USART2_CLK_ENABLE();
+            NVIC_EnableIRQ(USART2_IRQn);
             break;
         case UART_3:
             _uart_handle.Instance = USART3;
             __HAL_RCC_USART3_CLK_ENABLE();
+            NVIC_EnableIRQ(USART3_IRQn);
             break;
         case UART_4:
             _uart_handle.Instance = UART4;
             __HAL_RCC_UART4_CLK_ENABLE();
+            NVIC_EnableIRQ(UART4_IRQn);
             break;
         case UART_5:
             _uart_handle.Instance = UART5;
             __HAL_RCC_UART5_CLK_ENABLE();
+            NVIC_EnableIRQ(UART5_IRQn);
             break;
         case UART_6:
             _uart_handle.Instance = USART6;
             __HAL_RCC_USART6_CLK_ENABLE();
+            NVIC_EnableIRQ(USART6_IRQn);
             break;
         case UART_7:
             _uart_handle.Instance = UART7;
             __HAL_RCC_UART7_CLK_ENABLE();
+            NVIC_EnableIRQ(UART7_IRQn);
             break;
         case UART_8:
             _uart_handle.Instance = UART8;
             __HAL_RCC_UART8_CLK_ENABLE();
+            NVIC_EnableIRQ(UART8_IRQn);
             break;
         default:
             assert(true);

@@ -20,7 +20,14 @@ public:
 
     void setControllerValue(uint8_t controllerVal);
 
+    void prevButtonActionCb(const AbstractButton& button);
+
+    void nextButtonActionCb(const AbstractButton& button);
+
 protected:
+    touchgfx::Callback<PatchConfigView, const AbstractButton& > prevButtonCb;
+    touchgfx::Callback<PatchConfigView, const AbstractButton& > nextButtonCb;
+
 };
 
 #endif // PATCHCONFIG_VIEW_HPP

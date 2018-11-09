@@ -43,6 +43,8 @@ using namespace touchgfx;
 #include "task.h"
 #include "queue.h"
 #include "midi_task.h"
+#include "pc_interface_task.h"
+#include "gui_queue.h"
 
 
 /**
@@ -54,48 +56,18 @@ using namespace touchgfx;
 
 #define CANVAS_BUFFER_SIZE (3600)
 
+
 static void GUITask(void* params)
 {
     touchgfx::HAL::getInstance()->taskEntry();
 }
 
 
-UartIrqBased::Pin uart6_tx(GPIOG, GPIO_PIN_14, GPIO_AF8_USART6);
-UartIrqBased::Pin uart6_rx(GPIOG, GPIO_PIN_9,  GPIO_AF8_USART6);
+
 int main(void)
 {
     hw_init();
     touchgfx_init();
-    /* uint8_t creativerName[] = "Hello World!";
-    uint8_t readBuffer[128]= {0};
-    uint32_t uart_rec_cnt = 0;
-    uint32_t uart_tot_bytes = 0;
-    uint8_t byte_temp = 0x77;
-    RingBuffer<128> txBuffer;
-    RingBuffer<128> rxBuffer;
-    UartIrqs uartIrqReg;
-    UartIrqBased uart({115200, txBuffer, rxBuffer, UartIrqBased::UART_6,
-                       uart6_tx, uart6_rx, uartIrqReg});
-    touchgfx_init();
-
-    uart.start_receive();
-    // if 0x12 is received via UART, send out 0x12 0x55
-    while(1)
-    {
-        uart_rec_cnt = uart.get_rx_cnt();
-        uart_tot_bytes += uart_rec_cnt;
-        if(uart_tot_bytes == 586U)
-        {
-            uart_tot_bytes++;
-        }
-        if(uart_rec_cnt > 0)
-        {
-            uart.get_data(readBuffer, uart_rec_cnt);
-            uart.send(readBuffer, uart_rec_cnt);
-            uart.start_tx();
-        }
-        HAL_Delay(1);
-    }*/
 
     /**
      * IMPORTANT NOTICE!
@@ -126,7 +98,8 @@ int main(void)
                 configGUI_TASK_PRIORITY,
                 NULL);
 
-    //midi_task_create();
+    midi_task_create();
+    //pc_interface_task_create();
 
     vTaskStartScheduler();
 
