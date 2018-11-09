@@ -41,7 +41,7 @@ void ConfigManager::program_change_cb(midi_data currentData)
         bool found = false;
         for (uint8_t i = 0; i < NUMBER_OF_PROGRAMS; i++)
         {
-            if (currentData.programNr == ramCfgList[i].progrmNr)
+            if (currentData.programNr == ramCfgList[i].programNr)
             {
                 // load the configuration
                 switchCfg(currentData.programNr);
@@ -82,7 +82,7 @@ void ConfigManager::control_change_cb(midi_data currentData)
 
 I_ConfigManager::programConfig_t& ConfigManager::getCurrentCfg()
 {
-    return (ramCfgList[currentCfg->progrmNr]);
+    return (ramCfgList[currentCfg->programNr]);
 }
 
 I_ConfigManager::programConfig_t& ConfigManager::switchCfg(uint8_t programNr)

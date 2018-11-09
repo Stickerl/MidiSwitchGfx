@@ -65,7 +65,8 @@ UartIrqBased::Pin uart6_rx(GPIOG, GPIO_PIN_9,  GPIO_AF8_USART6);
 int main(void)
 {
     hw_init();
-    uint8_t creativerName[] = "Hello World!";
+    touchgfx_init();
+    /* uint8_t creativerName[] = "Hello World!";
     uint8_t readBuffer[128]= {0};
     uint32_t uart_rec_cnt = 0;
     uint32_t uart_tot_bytes = 0;
@@ -94,7 +95,7 @@ int main(void)
             uart.start_tx();
         }
         HAL_Delay(1);
-    }
+    }*/
 
     /**
      * IMPORTANT NOTICE!
@@ -125,7 +126,7 @@ int main(void)
                 configGUI_TASK_PRIORITY,
                 NULL);
 
-    midi_task_create();
+    //midi_task_create();
 
     vTaskStartScheduler();
 

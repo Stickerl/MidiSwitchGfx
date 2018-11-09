@@ -34,7 +34,7 @@ uint8_t Model::getControllerNumber()
 
 uint16_t Model::getConfigNumber()
 {
-	return displayedCfg.progrmNr;
+	return displayedCfg.programNr;
 }
 
 uint8_t Model::getControllerValue()
@@ -44,13 +44,13 @@ uint8_t Model::getControllerValue()
 
 uint8_t Model::getProgramNumber()
 {
-	return displayedCfg.progrmNr;
+	return displayedCfg.programNr;
 }
 
 void Model::pushMidiState(I_ConfigManager::programConfig_t& newConfig)
 {
 
-    displayedCfg.progrmNr = newConfig.progrmNr;
+    displayedCfg.programNr = newConfig.programNr;
     displayedCfg.defaultOut = newConfig.defaultOut;
     for(uint8_t i = 0; i < 2; i++)
     {

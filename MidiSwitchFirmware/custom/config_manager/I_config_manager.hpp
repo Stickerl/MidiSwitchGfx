@@ -29,7 +29,7 @@ public:
 
     typedef struct
     {
-        uint8_t progrmNr;                               // number of the program
+        uint8_t programNr;                              // number of the program
         uint8_t defaultOut;                             // default output configuration
         switchCfg_t switches[SWITCHES_PER_PROGRAM];     // array of switch configurations
     }programConfig_t;
