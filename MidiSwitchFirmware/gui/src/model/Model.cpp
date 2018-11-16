@@ -29,7 +29,7 @@ void Model::tick()
 	    {
 	    case GuiQueue::PROG_NR:
 	        midiData.programNr = rxMsg.data[0];
-	        displayedCfg.progrmNr = rxMsg.data[0];
+	        displayedCfg.programNr = rxMsg.data[0];
 	        modelListener->programNumberChanged();
 	        break;
 	    default:
@@ -81,7 +81,7 @@ void Model::requestProgramNrDecrement()
     txMsg.name = GuiQueue::PROG_NR;
     if(midiData.programNr == 0)
     {
-        midiData.programNr = NUMBER_OF_PROGRAMS;
+        midiData.programNr = (NUMBER_OF_PROGRAMS - 1);
     }
     else
     {
@@ -96,7 +96,7 @@ void Model::requestProgramNrIncrement()
 {
     GuiQueue::GuiMessage_t txMsg;
     txMsg.name = GuiQueue::PROG_NR;
-    if(midiData.programNr == NUMBER_OF_PROGRAMS)
+    if(midiData.programNr == (NUMBER_OF_PROGRAMS - 1))
     {
         midiData.programNr = 0;
     }

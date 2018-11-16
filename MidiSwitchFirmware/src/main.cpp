@@ -45,7 +45,7 @@ using namespace touchgfx;
 #include "midi_task.h"
 #include "pc_interface_task.h"
 #include "gui_queue.h"
-
+#include "stm32f4xx.h"
 
 /**
  * Define the FreeRTOS task priorities and stack sizes
@@ -55,6 +55,8 @@ using namespace touchgfx;
 #define configGUI_TASK_STK_SIZE                 ( 1024 )    // allocates 4K of stack for the gui task
 
 #define CANVAS_BUFFER_SIZE (3600)
+
+#define LAST_FLASH_SECTOR 0x080E0000
 
 
 static void GUITask(void* params)
@@ -68,7 +70,28 @@ int main(void)
 {
     hw_init();
     touchgfx_init();
+    HAL_FLASH_Unlock();
+    //FLASH_Erase_Sector(23, FLASH_VOLTAGE_RANGE_4);
+    /*Variable used for Erase procedure*/
+    static FLASH_EraseInitTypeDef EraseInitStruct;
+    EraseInitStruct.TypeErase     = FLASH_TYPEERASE_SECTORS;
+    EraseInitStruct.VoltageRange  = FLASH_VOLTAGE_RANGE_3;
+    EraseInitStruct.Sector        = 11;
+    EraseInitStruct.NbSectors     = 1;
 
+    uint32_t SECTORError = 0;
+
+    /* Note: If an erase operation in Flash memory also concerns data in the data or instruction cache,
+       you have to make sure that these data are rewritten before they are accessed during code
+       execution. If this cannot be done safely, it is recommended to flush the caches by setting the
+       DCRST and ICRST bits in the FLASH_CR register. */
+    //HAL_FLASHEx_Erase(&EraseInitStruct, &SECTORError);
+    HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, LAST_FLASH_SECTOR, 0x0000DEADBEEF0000);
+
+    /* Lock the Flash to disable the flash control register access (recommended
+       to protect the FLASH memory against possible unwanted operation) *********/
+    HAL_FLASH_Lock();
+    while(1){};
     /**
      * IMPORTANT NOTICE!
      *
