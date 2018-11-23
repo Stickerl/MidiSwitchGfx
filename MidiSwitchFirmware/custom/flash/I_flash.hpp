@@ -10,6 +10,7 @@
 
 #include "stdint.h"
 
+
 class I_Flash
 {
 public:
@@ -24,6 +25,7 @@ public:
     virtual void readWords(uint32_t addr, uint16_t* target, uint32_t size) = 0; // reads a number of uint16_t words from the flash
     virtual void readLong(uint32_t addr, uint32_t* target, uint32_t size) = 0;  // reads a number of uint32_t words from the flash
 };
+
 
 
 #endif /* FLASH_I_FLASH_HPP_ */

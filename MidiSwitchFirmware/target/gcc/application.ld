@@ -4,10 +4,11 @@ _HEAPSIZE = 512;
 
 MEMORY
 {
-    CODE (rx)       : ORIGIN = 0x08000000, LENGTH = 2048K
+    CODE (rx)       : ORIGIN = 0x08000000, LENGTH = 896K
     RAM (rw)        : ORIGIN = 0x20000000, LENGTH = 320K
     CCMRAM (rw)     : ORIGIN = 0x10000000, LENGTH = 64K
     QUADSPI (r)     : ORIGIN = 0x90000000, LENGTH = 16M
+    DATA (rwx)      : ORIGIN = 0x080E0000, LENGTH = 128K
 }
 
 /* Section Definitions */
@@ -16,6 +17,13 @@ ENTRY(ResetISR)
 
 SECTIONS
 {
+    .user_data :
+     {
+       . = ALIGN(4);
+        KEEP(*(.user_data))
+       . = ALIGN(4);
+     } > DATA
+
 	/* first section is .text which is used for code */
 	.text :
 	{

@@ -47,6 +47,9 @@ using namespace touchgfx;
 #include "gui_queue.h"
 #include "stm32f4xx.h"
 
+// TODO remove after debugging
+uint8_t banana_var = 0;
+
 /**
  * Define the FreeRTOS task priorities and stack sizes
  */
@@ -70,7 +73,7 @@ int main(void)
 {
     hw_init();
     touchgfx_init();
-    HAL_FLASH_Unlock();
+
     //FLASH_Erase_Sector(23, FLASH_VOLTAGE_RANGE_4);
     /*Variable used for Erase procedure*/
     static FLASH_EraseInitTypeDef EraseInitStruct;
@@ -86,7 +89,12 @@ int main(void)
        execution. If this cannot be done safely, it is recommended to flush the caches by setting the
        DCRST and ICRST bits in the FLASH_CR register. */
     //HAL_FLASHEx_Erase(&EraseInitStruct, &SECTORError);
-    HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, LAST_FLASH_SECTOR, 0x0000DEADBEEF0000);
+    HAL_FLASH_Unlock();
+    __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR |
+                           FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
+    FLASH_Erase_Sector(FLASH_SECTOR_11, VOLTAGE_RANGE_3);
+    banana_var = 1;
+    HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, LAST_FLASH_SECTOR, 0xDEADBEEF);
 
     /* Lock the Flash to disable the flash control register access (recommended
        to protect the FLASH memory against possible unwanted operation) *********/

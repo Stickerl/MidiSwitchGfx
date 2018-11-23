@@ -95,6 +95,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 
+
+extern uint8_t banana_var;
+
 /** @addtogroup STM32F4xx_HAL_Driver
   * @{
   */
@@ -176,6 +179,8 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint
 {
   HAL_StatusTypeDef status = HAL_ERROR;
   
+  banana_var = 2;
+
   /* Process Locked */
   __HAL_LOCK(&pFlash);
   
@@ -185,6 +190,7 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint
   /* Wait for last operation to be completed */
   status = FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE);
   
+  banana_var = 3;
   if(status == HAL_OK)
   {
     if(TypeProgram == FLASH_TYPEPROGRAM_BYTE)
@@ -214,7 +220,7 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint
     /* If the program operation is completed, disable the PG Bit */
     FLASH->CR &= (~FLASH_CR_PG);  
   }
-  
+  banana_var = 4;
   /* Process Unlocked */
   __HAL_UNLOCK(&pFlash);
   
