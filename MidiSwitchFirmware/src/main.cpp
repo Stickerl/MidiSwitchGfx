@@ -47,8 +47,7 @@ using namespace touchgfx;
 #include "gui_queue.h"
 #include "stm32f4xx.h"
 
-// TODO remove after debugging
-uint8_t banana_var = 0;
+
 
 /**
  * Define the FreeRTOS task priorities and stack sizes
@@ -59,7 +58,7 @@ uint8_t banana_var = 0;
 
 #define CANVAS_BUFFER_SIZE (3600)
 
-#define LAST_FLASH_SECTOR 0x080E0000
+#define LAST_FLASH_SECTOR 0x081E0000
 
 
 static void GUITask(void* params)
@@ -74,15 +73,7 @@ int main(void)
     hw_init();
     touchgfx_init();
 
-    //FLASH_Erase_Sector(23, FLASH_VOLTAGE_RANGE_4);
-    /*Variable used for Erase procedure*/
-    static FLASH_EraseInitTypeDef EraseInitStruct;
-    EraseInitStruct.TypeErase     = FLASH_TYPEERASE_SECTORS;
-    EraseInitStruct.VoltageRange  = FLASH_VOLTAGE_RANGE_3;
-    EraseInitStruct.Sector        = 11;
-    EraseInitStruct.NbSectors     = 1;
 
-    uint32_t SECTORError = 0;
 
     /* Note: If an erase operation in Flash memory also concerns data in the data or instruction cache,
        you have to make sure that these data are rewritten before they are accessed during code
@@ -92,10 +83,9 @@ int main(void)
     HAL_FLASH_Unlock();
     __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR |
                            FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
-    FLASH_Erase_Sector(FLASH_SECTOR_11, VOLTAGE_RANGE_3);
-    banana_var = 1;
+    FLASH_Erase_Sector(FLASH_SECTOR_23, VOLTAGE_RANGE_3);
     HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, LAST_FLASH_SECTOR, 0xDEADBEEF);
-
+    HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, LAST_FLASH_SECTOR, 0x0A000A00);
     /* Lock the Flash to disable the flash control register access (recommended
        to protect the FLASH memory against possible unwanted operation) *********/
     HAL_FLASH_Lock();

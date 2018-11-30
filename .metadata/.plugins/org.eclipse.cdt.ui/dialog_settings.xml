@@ -29,6 +29,10 @@
 		<item value="false" key="caseSensitive"/>
 		<item value="227191" key="searchFlags"/>
 		<list key="previousPatterns">
+			<item value="banana_var"/>
+			<item value="TODO"/>
+			<item value="HAL_RCC_ClockConfig"/>
+			<item value="FLASH"/>
 			<item value="FLASH_LATENCY"/>
 			<item value="OS_SysTick"/>
 			<item value="taskEntry"/>
