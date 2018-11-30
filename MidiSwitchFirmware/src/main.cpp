@@ -67,6 +67,7 @@ static void GUITask(void* params)
 }
 
 
+//__attribute__ ((section (".user_data"))) uint32_t test[100] = {};
 
 int main(void)
 {

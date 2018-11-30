@@ -53,14 +53,20 @@ private:
     // indicates that the sector is invalide
     // overrules the terminator (it can overwrite the terminator without an erase)
     static const uint8_t invalidationStamp = 0xAD;
+
+    static const uint32_t invalidSecIndex = 0xFFFFFFFF;
     frame_t valideFrames[1]; // 1= make compiler happy => size needs to be defined
 
     frame_t last_frame;
-    sector_t activeSector;
+    sector_t* activeSector;
+    sector_t secs[2];
+
+    // finds the last termination character in the sector
+    uint32_t findLastTerminator(sector_t sector);
 
     // finds the last frame in the sector
     // if the data != terminator or FF the sector is invalid => no frame in the sector
-    frame_t findLastFrame(sector_t sector);
+    frame_t frameFromIndex(sector_t sector, uint32_t index);
 
     // scans the sector for all valid frames starting from the last frame in the sector
     void scanForValidFrames();
@@ -73,7 +79,7 @@ private:
     uint32_t getFreeMemmory();
 
     // writes the terminator at the verry end of the sector
-    void invalidateSector(sector_t sector);
+    void invalidateSector(sector_t& sector);
 
     // copy data from the old sector to new sector, invalidates the old sector and activates the new sector
     void relocateData();
