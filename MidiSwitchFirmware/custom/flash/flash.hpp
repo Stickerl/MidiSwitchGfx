@@ -11,10 +11,20 @@
 #include "I_flash.hpp"
 #include "stm32f4xx_hal.h"
 
-class Flash :  public I_Flash
+class Flash : public I_Flash
 {
 public:
-    Flash(){};
+    typedef struct sector
+        {
+            uint8_t* start;
+            uint32_t size;
+            sector():start(NULL),size(0){};
+            sector(uint8_t* sec_start, uint32_t sec_size):
+                start(sec_start),
+                size(sec_size){};
+        } sector_t;
+
+    Flash(sector_t sec1, sector_t sec2);
     virtual ~Flash(){};
 
     // writes a number of bytes to the flash
@@ -36,12 +46,6 @@ public:
     virtual void readLong(uint32_t addr, uint32_t* target, uint32_t size);  // override
 
 private:
-    typedef struct sector
-    {
-        uint8_t* start;
-        uint32_t size;
-    } sector_t;
-
     typedef struct frame
     {
         uint8_t* data;
@@ -55,21 +59,23 @@ private:
     static const uint8_t invalidationStamp = 0xAD;
 
     static const uint32_t invalidSecIndex = 0xFFFFFFFF;
-    frame_t valideFrames[1]; // 1= make compiler happy => size needs to be defined
+    static const uint16_t numFrameIds = 3;
+    frame_t validFrames[numFrameIds] = {NULL}; // 1= make compiler happy => size needs to be defined
 
     frame_t last_frame;
-    sector_t* activeSector;
+    sector_t activeSector;
     sector_t secs[2];
 
-    // finds the last termination character in the sector
+    // iterates over sector, stating at the end. If a terminator is found, the byte index
+    // counting form start of sector, is returned.
+    // Returns 0xFFFFFFFF if no terminator is found
     uint32_t findLastTerminator(sector_t sector);
 
-    // finds the last frame in the sector
-    // if the data != terminator or FF the sector is invalid => no frame in the sector
+    // reads a frame in sector from index (counting from start of sector)
     frame_t frameFromIndex(sector_t sector, uint32_t index);
 
     // scans the sector for all valid frames starting from the last frame in the sector
-    void scanForValidFrames();
+    void scanForValidFrames(sector_t sector);
 
     // determines which sector is currently in use.
     // either 1 sector has no free space -> other sector is the active one
@@ -83,6 +89,9 @@ private:
 
     // copy data from the old sector to new sector, invalidates the old sector and activates the new sector
     void relocateData();
+
+    // writes a frame to the NVM (non valentin memory)
+    void storeFrame(frame_t& frame);
 };
 
 
