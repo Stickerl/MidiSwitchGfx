@@ -69,6 +69,7 @@ uint32_t Flash::findLastTerminator(sector_t sector)
 Flash::frame_t Flash::frameFromIndex(sector_t sector, uint32_t index)
 {
     Flash::frame_t frame;
+    assert(sector.start[index] != frame_t::terminator));
     frame.size = *((uint16_t*) &sector.start[index -sizeof(frame.terminator)]);
     frame.user_id = sector.start[index -sizeof(frame.terminator) -sizeof(frame.size)];
     frame.data = &sector.start[index -(sizeof(frame) -sizeof(frame.data)) -frame.size];
@@ -78,7 +79,6 @@ Flash::frame_t Flash::frameFromIndex(sector_t sector, uint32_t index)
 
 void Flash::scanForValidFrames(sector_t sector)
 {
-
     frame_t frame;
 
     for(uint32_t i=findLastTerminator(sector); i <= 0;)
@@ -93,13 +93,7 @@ void Flash::scanForValidFrames(sector_t sector)
 
 }
 
-uint32_t Flash::getFreeMemmory()
-{
-
-}
-
-// writes the terminator at the verry end of the sector
-void Flash::invalidateSector(sector_t sector)
+uint32_t Flash::getFreeMemory()
 {
 
 }
@@ -110,11 +104,6 @@ void Flash::relocateData()
 
 }
 
-// writes a frame to the NVM (non valentin memory)
-void Flash::storeFrame(frame_t& frame)
-{
-
-}
 
 // writes the terminator at the verry end of the sector
 void Flash::invalidateSector(sector_t& sector)

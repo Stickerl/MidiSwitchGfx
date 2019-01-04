@@ -82,7 +82,7 @@ private:
     // or the sector with less free space is the active one
     void determineActiveSector();
 
-    uint32_t getFreeMemmory();
+    uint32_t getFreeMemory();
 
     // writes the terminator at the verry end of the sector
     void invalidateSector(sector_t& sector);
