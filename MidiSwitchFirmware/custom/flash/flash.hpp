@@ -16,8 +16,8 @@ class Flash : public I_Flash
 public:
     typedef struct sector
         {
-            uint8_t* start;     // pointer to the start of the sector data
-            uint32_t size;      // size of the sector in bytes
+            uint8_t* start;
+            uint32_t size;
             sector():start(NULL),size(0){};
             sector(uint8_t* sec_start, uint32_t sec_size):
                 start(sec_start),
@@ -52,8 +52,7 @@ public:
     // simply reads data from the nvm
     void read(uint16_t id, uint32_t addr, uint32_t* target, uint32_t size);
 
-    uint32_t getFreeMemmory();
-
+    uint32_t getFreeMemory();
 private:
     typedef struct frame
     {
@@ -64,7 +63,6 @@ private:
     } frame_t;
 
     uint8_t frameOverhad = sizeof(frame_t) - sizeof(uint8_t*);
-
     // indicates that the sector is invalide
     // overrules the terminator (it can overwrite the terminator without an erase)
     static const uint8_t invalidationStamp = 0xAD;

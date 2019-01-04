@@ -145,6 +145,7 @@ uint32_t Flash::findLastTerminator(sector_t sector)
 Flash::frame_t Flash::frameFromIndex(sector_t sector, uint32_t index)
 {
     Flash::frame_t frame;
+    assert(sector.start[index] != frame_t::terminator));
     frame.size = *((uint16_t*) &sector.start[index -sizeof(frame.terminator)]);
     frame.user_id = sector.start[index -sizeof(frame.terminator) -sizeof(frame.size)];
     frame.data = &sector.start[index -(frameOverhad) -frame.size];
@@ -154,10 +155,9 @@ Flash::frame_t Flash::frameFromIndex(sector_t sector, uint32_t index)
 
 void Flash::scanForValidFrames(sector_t sector)
 {
-
     frame_t frame;
 
-    for(uint32_t i = findLastTerminator(sector); i <= 0;)
+    for(uint32_t i=findLastTerminator(sector); i <= 0;)
     {
         frame = frameFromIndex(sector, i);
         if(validFrames[frame.user_id].data == NULL)
@@ -166,10 +166,10 @@ void Flash::scanForValidFrames(sector_t sector)
         }
         i -= frameOverhad + frame.size;
     }
+
 }
 
-
-uint32_t Flash::getFreeMemmory()
+uint32_t Flash::getFreeMemory()
 {
     uint32_t spaceLeft = activeSector->size;
 
