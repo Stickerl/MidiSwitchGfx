@@ -81,16 +81,16 @@ int main(void)
        execution. If this cannot be done safely, it is recommended to flush the caches by setting the
        DCRST and ICRST bits in the FLASH_CR register. */
     //HAL_FLASHEx_Erase(&EraseInitStruct, &SECTORError);
-    HAL_FLASH_Unlock();
-    __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR |
-                           FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
-    FLASH_Erase_Sector(FLASH_SECTOR_23, VOLTAGE_RANGE_3);
-    HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, LAST_FLASH_SECTOR, 0xDEADBEEF);
-    HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, LAST_FLASH_SECTOR, 0x0A000A00);
+    //HAL_FLASH_Unlock();
+    //__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR |
+    //                       FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
+    //FLASH_Erase_Sector(FLASH_SECTOR_23, VOLTAGE_RANGE_3);
+    //HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, LAST_FLASH_SECTOR, 0xDEADBEEF);
+    //HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, LAST_FLASH_SECTOR, 0x0A000A00);
     /* Lock the Flash to disable the flash control register access (recommended
        to protect the FLASH memory against possible unwanted operation) *********/
-    HAL_FLASH_Lock();
-    while(1){};
+    //HAL_FLASH_Lock();
+    //while(1){};
     /**
      * IMPORTANT NOTICE!
      *

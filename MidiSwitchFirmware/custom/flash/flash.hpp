@@ -16,8 +16,8 @@ class Flash : public I_Flash
 public:
     typedef struct sector
         {
-            uint8_t* start;
-            uint32_t size;
+            uint8_t* start;     // pointer to the start of the sector data
+            uint32_t size;      // size of the sector in bytes
             sector():start(NULL),size(0){};
             sector(uint8_t* sec_start, uint32_t sec_size):
                 start(sec_start),
@@ -45,6 +45,15 @@ public:
     // reads a number of uint32_t words from the flash
     virtual void readLong(uint32_t addr, uint32_t* target, uint32_t size);  // override
 
+    void store(uint16_t id, uint32_t* source, uint32_t size, uint32_t addr = 0);
+
+    void reduceSize(uint16_t id, uint32_t size);
+
+    // simply reads data from the nvm
+    void read(uint16_t id, uint32_t addr, uint32_t* target, uint32_t size);
+
+    uint32_t getFreeMemmory();
+
 private:
     typedef struct frame
     {
@@ -53,6 +62,8 @@ private:
         uint16_t size;
         static const uint8_t terminator = 0xED; // marks the end of a frame
     } frame_t;
+
+    uint8_t frameOverhad = sizeof(frame_t) - sizeof(uint8_t*);
 
     // indicates that the sector is invalide
     // overrules the terminator (it can overwrite the terminator without an erase)
@@ -63,7 +74,7 @@ private:
     frame_t validFrames[numFrameIds] = {NULL}; // 1= make compiler happy => size needs to be defined
 
     frame_t last_frame;
-    sector_t activeSector;
+    sector_t* activeSector;
     sector_t secs[2];
 
     // iterates over sector, stating at the end. If a terminator is found, the byte index
@@ -82,8 +93,6 @@ private:
     // or the sector with less free space is the active one
     void determineActiveSector();
 
-    uint32_t getFreeMemmory();
-
     // writes the terminator at the verry end of the sector
     void invalidateSector(sector_t& sector);
 
@@ -92,6 +101,9 @@ private:
 
     // writes a frame to the NVM (non valentin memory)
     void storeFrame(frame_t& frame);
+
+    // simply copys data to the nvm
+    void copyToNvm(uint32_t writeIndex, uint8_t* data, uint32_t size);
 };
 
 

@@ -8,7 +8,7 @@ MEMORY
     RAM (rw)        : ORIGIN = 0x20000000, LENGTH = 320K
     CCMRAM (rw)     : ORIGIN = 0x10000000, LENGTH = 64K
     QUADSPI (r)     : ORIGIN = 0x90000000, LENGTH = 16M
-    USER_DATA (rw)  : ORIGIN = 0x081B5800, LENGTH = 256K
+    /* USER_DATA (rw)  : ORIGIN = 0x081B5800, LENGTH = 256K */
 }
 
 /* Section Definitions */
@@ -17,12 +17,12 @@ ENTRY(ResetISR)
 
 SECTIONS
 {
-    .user_data :
+    /*.user_data :
      {
        . = ALIGN(4);
         KEEP(*(.user_data))
        . = ALIGN(4);
-     } > USER_DATA
+     } > USER_DATA*/
 
 	/* first section is .text which is used for code */
 	.text :
