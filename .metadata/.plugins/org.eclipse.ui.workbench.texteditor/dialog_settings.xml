@@ -8,6 +8,7 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="USER_DATA"/>
 			<item value="flash"/>
 			<item value="Pin"/>
 			<item value="GPIO_Alternate_function_selection"/>
@@ -15,7 +16,6 @@
 			<item value="UART_Receive_IT"/>
 			<item value="/**"/>
 			<item value="__HAL_UART_GET_FLAG"/>
-			<item value="stack"/>
 		</list>
 		<list key="replacehistory">
 			<item value="currentData"/>

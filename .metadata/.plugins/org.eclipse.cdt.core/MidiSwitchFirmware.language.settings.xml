@@ -58,13 +58,13 @@
 					<entry kind="includePath" name="/MidiSwitchFirmware/target/bsp/source/vendor/STM32469I-Discovery">
 						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/lib/gcc/arm-none-eabi/6.3.1/include">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/lib/gcc/arm-none-eabi/6.3.1/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/lib/gcc/arm-none-eabi/6.3.1/include-fixed">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/lib/gcc/arm-none-eabi/6.3.1/include-fixed">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/arm-none-eabi/include">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/arm-none-eabi/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="CORE_M4" value="1">
@@ -1248,22 +1248,22 @@
 					<entry kind="includePath" name="/MidiSwitchFirmware/custom/global_defines">
 						<flag value="BUILTIN|READONLY|VALUE_WORKSPACE_PATH|RESOLVED"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/arm-none-eabi/include/c++/6.3.1">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/arm-none-eabi/include/c++/6.3.1">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/arm-none-eabi/include/c++/6.3.1/arm-none-eabi/thumb/v7e-m/fpv4-sp/softfp">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/arm-none-eabi/include/c++/6.3.1/arm-none-eabi/thumb/v7e-m/fpv4-sp/softfp">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/arm-none-eabi/include/c++/6.3.1/backward">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/arm-none-eabi/include/c++/6.3.1/backward">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/lib/gcc/arm-none-eabi/6.3.1/include">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/lib/gcc/arm-none-eabi/6.3.1/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/lib/gcc/arm-none-eabi/6.3.1/include-fixed">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/lib/gcc/arm-none-eabi/6.3.1/include-fixed">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/arm-none-eabi/include">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/arm-none-eabi/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="CORE_M4" value="1">
@@ -2462,13 +2462,13 @@
 		<extension point="org.eclipse.cdt.core.LanguageSettingsProvider">
 			<provider id="ilg.gnuarmeclipse.managedbuild.cross.GCCBuiltinSpecsDetector">
 				<language id="org.eclipse.cdt.core.gcc">
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/lib/gcc/arm-none-eabi/6.3.1/include">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/lib/gcc/arm-none-eabi/6.3.1/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/lib/gcc/arm-none-eabi/6.3.1/include-fixed">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/lib/gcc/arm-none-eabi/6.3.1/include-fixed">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/arm-none-eabi/include">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/arm-none-eabi/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="HSE_VALUE" value="8000000">
@@ -3565,22 +3565,22 @@
 					</entry>
 				</language>
 				<language id="org.eclipse.cdt.core.g++">
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/arm-none-eabi/include/c++/6.3.1">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/arm-none-eabi/include/c++/6.3.1">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/arm-none-eabi/include/c++/6.3.1/arm-none-eabi/thumb/v7e-m">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/arm-none-eabi/include/c++/6.3.1/arm-none-eabi/thumb/v7e-m">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/arm-none-eabi/include/c++/6.3.1/backward">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/arm-none-eabi/include/c++/6.3.1/backward">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/lib/gcc/arm-none-eabi/6.3.1/include">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/lib/gcc/arm-none-eabi/6.3.1/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/lib/gcc/arm-none-eabi/6.3.1/include-fixed">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/lib/gcc/arm-none-eabi/6.3.1/include-fixed">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/6 2017-q1-update/arm-none-eabi/include">
+					<entry kind="includePath" name="C:/Program Files (x86)/GNU Tools ARM Embedded/arm-none-eabi/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="HSE_VALUE" value="8000000">
