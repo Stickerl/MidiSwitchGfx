@@ -114,11 +114,11 @@ int main(void)
     //static uint8_t canvasBuffer[CANVAS_BUFFER_SIZE];
     //CanvasWidgetRenderer::setupBuffer(canvasBuffer, CANVAS_BUFFER_SIZE);
 
-    xTaskCreate(GUITask, (TASKCREATE_NAME_TYPE)"GUITask",
+    /*xTaskCreate(GUITask, (TASKCREATE_NAME_TYPE)"GUITask",
                 configGUI_TASK_STK_SIZE,
                 NULL,
                 configGUI_TASK_PRIORITY,
-                NULL);
+                NULL);*/
 
     midi_task_create();
     //pc_interface_task_create();
