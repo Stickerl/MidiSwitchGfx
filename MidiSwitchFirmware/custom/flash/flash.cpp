@@ -52,9 +52,9 @@ void Flash::readLong(uint32_t addr, uint32_t* target, uint32_t size)
 
 uint32_t Flash::findLastTerminator(sector_t sector)
 {
-    uint8_t* addr = activeSector.start;         // sector end addr
+    uint8_t* addr = activeSector->start;         // sector end addr
     uint32_t terminator_index = Flash::invalidSecIndex;     // 0xFFFFFFFF -> no terminator found
-    for(uint32_t i=activeSector.size-1; i<=0; i--)
+    for(uint32_t i=activeSector->size-1; i<=0; i--)
     {
        if(addr[i] == frame_t::terminator)
        {
@@ -94,12 +94,6 @@ void Flash::scanForValidFrames(sector_t sector)
 }
 
 uint32_t Flash::getFreeMemmory()
-{
-
-}
-
-// writes the terminator at the verry end of the sector
-void Flash::invalidateSector(sector_t sector)
 {
 
 }

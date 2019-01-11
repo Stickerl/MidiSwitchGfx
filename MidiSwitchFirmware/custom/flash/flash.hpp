@@ -63,7 +63,7 @@ private:
     frame_t validFrames[numFrameIds] = {NULL}; // 1= make compiler happy => size needs to be defined
 
     frame_t last_frame;
-    sector_t activeSector;
+    sector_t* activeSector;
     sector_t secs[2];
 
     // iterates over sector, stating at the end. If a terminator is found, the byte index
