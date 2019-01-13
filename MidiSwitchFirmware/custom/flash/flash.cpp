@@ -63,6 +63,10 @@ void Flash::store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr)
     uint32_t spaceInSector = activeSector->size - writeIndex;
     uint32_t currentSize = 0;
     uint32_t requestSize = size + addr;
+    uint8_t frameHeader[frameOverhead] = {0};
+    frameHeader[frameOverhead-1] = frame_t::terminator;
+    frameHeader[frameOverhead-4] = id & 0xFF;
+    frameHeader[frameOverhead-5] = (id >> 8) & 0xFF;
 
     (writeIndex == invalidSecIndex) ? (writeIndex = 0) : (writeIndex = writeIndex); // if the write index is invalid nothing was written to the flash so far
 
@@ -77,6 +81,10 @@ void Flash::store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr)
     }
     // correct the corrected size if the data count in the current frame is greater
     (requestSize < currentSize) ? (requestSize = currentSize) : (requestSize = requestSize);
+    // set the new size
+    frameHeader[frameOverhead-2] = requestSize & 0xFF;
+    frameHeader[frameOverhead-3] = (requestSize >> 8) & 0xFF;
+
     assert(getFreeMemory() >= (requestSize + frameOverhead)); // the number of bytes to be stored in the flash is greater than 128k
     if(spaceInSector < (requestSize + frameOverhead))
     {
@@ -90,13 +98,16 @@ void Flash::store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr)
         copyToNvm(writeIndex, validFrames[id].data, addr);
     }
     writeIndex += addr;
-    // TODO why does the copyToNvm function not work anymore?
     copyToNvm(writeIndex, source, size);
     writeIndex += size;
     if(validFrames[id].data != NULL)
     {
         copyToNvm(writeIndex, &validFrames[id].data[addr+size], (requestSize - (size + addr)));
+        writeIndex += (requestSize - (size + addr));
     }
+
+    // add the frame header
+    copyToNvm(writeIndex, frameHeader, sizeof(frameHeader));
 
     scanForValidFrames(*activeSector); // update the valid frames array
 }
@@ -104,13 +115,40 @@ void Flash::store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr)
 void Flash::copyToNvm(uint32_t writeIndex, uint8_t* data, uint32_t size)
 {
     // determine chunk sizes for efficient flash programming
-    uint8_t byteCnt         = size & 0x01;          // take care of the last bit only. Everything above can be divided by 16
-    uint8_t halfWordCnt     = (size >> 1) & 0x01;   // divide by 16 and take care of the last bit only. Everything above can be divided by 32
-    uint32_t wordCnt        = (size >> 2);          // divide by 32 => double word count
+    uint8_t byteCnt = 0;
+    uint8_t halfWordCnt = 0;
+    uint32_t wordCnt = 0;
 
     uint32_t dataIndex = 0;
+    uint32_t startAddress = (uint32_t)activeSector->start + writeIndex;
+    uint8_t alignment = startAddress & 3;
 
     HAL_FLASH_Unlock();
+    switch(alignment)
+    {
+    case 1:
+        HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, ((uint32_t)activeSector->start + writeIndex + dataIndex), data[dataIndex]);
+        dataIndex++;
+        HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, ((uint32_t)activeSector->start + writeIndex + dataIndex), *((uint16_t*)(&data[dataIndex])));
+        dataIndex += sizeof(uint16_t);
+        break;
+    case 2:
+        HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, ((uint32_t)activeSector->start + writeIndex + dataIndex), *((uint16_t*)(&data[dataIndex])));
+        dataIndex += sizeof(uint16_t);
+        break;
+    case 3:
+        HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, ((uint32_t)activeSector->start + writeIndex + dataIndex), data[dataIndex]);
+        dataIndex++;
+        break;
+    default:
+        alignment = 4;
+        break;
+    }
+
+    byteCnt     = (size - (4-alignment))  & 0x01;         // take care of the last bit only. Everything above can be divided by 16
+    halfWordCnt = ((size - (4-alignment)) >> 1) & 0x01;   // divide by 16 and take care of the last bit only. Everything above can be divided by 32
+    wordCnt     = ((size - (4-alignment)) >> 2);          // divide by 32 => double word count
+
     while(wordCnt > 0)
     {
         HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, ((uint32_t)activeSector->start + writeIndex + dataIndex), *((uint32_t*)(&data[dataIndex])));
@@ -186,10 +224,6 @@ void Flash::scanForValidFrames(sector_t sector)
     }
 }
 
-// writes the terminator at the verry end of the sector
-void Flash::invalidateSector(sector_t sector)
-{
-}
 
 uint32_t Flash::getFreeMemory()
 {

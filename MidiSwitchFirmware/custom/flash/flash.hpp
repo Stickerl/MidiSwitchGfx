@@ -57,12 +57,12 @@ private:
     typedef struct frame
     {
         uint8_t* data;
-        uint8_t user_id;
+        uint16_t user_id;
         uint16_t size;
         static const uint8_t terminator = 0xED; // marks the end of a frame
     } frame_t;
 
-    uint8_t frameOverhead = sizeof(frame_t) - sizeof(uint8_t*);
+    uint8_t frameOverhead = sizeof(frame_t) - sizeof(uint8_t*) + sizeof(frame_t::terminator);
     // indicates that the sector is invalide
     // overrules the terminator (it can overwrite the terminator without an erase)
     static const uint8_t invalidationStamp = 0xAD;
