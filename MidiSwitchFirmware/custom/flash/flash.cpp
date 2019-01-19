@@ -13,13 +13,52 @@ Flash::Flash(sector_t sec1, sector_t sec2)
 {
     memcpy(&secs[0], &sec1, sizeof(sector_t));
     memcpy(&secs[1], &sec2, sizeof(sector_t));
-    determineActiveSector();
-    scanForValidFrames(*activeSector);
-    char testGordon[] = "GordonFlusht!?";
     HAL_FLASH_Unlock();
     FLASH_Erase_Sector(FLASH_SECTOR_23, VOLTAGE_RANGE_3);
     HAL_FLASH_Lock();
-    store(1, (uint8_t*)testGordon, sizeof(testGordon), 5);
+
+    determineActiveSector();
+    scanForValidFrames(*activeSector);
+    char testGordon[] = "GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
+            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?";
+
+    for(uint32_t i = activeSector->size; i >= (strlen(testGordon) + frameOverhead); )
+    {
+        store(1, (uint8_t*)testGordon, sizeof(testGordon), 0);
+        i -= (strlen(testGordon) + frameOverhead);
+    }
+    store(1, (uint8_t*)testGordon, sizeof(testGordon), 0);
+
 }
 
 void Flash::writeBytes(uint32_t addr, uint8_t* data, uint32_t size)
@@ -65,10 +104,9 @@ void Flash::store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr)
     uint32_t requestSize = size + addr;
     uint8_t frameHeader[frameOverhead] = {0};
     frameHeader[frameOverhead-1] = frame_t::terminator;
-    frameHeader[frameOverhead-4] = id & 0xFF;
-    frameHeader[frameOverhead-5] = (id >> 8) & 0xFF;
+    *(uint16_t*)&frameHeader[frameOverhead-5] = id;
 
-    (writeIndex == invalidSecIndex) ? (writeIndex = 0) : (writeIndex = writeIndex); // if the write index is invalid nothing was written to the flash so far
+    (writeIndex == invalidSecIndex) ? (writeIndex = 0) : (writeIndex++); // if the write index is invalid nothing was written to the flash so far
 
     // evaluate the size of the currently available frame in the sector
     if(validFrames[id].data == NULL)
@@ -82,8 +120,7 @@ void Flash::store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr)
     // correct the corrected size if the data count in the current frame is greater
     (requestSize < currentSize) ? (requestSize = currentSize) : (requestSize = requestSize);
     // set the new size
-    frameHeader[frameOverhead-2] = requestSize & 0xFF;
-    frameHeader[frameOverhead-3] = (requestSize >> 8) & 0xFF;
+    *(uint16_t*)&frameHeader[frameOverhead-3] = requestSize;
 
     assert(getFreeMemory() >= (requestSize + frameOverhead)); // the number of bytes to be stored in the flash is greater than 128k
     if(spaceInSector < (requestSize + frameOverhead))
@@ -122,9 +159,15 @@ void Flash::copyToNvm(uint32_t writeIndex, uint8_t* data, uint32_t size)
     uint32_t dataIndex = 0;
     uint32_t startAddress = (uint32_t)activeSector->start + writeIndex;
     uint8_t alignment = startAddress & 3;
+    uint8_t alignCnt = (size > (4-alignment)) ? (4-alignment) : size;
 
     HAL_FLASH_Unlock();
-    switch(alignment)
+    for(uint8_t i = 0; i < alignCnt; i++)
+    {
+        HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, ((uint32_t)activeSector->start + writeIndex + dataIndex), data[dataIndex]);
+        dataIndex++;
+    }
+    /*switch(alignment) // TODO what happens if we want to write less bytes than needed to aligne the data
     {
     case 1:
         HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, ((uint32_t)activeSector->start + writeIndex + dataIndex), data[dataIndex]);
@@ -143,11 +186,11 @@ void Flash::copyToNvm(uint32_t writeIndex, uint8_t* data, uint32_t size)
     default:
         alignment = 4;
         break;
-    }
+    }*/
 
-    byteCnt     = (size - (4-alignment))  & 0x01;         // take care of the last bit only. Everything above can be divided by 16
-    halfWordCnt = ((size - (4-alignment)) >> 1) & 0x01;   // divide by 16 and take care of the last bit only. Everything above can be divided by 32
-    wordCnt     = ((size - (4-alignment)) >> 2);          // divide by 32 => double word count
+    byteCnt     = (size - (alignCnt))  & 0x01;         // take care of the last bit only. Everything above can be divided by 16
+    halfWordCnt = ((size - (alignCnt)) >> 1) & 0x01;   // divide by 16 and take care of the last bit only. Everything above can be divided by 32
+    wordCnt     = ((size - (alignCnt)) >> 2);          // divide by 32 => double word count
 
     while(wordCnt > 0)
     {
@@ -198,10 +241,10 @@ uint32_t Flash::findLastTerminator(sector_t sector)
 Flash::frame_t Flash::frameFromIndex(sector_t sector, uint32_t index)
 {
     Flash::frame_t frame;
-    assert(sector.start[index] != frame_t::terminator);
-    frame.size = *((uint16_t*) &sector.start[index -sizeof(frame.terminator)]);
-    frame.user_id = sector.start[index -sizeof(frame.terminator) -sizeof(frame.size)];
-    frame.data = &sector.start[index -(frameOverhead) -frame.size];
+    assert(sector.start[index] == frame_t::terminator);
+    memcpy(&frame.size, &sector.start[index - (frameOverhead - sizeof(frame.user_id) - 1)], sizeof(frame.size));
+    memcpy(&frame.user_id, &sector.start[index - (frameOverhead - 1)], sizeof(frame.user_id));
+    frame.data = &sector.start[index - (frameOverhead + frame.size - 1)];
 
     return frame;
 }
@@ -219,7 +262,7 @@ void Flash::scanForValidFrames(sector_t sector)
             {
                 validFrames[frame.user_id] = frame;
             }
-            i -= frameOverhead + frame.size;
+            (i > (frameOverhead + frame.size)) ? (i -= frameOverhead + frame.size) : (i = 0);
         }
     }
 }
@@ -242,14 +285,24 @@ uint32_t Flash::getFreeMemory()
 // copy data from the old sector to new sector, invalidates the old sector and activates the new sector
 void Flash::relocateData()
 {
+    sector_t* oldSector = activeSector;
+    activeSector = (&secs[0] == activeSector) ? &secs[1] : &secs[0];
+    uint32_t targetIndex = 0;
 
-    assert(false); // TODO implement this function!?!? :(
+    for(uint8_t user_id = 0; user_id < numFrameIds; user_id++)
+    {
+        copyToNvm(targetIndex, validFrames[user_id].data, (validFrames[user_id].size + frameOverhead));
+    }
+    invalidateSector(*oldSector);
 }
 
 // writes the terminator at the verry end of the sector
 void Flash::invalidateSector(sector_t& sector)
 {
     sector.start[sector.size - 1] = invalidationStamp;
+    HAL_FLASH_Unlock();
+    HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, sector.start[sector.size - 1] , invalidationStamp);
+    HAL_FLASH_Lock();
 }
 
 // determines which sector is currently in use.
