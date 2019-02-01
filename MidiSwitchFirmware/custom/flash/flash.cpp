@@ -13,6 +13,7 @@ Flash::Flash(sector_t sec1, sector_t sec2)
 {
     memcpy(&secs[0], &sec1, sizeof(sector_t));
     memcpy(&secs[1], &sec2, sizeof(sector_t));
+
     HAL_FLASH_Unlock();
     FLASH_Erase_Sector(FLASH_SECTOR_23, VOLTAGE_RANGE_3);
     HAL_FLASH_Lock();
@@ -52,13 +53,13 @@ Flash::Flash(sector_t sec1, sector_t sec2)
             "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
             "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?";
 
-    for(uint32_t i = activeSector->size; i >= (strlen(testGordon) + frameOverhead); )
+    for(uint32_t i = activeSector->size; i >= (sizeof(testGordon) + frameOverhead); )
     {
         store(1, (uint8_t*)testGordon, sizeof(testGordon), 0);
-        i -= (strlen(testGordon) + frameOverhead);
+        i -= (sizeof(testGordon) + frameOverhead);
     }
     store(1, (uint8_t*)testGordon, sizeof(testGordon), 0);
-
+    scanForValidFrames(*activeSector);
 }
 
 void Flash::writeBytes(uint32_t addr, uint8_t* data, uint32_t size)
@@ -103,32 +104,55 @@ void Flash::store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr)
     uint32_t currentSize = 0;
     uint32_t requestSize = size + addr;
     uint8_t frameHeader[frameOverhead] = {0};
-    frameHeader[frameOverhead-1] = frame_t::terminator;
-    *(uint16_t*)&frameHeader[frameOverhead-5] = id;
+    frameHeader[frameOverhead - sizeof(frame_t::terminator)] = frame_t::terminator;
+    *(uint16_t*)&frameHeader[frameOverhead - sizeof(frame_t::terminator) - sizeof(validFrames[0].user_id) - sizeof(validFrames[0].size)] = id;
 
     (writeIndex == invalidSecIndex) ? (writeIndex = 0) : (writeIndex++); // if the write index is invalid nothing was written to the flash so far
 
-    // evaluate the size of the currently available frame in the sector
-    if(validFrames[id].data == NULL)
+    if(validFrames[id].data != NULL)    // old frame available?
     {
-        currentSize = 0;
+        if(validFrames[id].size > requestSize) // is it larger than the new frame (= size + addr)
+        {
+            requestSize = validFrames[id].size; // resulting framelength = size of the old frame
+        }
     }
-    else
-    {
-        currentSize = validFrames[id].size;
-    }
-    // correct the corrected size if the data count in the current frame is greater
-    (requestSize < currentSize) ? (requestSize = currentSize) : (requestSize = requestSize);
+
     // set the new size
-    *(uint16_t*)&frameHeader[frameOverhead-3] = requestSize;
+    *(uint16_t*)&frameHeader[frameOverhead - sizeof(frame_t::terminator) - sizeof(validFrames[0].size)] = requestSize;
 
     assert(getFreeMemory() >= (requestSize + frameOverhead)); // the number of bytes to be stored in the flash is greater than 128k
     if(spaceInSector < (requestSize + frameOverhead))
     {
         relocateData();
-        writeIndex = findLastTerminator(*activeSector);
+        writeIndex = findLastTerminator(*activeSector) + 1;
     }
 
+    crateAndStoreFrame
+    // TODO write the new frame
+    /*
+    // store the new frame in the flash
+    if(validFrames[id].data != NULL)
+    {
+        copyToNvm(writeIndex, validFrames[id].data, addr);
+    }
+    writeIndex += addr;
+    copyToNvm(writeIndex, source, size);
+    writeIndex += size;
+    if(validFrames[id].data != NULL)
+    {
+        copyToNvm(writeIndex, &validFrames[id].data[addr+size], (requestSize - (size + addr)));
+        writeIndex += (requestSize - (size + addr));
+    }
+
+    // add the frame header
+    copyToNvm(writeIndex, frameHeader, sizeof(frameHeader));
+
+    scanForValidFrames(*activeSector); // update the valid frames array
+     */
+}
+
+Flash::frame_t Flash::crateAndStoreFrame(Flash::frame_t oldFrame, )
+{
     // store the new frame in the flash
     if(validFrames[id].data != NULL)
     {
@@ -151,6 +175,7 @@ void Flash::store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr)
 
 void Flash::copyToNvm(uint32_t writeIndex, uint8_t* data, uint32_t size)
 {
+    assert(data != NULL);
     // determine chunk sizes for efficient flash programming
     uint8_t byteCnt = 0;
     uint8_t halfWordCnt = 0;
@@ -258,7 +283,7 @@ void Flash::scanForValidFrames(sector_t sector)
         for(uint32_t i = lastTerminator; i > 0;)
         {
             frame = frameFromIndex(sector, i);
-            if(validFrames[frame.user_id].data == NULL)
+            if(validFrames[frame.user_id].data < frame.data)
             {
                 validFrames[frame.user_id] = frame;
             }
@@ -291,17 +316,24 @@ void Flash::relocateData()
 
     for(uint8_t user_id = 0; user_id < numFrameIds; user_id++)
     {
-        copyToNvm(targetIndex, validFrames[user_id].data, (validFrames[user_id].size + frameOverhead));
+        if(validFrames[user_id].data != NULL)
+        {
+            copyToNvm(targetIndex, validFrames[user_id].data, (validFrames[user_id].size + frameOverhead));
+        }
     }
     invalidateSector(*oldSector);
+    // invalidate the validFrames array as it is not valid anymore :(
+    for(uint8_t index = 0; index < numFrameIds; index++)
+    {
+        validFrames[index].data = NULL;
+    }
 }
 
 // writes the terminator at the verry end of the sector
 void Flash::invalidateSector(sector_t& sector)
 {
-    sector.start[sector.size - 1] = invalidationStamp;
     HAL_FLASH_Unlock();
-    HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, sector.start[sector.size - 1] , invalidationStamp);
+    HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, (uint32_t)&sector.start[sector.size - 1] , invalidationStamp);
     HAL_FLASH_Lock();
 }
 
