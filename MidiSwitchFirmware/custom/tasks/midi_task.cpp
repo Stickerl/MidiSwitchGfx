@@ -50,8 +50,8 @@ void midi_task_run(void* params)
     GuiQueue::GuiMessage_t txMsg;
     GuiQueue::GuiMessage_t rxMsg;
 
-    Flash::sector_t sec1((uint8_t*) 0x081C0000, 0x20000); // Sector 22 size 128k
-    Flash::sector_t sec2((uint8_t*) 0x081E0000, 0x20000); // Sector 23 size 128k
+    Flash::sector_t sec1(FLASH_SECTOR_22, (uint8_t*) 0x081C0000, 0x20000); // Sector 22 size 128k
+    Flash::sector_t sec2(FLASH_SECTOR_23, (uint8_t*) 0x081E0000, 0x20000); // Sector 23 size 128k
     Flash flash(sec1, sec2);
 
     ConfigManager cfgManager(flash);

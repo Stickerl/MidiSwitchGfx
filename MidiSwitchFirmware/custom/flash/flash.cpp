@@ -14,9 +14,6 @@ Flash::Flash(sector_t sec1, sector_t sec2)
     memcpy(&secs[0], &sec1, sizeof(sector_t));
     memcpy(&secs[1], &sec2, sizeof(sector_t));
 
-    HAL_FLASH_Unlock();
-    FLASH_Erase_Sector(FLASH_SECTOR_23, VOLTAGE_RANGE_3);
-    HAL_FLASH_Lock();
 
     determineActiveSector();
     scanForValidFrames(*activeSector);
@@ -53,12 +50,16 @@ Flash::Flash(sector_t sec1, sector_t sec2)
             "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
             "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?";
 
+    char kokolores2[] = "Behindihindikindi";
+    char nasichi[] = "Hedscht inveschtiert, hedscht andre ruiniert! Hedschfonds";
+
     for(uint32_t i = activeSector->size; i >= (sizeof(testGordon) + frameOverhead); )
     {
-        store(1, (uint8_t*)testGordon, sizeof(testGordon), 0);
+        store(0, (uint8_t*)testGordon, sizeof(testGordon), 0);
+        store(1, (uint8_t*)kokolores2, sizeof(kokolores2), 8);
+        store(2, (uint8_t*)nasichi, sizeof(nasichi), 0);
         i -= (sizeof(testGordon) + frameOverhead);
     }
-    store(1, (uint8_t*)testGordon, sizeof(testGordon), 0);
     scanForValidFrames(*activeSector);
 }
 
@@ -103,12 +104,12 @@ void Flash::store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr)
     uint32_t spaceInSector = activeSector->size - writeIndex;
     uint32_t currentSize = 0;
     uint32_t requestSize = size + addr;
-    uint8_t frameHeader[frameOverhead] = {0};
-    frameHeader[frameOverhead - sizeof(frame_t::terminator)] = frame_t::terminator;
-    *(uint16_t*)&frameHeader[frameOverhead - sizeof(frame_t::terminator) - sizeof(validFrames[0].user_id) - sizeof(validFrames[0].size)] = id;
 
-    (writeIndex == invalidSecIndex) ? (writeIndex = 0) : (writeIndex++); // if the write index is invalid nothing was written to the flash so far
 
+    // if the write index is invalid nothing was written to the flash so far
+    (writeIndex == invalidSecIndex) ? (writeIndex = 0) : (writeIndex++);
+
+    // calculate the actual size of the new frame
     if(validFrames[id].data != NULL)    // old frame available?
     {
         if(validFrames[id].size > requestSize) // is it larger than the new frame (= size + addr)
@@ -117,21 +118,31 @@ void Flash::store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr)
         }
     }
 
-    // set the new size
-    *(uint16_t*)&frameHeader[frameOverhead - sizeof(frame_t::terminator) - sizeof(validFrames[0].size)] = requestSize;
 
+    frames2ConcatStruct_t frames2Concat;
+    frames2Concat.newFrame.data = source;
+    frames2Concat.newFrame.size = size;
+    frames2Concat.newFrame.user_id = id;
+    frames2Concat.oldFrame = validFrames[id];
+    frames2Concat.finalSize = requestSize;
+    frames2Concat.offset = addr;
+
+    // check whether the requested size is available if not switch sector
     assert(getFreeMemory() >= (requestSize + frameOverhead)); // the number of bytes to be stored in the flash is greater than 128k
     if(spaceInSector < (requestSize + frameOverhead))
     {
-        relocateData();
-        writeIndex = findLastTerminator(*activeSector) + 1;
+        relocateData(frames2Concat);
+    }
+    else
+    {
+        updateFrameInNvm(frames2Concat, writeIndex);
     }
 
-    crateAndStoreFrame
+    //createAndStoreFrame
     // TODO write the new frame
-    /*
+
     // store the new frame in the flash
-    if(validFrames[id].data != NULL)
+    /*if(validFrames[id].data != NULL)
     {
         copyToNvm(writeIndex, validFrames[id].data, addr);
     }
@@ -146,31 +157,41 @@ void Flash::store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr)
 
     // add the frame header
     copyToNvm(writeIndex, frameHeader, sizeof(frameHeader));
+    */
 
     scanForValidFrames(*activeSector); // update the valid frames array
-     */
 }
 
-Flash::frame_t Flash::crateAndStoreFrame(Flash::frame_t oldFrame, )
+Flash::frame_t Flash::updateFrameInNvm(frames2ConcatStruct_t frames2Concat, uint32_t& writeIndex)
 {
+    uint8_t* oldData = frames2Concat.oldFrame.data;
+    uint8_t* newData = frames2Concat.newFrame.data;
+    uint32_t newSize = frames2Concat.newFrame.size;
+
+    uint8_t frameHeader[frameOverhead] = {0};
+    // create new frame header
+    frameHeader[frameOverhead - sizeof(frame_t::terminator)] = frame_t::terminator;
+    *(uint16_t*)&frameHeader[frameOverhead - sizeof(frame_t::terminator) - sizeof(validFrames[0].user_id) - sizeof(validFrames[0].size)] = frames2Concat.newFrame.user_id;
+    // set the new size
+    *(uint16_t*)&frameHeader[frameOverhead - sizeof(frame_t::terminator) - sizeof(validFrames[0].size)] = frames2Concat.finalSize;
+
     // store the new frame in the flash
-    if(validFrames[id].data != NULL)
+    if(oldData != NULL)
     {
-        copyToNvm(writeIndex, validFrames[id].data, addr);
+        copyToNvm(writeIndex, oldData, frames2Concat.offset);
     }
-    writeIndex += addr;
-    copyToNvm(writeIndex, source, size);
-    writeIndex += size;
-    if(validFrames[id].data != NULL)
+    writeIndex += frames2Concat.offset;
+    copyToNvm(writeIndex, newData, newSize);
+    writeIndex += newSize;
+    if(oldData != NULL)
     {
-        copyToNvm(writeIndex, &validFrames[id].data[addr+size], (requestSize - (size + addr)));
-        writeIndex += (requestSize - (size + addr));
+        copyToNvm(writeIndex, &oldData[frames2Concat.offset+newSize], (frames2Concat.finalSize - (newSize + frames2Concat.offset)));
+        writeIndex += (frames2Concat.finalSize - (newSize + frames2Concat.offset));
     }
 
     // add the frame header
     copyToNvm(writeIndex, frameHeader, sizeof(frameHeader));
-
-    scanForValidFrames(*activeSector); // update the valid frames array
+    writeIndex += sizeof(frameHeader);
 }
 
 void Flash::copyToNvm(uint32_t writeIndex, uint8_t* data, uint32_t size)
@@ -308,17 +329,25 @@ uint32_t Flash::getFreeMemory()
 }
 
 // copy data from the old sector to new sector, invalidates the old sector and activates the new sector
-void Flash::relocateData()
+void Flash::relocateData(frames2ConcatStruct_t frames2Concat)
 {
     sector_t* oldSector = activeSector;
     activeSector = (&secs[0] == activeSector) ? &secs[1] : &secs[0];
     uint32_t targetIndex = 0;
+    HAL_FLASH_Unlock();
+    FLASH_Erase_Sector(activeSector->secNr, VOLTAGE_RANGE_3);
+    HAL_FLASH_Lock();
 
     for(uint8_t user_id = 0; user_id < numFrameIds; user_id++)
     {
-        if(validFrames[user_id].data != NULL)
+        if(user_id == frames2Concat.oldFrame.user_id)
+        {
+            updateFrameInNvm(frames2Concat, targetIndex);
+        }
+        else if(validFrames[user_id].data != NULL)
         {
             copyToNvm(targetIndex, validFrames[user_id].data, (validFrames[user_id].size + frameOverhead));
+            targetIndex += validFrames[user_id].size + frameOverhead;
         }
     }
     invalidateSector(*oldSector);
@@ -359,7 +388,7 @@ void Flash::determineActiveSector()
     assert(validSecIndex != 0);
     if(validSecIndex == 1)
     {
-        activeSector = validSecs[validSecIndex];
+        activeSector = validSecs[validSecIndex - 1];
     }
     else
     {

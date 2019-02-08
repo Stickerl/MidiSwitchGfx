@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="switch(alignment) // TODO what happens if we want to write less bytes than needed to aligne the data" key="selection"/>
+		<item value="newSize" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="frames2Concat.oldFrame.data"/>
+			<item value="Flash::frame_t Flash::createAndStoreFrame(Flash::frame_t oldFrame, uint8_t* source, uint32_t size, uint32_t addr, uint32_t writeIndex)"/>
 			<item value="switch(alignment) // TODO what happens if we want to write less bytes than needed to aligne the data"/>
 			<item value="laten"/>
 			<item value="USER_DATA"/>
 			<item value="flash"/>
 			<item value="Pin"/>
 			<item value="GPIO_Alternate_function_selection"/>
-			<item value="UART_EndTransmit_IT"/>
-			<item value="UART_Receive_IT"/>
 		</list>
 		<list key="replacehistory">
 			<item value="currentData"/>
@@ -25,7 +25,7 @@
 		<item value="284" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="391" key="DIALOG_HEIGHT"/>
-		<item value="185" key="DIALOG_X_ORIGIN"/>
-		<item value="187" key="DIALOG_Y_ORIGIN"/>
+		<item value="1161" key="DIALOG_X_ORIGIN"/>
+		<item value="214" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>
