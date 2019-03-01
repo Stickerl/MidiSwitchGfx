@@ -13,53 +13,7 @@ Flash::Flash(sector_t sec1, sector_t sec2)
 {
     memcpy(&secs[0], &sec1, sizeof(sector_t));
     memcpy(&secs[1], &sec2, sizeof(sector_t));
-
-
     determineActiveSector();
-    scanForValidFrames(*activeSector);
-    char testGordon[] = "GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?"
-            "            GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?GordonFlusht!?";
-
-    char kokolores2[] = "Behindihindikindi";
-    char nasichi[] = "Hedscht inveschtiert, hedscht andre ruiniert! Hedschfonds";
-
-    for(uint32_t i = activeSector->size; i >= (sizeof(testGordon) + frameOverhead); )
-    {
-        store(0, (uint8_t*)testGordon, sizeof(testGordon), 0);
-        store(1, (uint8_t*)kokolores2, sizeof(kokolores2), 8);
-        store(2, (uint8_t*)nasichi, sizeof(nasichi), 0);
-        i -= (sizeof(testGordon) + frameOverhead);
-    }
     scanForValidFrames(*activeSector);
 }
 

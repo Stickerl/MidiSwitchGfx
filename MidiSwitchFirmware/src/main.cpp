@@ -58,25 +58,16 @@ using namespace touchgfx;
 
 #define CANVAS_BUFFER_SIZE (3600)
 
-#define LAST_FLASH_SECTOR 0x081E0000
-
 
 static void GUITask(void* params)
 {
     touchgfx::HAL::getInstance()->taskEntry();
 }
 
-
-//__attribute__ ((section (".user_data"))) uint32_t test[100] = {};
-
 int main(void)
 {
     hw_init();
-    //touchgfx_init();
-
-    Flash::sector_t sec1(FLASH_SECTOR_22, (uint8_t*) 0x081C0000, 0x20000); // Sector 22 size 128k
-    Flash::sector_t sec2(FLASH_SECTOR_23, (uint8_t*) 0x081E0000, 0x20000); // Sector 23 size 128k
-    Flash flash(sec1, sec2);
+    touchgfx_init();
 
     /**
      * IMPORTANT NOTICE!
@@ -101,16 +92,16 @@ int main(void)
     //static uint8_t canvasBuffer[CANVAS_BUFFER_SIZE];
     //CanvasWidgetRenderer::setupBuffer(canvasBuffer, CANVAS_BUFFER_SIZE);
 
-    /*xTaskCreate(GUITask, (TASKCREATE_NAME_TYPE)"GUITask",
+    xTaskCreate(GUITask, (TASKCREATE_NAME_TYPE)"GUITask",
                 configGUI_TASK_STK_SIZE,
                 NULL,
                 configGUI_TASK_PRIORITY,
-                NULL);*/
+                NULL);
 
-    //midi_task_create();
+    midi_task_create();
     //pc_interface_task_create();
 
-    //vTaskStartScheduler();
+    vTaskStartScheduler();
 
     for (;;);
 
