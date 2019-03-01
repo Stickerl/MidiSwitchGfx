@@ -12,6 +12,7 @@
 
 #define configMidi_TASK_PRIORITY                (3)
 #define configMidi_TASK_STK_SIZE                (1024)
+#define CONFIG_MANAGER_FLASH_ID                 1
 
 #ifdef __cplusplus
     extern "C"{
@@ -54,7 +55,7 @@ void midi_task_run(void* params)
     Flash::sector_t sec2(FLASH_SECTOR_23, (uint8_t*) 0x081E0000, 0x20000); // Sector 23 size 128k
     Flash flash(sec1, sec2);
 
-    ConfigManager cfgManager(flash);
+    ConfigManager cfgManager(flash, CONFIG_MANAGER_FLASH_ID);
 
     Midi_n::MidiDecoder midiDecoder(midiRxBuffer, midiSysTime, 100u);
     midiDecoder.register_control_change_cb(&cfgManager);

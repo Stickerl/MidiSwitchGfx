@@ -29,32 +29,17 @@ public:
     Flash(sector_t sec1, sector_t sec2);
     virtual ~Flash(){};
 
-    // writes a number of bytes to the flash
-    virtual void writeBytes(uint32_t addr, uint8_t* data, uint32_t size);   // override
+    void store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr = 0); /* override */
 
-    // writes uint16_t words to the flash
-    virtual void writeWords(uint32_t addr, uint16_t* data, uint32_t size);  // override
-
-    // writes uint32_t words to the flash
-    virtual void writeLong(uint32_t addr, uint32_t* data, uint32_t size);   // override
-
-    // reads a number of bytes from the flash
-    virtual void readBytes(uint32_t addr, uint8_t* target, uint32_t size);  // override
-
-    // reads a number of uint16_t words from the flash
-    virtual void readWords(uint32_t addr, uint16_t* target, uint32_t size); // override
-
-    // reads a number of uint32_t words from the flash
-    virtual void readLong(uint32_t addr, uint32_t* target, uint32_t size);  // override
-
-    void store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr = 0);
+    // simply reads data from the nvm
+    bool read(uint16_t id, uint8_t* target, uint32_t size, uint32_t addr = 0); /* override */
 
     void reduceSize(uint16_t id, uint32_t size);
 
-    // simply reads data from the nvm
-    void read(uint16_t id, uint32_t addr, uint32_t* target, uint32_t size);
-
     uint32_t getFreeMemory();
+
+    uint32_t getIdSize(uint16_t id);
+
 private:
     typedef struct frame
     {

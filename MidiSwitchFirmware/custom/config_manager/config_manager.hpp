@@ -18,7 +18,7 @@ class ConfigManager : public I_ConfigManager, public I_MidiControlChangeCb, publ
 {
 
 public:
-    ConfigManager(I_Flash& flashManager);
+    ConfigManager(I_Flash& flashManager, uint16_t flashUserId);
     virtual ~ConfigManager();
 
     void init();     // reads the configuration list from the flash and sets the output to the configured default
@@ -34,6 +34,7 @@ private:
     static const uint32_t CFG_STORAGE_ADDR = 0;
     static const uint32_t BANK_NR_STORE_ADDR = 0;
     static const uint32_t CHANAL_NR_STORE_ADDR = 0;
+    const uint16_t _flashUserId;
 
     programConfig_t ramCfgList[NUMBER_OF_PROGRAMS];
     static const uint32_t CFG_SIZE = sizeof(programConfig_t);

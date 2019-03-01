@@ -63,48 +63,12 @@ Flash::Flash(sector_t sec1, sector_t sec2)
     scanForValidFrames(*activeSector);
 }
 
-void Flash::writeBytes(uint32_t addr, uint8_t* data, uint32_t size)
-{
-    uint32_t address = addr;
-    for(uint32_t i = 0; i < size; i++)
-    {
-        //FLASH_Program_Byte(address, data[i]);
-        address++;
-    }
-}
-
-void Flash::writeWords(uint32_t addr, uint16_t* data, uint32_t size)
-{
-
-}
-
-void Flash::writeLong(uint32_t addr, uint32_t* data, uint32_t size)
-{
-
-}
-
-void Flash::readBytes(uint32_t addr, uint8_t* target, uint32_t size)
-{
-
-}
-
-void Flash::readWords(uint32_t addr, uint16_t* target, uint32_t size)
-{
-
-}
-
-void Flash::readLong(uint32_t addr, uint32_t* target, uint32_t size)
-{
-
-}
-
 void Flash::store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr)
 {
     uint32_t writeIndex = findLastTerminator(*activeSector);
     uint32_t spaceInSector = activeSector->size - writeIndex;
     uint32_t currentSize = 0;
     uint32_t requestSize = size + addr;
-
 
     // if the write index is invalid nothing was written to the flash so far
     (writeIndex == invalidSecIndex) ? (writeIndex = 0) : (writeIndex++);
@@ -137,27 +101,6 @@ void Flash::store(uint16_t id, uint8_t* source, uint32_t size, uint32_t addr)
     {
         updateFrameInNvm(frames2Concat, writeIndex);
     }
-
-    //createAndStoreFrame
-    // TODO write the new frame
-
-    // store the new frame in the flash
-    /*if(validFrames[id].data != NULL)
-    {
-        copyToNvm(writeIndex, validFrames[id].data, addr);
-    }
-    writeIndex += addr;
-    copyToNvm(writeIndex, source, size);
-    writeIndex += size;
-    if(validFrames[id].data != NULL)
-    {
-        copyToNvm(writeIndex, &validFrames[id].data[addr+size], (requestSize - (size + addr)));
-        writeIndex += (requestSize - (size + addr));
-    }
-
-    // add the frame header
-    copyToNvm(writeIndex, frameHeader, sizeof(frameHeader));
-    */
 
     scanForValidFrames(*activeSector); // update the valid frames array
 }
@@ -213,26 +156,6 @@ void Flash::copyToNvm(uint32_t writeIndex, uint8_t* data, uint32_t size)
         HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, ((uint32_t)activeSector->start + writeIndex + dataIndex), data[dataIndex]);
         dataIndex++;
     }
-    /*switch(alignment) // TODO what happens if we want to write less bytes than needed to aligne the data
-    {
-    case 1:
-        HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, ((uint32_t)activeSector->start + writeIndex + dataIndex), data[dataIndex]);
-        dataIndex++;
-        HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, ((uint32_t)activeSector->start + writeIndex + dataIndex), *((uint16_t*)(&data[dataIndex])));
-        dataIndex += sizeof(uint16_t);
-        break;
-    case 2:
-        HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, ((uint32_t)activeSector->start + writeIndex + dataIndex), *((uint16_t*)(&data[dataIndex])));
-        dataIndex += sizeof(uint16_t);
-        break;
-    case 3:
-        HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, ((uint32_t)activeSector->start + writeIndex + dataIndex), data[dataIndex]);
-        dataIndex++;
-        break;
-    default:
-        alignment = 4;
-        break;
-    }*/
 
     byteCnt     = (size - (alignCnt))  & 0x01;         // take care of the last bit only. Everything above can be divided by 16
     halfWordCnt = ((size - (alignCnt)) >> 1) & 0x01;   // divide by 16 and take care of the last bit only. Everything above can be divided by 32
@@ -260,14 +183,36 @@ void Flash::copyToNvm(uint32_t writeIndex, uint8_t* data, uint32_t size)
 // reduceSize size number of bytes from the end of the frame
 void Flash::reduceSize(uint16_t id, uint32_t size)
 {
-
+    // TODO implement if needed
 }
 
-void Flash::read(uint16_t id, uint32_t addr, uint32_t* target, uint32_t size)
+bool Flash::read(uint16_t id, uint8_t* target, uint32_t size, uint32_t addr)
 {
-
+    bool ret = false;
+    for(uint16_t index = 0; index < numFrameIds; index++)
+    {
+        if(validFrames[index].user_id == id)
+        {
+            if((validFrames[index].data != NULL) && ((size + addr) <= validFrames[index].size))
+            {
+                memcpy(target, validFrames[index].data, size);
+                ret = true;
+            }
+            break;
+        }
+    }
+    return ret;
 }
 
+uint32_t Flash::getIdSize(uint16_t id)
+{
+    uint32_t ret = 0;
+    if(validFrames[id].data != NULL)
+    {
+        ret = validFrames[id].size;
+    }
+    return ret;
+}
 
 uint32_t Flash::findLastTerminator(sector_t sector)
 {

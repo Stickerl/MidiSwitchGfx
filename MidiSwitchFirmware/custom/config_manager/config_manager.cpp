@@ -8,11 +8,12 @@
 #include "config_manager.hpp"
 
 
-ConfigManager::ConfigManager(I_Flash& flashManager):
+ConfigManager::ConfigManager(I_Flash& flashManager, uint16_t flashUserId):
     _flashManager(flashManager),
     currentCfg(0),
     _bankNr(0),
-    _chanalNr(0)
+    _chanalNr(0),
+    _flashUserId(flashUserId)
 {
 
 }
@@ -106,36 +107,36 @@ void ConfigManager::readCfg(uint8_t index)
 {
     uint32_t readAddr = CFG_STORAGE_ADDR;
     readAddr += CFG_SIZE * (index+1);
-    _flashManager.readBytes(readAddr, ((uint8_t*)&ramCfgList[index]), CFG_SIZE);
+    _flashManager.read(_flashUserId, ((uint8_t*)&ramCfgList[index]), CFG_SIZE, readAddr);
 }
 
 void ConfigManager::readCfgList()
 {
-    _flashManager.readBytes(CFG_STORAGE_ADDR, (uint8_t*)ramCfgList, (CFG_SIZE * NUMBER_OF_PROGRAMS));
+    _flashManager.read(_flashUserId, (uint8_t*)ramCfgList, (CFG_SIZE * NUMBER_OF_PROGRAMS), CFG_STORAGE_ADDR);
 }
 
 void ConfigManager::storeCfg(uint8_t index)
 {
     uint32_t writeAddr = CFG_STORAGE_ADDR;
     writeAddr += CFG_SIZE * (index+1);
-    _flashManager.writeBytes(writeAddr, ((uint8_t*)&ramCfgList[index]), CFG_SIZE);
+    _flashManager.store(_flashUserId, ((uint8_t*)&ramCfgList[index]), CFG_SIZE, writeAddr);
 }
 
 void ConfigManager::storeCfgList()
 {
-    _flashManager.readBytes(CFG_STORAGE_ADDR, (uint8_t*)ramCfgList, (CFG_SIZE * NUMBER_OF_PROGRAMS));
+    _flashManager.store(_flashUserId, (uint8_t*)ramCfgList, (CFG_SIZE * NUMBER_OF_PROGRAMS), CFG_STORAGE_ADDR);
 }
 
 void ConfigManager::storeGlobalSettings()
 {
-    _flashManager.writeWords(BANK_NR_STORE_ADDR, &_bankNr, 1);
-    _flashManager.writeBytes(CHANAL_NR_STORE_ADDR, &_chanalNr, 1);
+    _flashManager.store(_flashUserId, (uint8_t*)&_bankNr, sizeof(_bankNr), BANK_NR_STORE_ADDR);
+    _flashManager.store(_flashUserId, (uint8_t*)&_chanalNr, sizeof(_chanalNr), CHANAL_NR_STORE_ADDR);
 }
 
 void ConfigManager::readGlobalSettings()
 {
-    _flashManager.readWords(BANK_NR_STORE_ADDR, &_bankNr, 1);
-    _flashManager.readBytes(CHANAL_NR_STORE_ADDR, &_chanalNr, 1);
+    _flashManager.read(_flashUserId, (uint8_t*)&_bankNr, sizeof(_bankNr), BANK_NR_STORE_ADDR);
+    _flashManager.read(_flashUserId, (uint8_t*)&_chanalNr, sizeof(_chanalNr), CHANAL_NR_STORE_ADDR);
 }
 
 void ConfigManager::setOutput(uint8_t out)
