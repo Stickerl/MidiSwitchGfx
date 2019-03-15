@@ -12,7 +12,7 @@
 #include "string.h"
 #include "FreeRTOS.h"
 #include "queue.h"
-
+#include "guiMessageDefinitions.hpp"
 
 
 class GuiQueue {
@@ -20,15 +20,17 @@ public:
     static const uint32_t QUEUE_LENGTH;
     static const uint32_t QUEUE_DATA_LENGTH = 16;
 
+    // Message names
     typedef enum
     {
-        NONE            = 0,
-        PROG_NR         = 1,
-        SWITCH_SETTING  = 2,
-        OUTPUT_CFG      = 3,
-        TEACH_BUTTON    = 4,
-        SAVE_BUTTON     = 5,
-        OPTIONS_BUTON   = 6
+        NONE             = 0,
+        PROG_NR          = 1,
+        SWITCH_SETTING   = 2,
+        OUTPUT_CFG       = 3,
+        TEACH_BUTTON     = 4,
+        SAVE_BUTTON      = 5,
+        OPTIONS_BUTON    = 6,
+        UPDATE_PATCH_CFG = 7,
     }GuiControls;
 
     typedef struct GuiMessage

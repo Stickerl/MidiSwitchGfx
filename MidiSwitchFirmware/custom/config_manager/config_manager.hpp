@@ -14,6 +14,7 @@
 #include "global_defines.hpp"
 
 
+
 class ConfigManager : public I_ConfigManager, public I_MidiControlChangeCb, public I_MidiProgrammChangeCb
 {
 

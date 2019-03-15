@@ -32,6 +32,10 @@ void Model::tick()
 	        displayedCfg.programNr = rxMsg.data[0];
 	        modelListener->programNumberChanged();
 	        break;
+	    case GuiQueue::UPDATE_PATCH_CFG:
+
+
+	        break;
 	    default:
 	        // message unknown or not implemented
 	        break;
@@ -108,4 +112,8 @@ void Model::requestProgramNrIncrement()
     _queToMidi.sendElement(txMsg);
 }
 
+
+updatePatchCfgMsg Model::getPatchCfgData(){
+    return patchCfgData;
+}
 

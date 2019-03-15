@@ -24,16 +24,28 @@ void PatchConfigView::setProgramNumber(uint8_t programNr)
 	progNrVal.invalidate();
 }
 
-void PatchConfigView::setControllerNumber(uint8_t controllerNr)
+void PatchConfigView::setController1Number(uint8_t controllerNr)
 {
 	Unicode::snprintf(switch1ConNrValBuffer, SWITCH1CONNRVAL_SIZE, "%i", controllerNr);
 	switch1ConNrVal.invalidate();
 }
 
-void PatchConfigView::setControllerValue(uint8_t controllerVal)
+void PatchConfigView::setController1Value(uint8_t controllerVal)
 {
 	Unicode::snprintf(switch1ConValueValBuffer, SWITCH1CONVALUEVAL_SIZE, "%i", controllerVal);
 	switch1ConValueVal.invalidate();
+}
+
+void PatchConfigView::setController2Number(uint8_t controllerNr)
+{
+    Unicode::snprintf(switch2ConNrValBuffer, SWITCH2CONNRVAL_SIZE, "%i", controllerNr);
+    switch2ConNrVal.invalidate();
+}
+
+void PatchConfigView::setController2Value(uint8_t controllerVal)
+{
+    Unicode::snprintf(switch2ConValueValBuffer, SWITCH2CONVALUEVAL_SIZE, "%i", controllerVal);
+    switch2ConValueVal.invalidate();
 }
 
 void PatchConfigView::prevButtonActionCb(const AbstractButton& button)

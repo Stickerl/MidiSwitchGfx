@@ -16,9 +16,13 @@ public:
 
     void setProgramNumber(uint8_t programNr);
 
-    void setControllerNumber(uint8_t controllerNr);
+    void setController1Number(uint8_t controllerNr);
 
-    void setControllerValue(uint8_t controllerVal);
+    void setController1Value(uint8_t controllerVal);
+
+    void setController2Number(uint8_t controllerNr);
+
+    void setController2Value(uint8_t controllerVal);
 
     void prevButtonActionCb(const AbstractButton& button);
 

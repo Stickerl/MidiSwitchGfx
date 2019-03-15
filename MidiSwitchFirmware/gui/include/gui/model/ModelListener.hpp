@@ -32,11 +32,7 @@ public:
 
 	virtual void bankSelectionChanged(){};
 
-	virtual void controllerValueChanged(){};
-
-	virtual void programNumberChanged(){};
-
-	virtual void configNumberChanged(){};
+	virtual void patchConfigChanged(){};
 
 protected:
     Model* model;

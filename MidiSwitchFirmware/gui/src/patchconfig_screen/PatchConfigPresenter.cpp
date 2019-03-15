@@ -16,21 +16,6 @@ void PatchConfigPresenter::deactivate()
 
 }
 
-void PatchConfigPresenter::controllerNumberChanged()
-{
-	view.setControllerNumber(model->getControllerNumber());
-}
-
-void PatchConfigPresenter::controllerValueChanged()
-{
-	view.setControllerValue(model->getControllerValue());
-}
-
-void PatchConfigPresenter::programNumberChanged()
-{
-	view.setProgramNumber(model->getProgramNumber());
-}
-
 void PatchConfigPresenter::prevButtonPressed()
 {
     model->requestProgramNrDecrement();
@@ -41,4 +26,13 @@ void PatchConfigPresenter::nextButtonPressed()
     model->requestProgramNrIncrement();
 }
 
+void PatchConfigPresenter::patchConfigChanged()
+{
+    updatePatchCfgMsg newPatchConfig = model->getPatchCfgData();
+    view.setProgramNumber(newPatchConfig.programNr);
+    view.setController1Number(newPatchConfig.switch1Name);
+    view.setController1Value(newPatchConfig.switch1Value);
+    view.setController2Number(newPatchConfig.switch2Name);
+    view.setController2Value(newPatchConfig.switch2Value);
+}
 

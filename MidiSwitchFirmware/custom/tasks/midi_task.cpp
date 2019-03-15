@@ -8,6 +8,7 @@
 
 #include "midi_task.h"
 #include "gui_queue.h"
+#include "guiCommunication.hpp"
 
 
 #define configMidi_TASK_PRIORITY                (3)
@@ -45,25 +46,26 @@ void midi_task_run(void* params)
                        midiUart_tx, midiUart_rx, midiUartIrqReg});
     midiUart.start_receive();
 
+    // set up configuration sotrage management
+    Flash::sector_t sec1(FLASH_SECTOR_22, (uint8_t*) 0x081C0000, 0x20000); // Sector 22 size 128k
+    Flash::sector_t sec2(FLASH_SECTOR_23, (uint8_t*) 0x081E0000, 0x20000); // Sector 23 size 128k
+    Flash flash(sec1, sec2);
+    ConfigManager cfgManager(flash, CONFIG_MANAGER_FLASH_ID);
+    cfgManager.init();
+
     // set up the connection to the gui via queues
     GuiQueue& queueToGui = GuiQueue::getQueToGuiRef();
     GuiQueue& queueToMidi = GuiQueue::getQueToMidiRef();
     GuiQueue::GuiMessage_t txMsg;
     GuiQueue::GuiMessage_t rxMsg;
+    GuiCommunication guiCom(cfgManager);
 
-    Flash::sector_t sec1(FLASH_SECTOR_22, (uint8_t*) 0x081C0000, 0x20000); // Sector 22 size 128k
-    Flash::sector_t sec2(FLASH_SECTOR_23, (uint8_t*) 0x081E0000, 0x20000); // Sector 23 size 128k
-    Flash flash(sec1, sec2);
-
-    ConfigManager cfgManager(flash, CONFIG_MANAGER_FLASH_ID);
-
+    // set up midi decoder
     Midi_n::MidiDecoder midiDecoder(midiRxBuffer, midiSysTime, 100u);
     midiDecoder.register_control_change_cb(&cfgManager);
     midiDecoder.register_program_change_cb(&cfgManager);
 
-
     txMsg.name = GuiQueue::PROG_NR;
-
     while(1)
     {
         midiSysTime++;
@@ -76,6 +78,15 @@ void midi_task_run(void* params)
                 txMsg.data[0] = rxMsg.data[0];
                 queueToGui.sendElement(txMsg);
                 break;
+
+            case GuiQueue::SAVE_BUTTON:
+                cfgManager.store();
+                break;
+
+            case GuiQueue::SWITCH_SETTING:
+                cfgManager.store();
+                break;
+
             default:
                 // message unknown or not implemented
                 break;

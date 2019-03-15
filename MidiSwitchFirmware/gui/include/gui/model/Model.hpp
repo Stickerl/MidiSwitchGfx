@@ -5,6 +5,7 @@
 #include "I_config_manager.hpp"
 #include "gui_queue.h"
 #include "global_defines.hpp"
+#include "guiMessageDefinitions.hpp"
 
 class ModelListener;
 
@@ -23,17 +24,6 @@ class ModelListener;
 class Model
 {
 public:
-
-	typedef struct
-	{
-	    uint8_t     chanalNr;
-	    uint16_t    bankSelect;
-	    uint8_t     controllerNr;
-	    uint8_t     controllerVal;
-	    uint8_t     programNr;          // equals patch number
-	}midi_data;
-
-
     Model();
 
     /**
@@ -60,6 +50,8 @@ public:
 
     uint8_t getProgramNumber();
 
+    updatePatchCfgMsg getPatchCfgData();
+
     /*****************************************************************
      * respond = application updates Gui
      * request = Gui requests new data from the application
@@ -79,7 +71,7 @@ protected:
 
     I_ConfigManager::programConfig_t displayedCfg;
 
-    midi_data midiData;
+    updatePatchCfgMsg patchCfgData;
     uint8_t configNr;
     GuiQueue& _queToMidi;
     GuiQueue& _queToGui;

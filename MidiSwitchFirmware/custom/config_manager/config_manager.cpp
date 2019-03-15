@@ -48,6 +48,7 @@ void ConfigManager::program_change_cb(midi_data currentData)
                 switchCfg(currentData.programNr);
                 setOutput(currentCfg->defaultOut);
                 found = true;
+                configChangedCb->execute(*this);
                 break;
             }
         }
@@ -77,6 +78,7 @@ void ConfigManager::control_change_cb(midi_data currentData)
             }
         }
         setOutput(newOutState);
+        configChangedCb->execute(*this);
         // TODO Teach function is missing!
     }
 }
@@ -101,7 +103,6 @@ void ConfigManager::setBankNr(uint16_t bankNr)
 {
     _bankNr = bankNr;
 }
-
 
 void ConfigManager::readCfg(uint8_t index)
 {

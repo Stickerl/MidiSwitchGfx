@@ -3,6 +3,7 @@
 
 #include <gui/model/ModelListener.hpp>
 #include <mvp/Presenter.hpp>
+#include "guiMessageDefinitions.hpp"
 
 using namespace touchgfx;
 
@@ -27,15 +28,11 @@ public:
 
     virtual ~PatchConfigPresenter() {};
 
-    virtual void controllerNumberChanged();
-
-    virtual void controllerValueChanged();
-
-    virtual void programNumberChanged();
-
     virtual void prevButtonPressed();
 
     virtual void nextButtonPressed();
+
+    virtual void patchConfigChanged();
 
 private:
     PatchConfigPresenter();

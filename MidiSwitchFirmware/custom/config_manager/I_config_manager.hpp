@@ -11,6 +11,7 @@
 #include "stdint.h"
 #include "I_midi_callbacks.hpp"
 #include "midi_defines.hpp"
+#include <touchgfx/Callback.hpp>
 
 
 #define SWITCHES_PER_PROGRAM 2
@@ -34,7 +35,7 @@ public:
         switchCfg_t switches[SWITCHES_PER_PROGRAM];     // array of switch configurations
     }programConfig_t;
 
-    I_ConfigManager(){};
+    I_ConfigManager():configChangedCb(NULL){};
     virtual ~I_ConfigManager(){};
 
     virtual void store() = 0;                                           // stores a configuration in the flash
@@ -43,6 +44,13 @@ public:
     virtual void setChanalNr(uint8_t chanalNr) = 0;                     // setter for the chanal number
     virtual void setBankNr(uint16_t bankNr) = 0;                        // setter for the bank number
 
+    void setConfigChangedCb(touchgfx::GenericCallback< const ConfigManager& >& callback)
+    {
+        configChangedCb = &callback;
+    }
+
+protected:
+    touchgfx::GenericCallback< const I_ConfigManager& >* configChangedCb;
 
 };
 
