@@ -10,8 +10,11 @@
 
 #include <cstdint>
 
+/*********************************************
+ * Backend to GUI message definitions
+ *********************************************/
 // UPDATE_PATCH_CFG
-struct updatePatchCfgMsg
+struct patchCfgMsg
 {
     std::uint8_t programNr;
     std::uint8_t defaultOut;
@@ -23,5 +26,14 @@ struct updatePatchCfgMsg
     std::uint8_t switch2Output;
 };
 
+
+/*********************************************
+ * GUI to Backend message definitions
+ *********************************************/
+// PROG_NR
+struct progNrMsg
+{
+    std::uint8_t programNr;
+};
 
 #endif // GUI_MESSAGE_DEFINITIONS_HPP_

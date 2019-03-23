@@ -12,6 +12,7 @@
 #include "I_config_manager.hpp"
 #include "I_flash.hpp"
 #include "global_defines.hpp"
+#include <cstdint>
 
 
 
@@ -32,22 +33,24 @@ public:
     void setBankNr(uint16_t bankNr);                        // setter for the bank number
 
 private:
-    static const uint32_t CFG_STORAGE_ADDR = 0;
+    uint8_t _chanalNr;
+    uint8_t _startupProgNr;
+    uint16_t _bankNr;
     static const uint32_t BANK_NR_STORE_ADDR = 0;
-    static const uint32_t CHANAL_NR_STORE_ADDR = 0;
+    static const uint32_t CHANAL_NR_STORE_ADDR = BANK_NR_STORE_ADDR + sizeof(_bankNr);
+    static const uint32_t STARTUP_PROG_NR = CHANAL_NR_STORE_ADDR + sizeof(_chanalNr);
+    static const uint32_t CFG_STORAGE_ADDR = STARTUP_PROG_NR + sizeof(_startupProgNr);
     const uint16_t _flashUserId;
 
     programConfig_t ramCfgList[NUMBER_OF_PROGRAMS];
     static const uint32_t CFG_SIZE = sizeof(programConfig_t);
     I_Flash& _flashManager;
     programConfig_t* currentCfg;
-    uint8_t _chanalNr;
-    uint16_t _bankNr;
 
 
     void readCfg(uint8_t index);                    // reads a specific configuration from flash to the ramCfgList
-    void readCfgList();                             // reads all configurations from flash to the ramCfgList
-    void readGlobalSettings();                      // reads the global settings from flash
+    bool readCfgList();                             // reads all configurations from flash to the ramCfgList
+    bool readGlobalSettings();                      // reads the global settings from flash
     void storeCfg(uint8_t index);                   // stores a specific configuration from the ram list to the flash
     void storeCfgList();                            // stores the whole list in the flash
     void storeGlobalSettings();                     // stores the global settings into flash

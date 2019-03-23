@@ -9,19 +9,20 @@
 #include <string.h>
 
 GuiCommunication::GuiCommunication(I_ConfigManager& configManager) :
-    configChangedCb(this, &GuiCommunication::sendCurrentPatchData)
+    configChangedCb(this, &GuiCommunication::sendCurrentPatchData),
+    cfgManager(configManager)
 {
     configManager.setConfigChangedCb(configChangedCb);
-
+    sendCurrentPatchData(cfgManager);
 }
 
 GuiCommunication::~GuiCommunication() {
     // TODO Auto-generated destructor stub
 }
 
-void GuiCommunication::sendCurrentPatchData(const I_ConfigManager& configManager){
+void GuiCommunication::sendCurrentPatchData(I_ConfigManager& configManager){
     I_ConfigManager::programConfig_t& currentCfg = configManager.getCurrentCfg();
-    updatePatchCfgMsg msgData;
+    patchCfgMsg msgData;
     msgData.programNr = currentCfg.programNr;
     msgData.defaultOut = currentCfg.defaultOut;
     msgData.switch1Name = currentCfg.switches[0].switchName;
@@ -31,6 +32,34 @@ void GuiCommunication::sendCurrentPatchData(const I_ConfigManager& configManager
     msgData.switch2Output = currentCfg.switches[1].output;
     msgData.switch2Value = currentCfg.switches[1].switchOnVal;
     txMsg.name = GuiQueue::UPDATE_PATCH_CFG;
-    memcpy(txMsg.data, &msgData, sizeof(updatePatchCfgMsg));
+    memcpy(txMsg.data, &msgData, sizeof(patchCfgMsg));
     queueToGui.sendElement(txMsg);
+}
+
+
+void GuiCommunication::run()
+{
+    if(queueToMidi.getElement(rxMsg) == true)
+    {
+        switch(rxMsg.name)
+        {
+        case GuiQueue::PROG_NR:
+            txMsg.name = GuiQueue::UPDATE_PATCH_CFG;
+            cfgManager.switchCfg(reinterpret_cast<progNrMsg*>(rxMsg.data)->programNr);
+            sendCurrentPatchData(cfgManager);
+            break;
+
+        case GuiQueue::SAVE_BUTTON:
+            cfgManager.store();
+            break;
+
+        case GuiQueue::SWITCH_SETTING:
+            cfgManager.store();
+            break;
+
+        default:
+            // message unknown or not implemented
+            break;
+        }
+    }
 }

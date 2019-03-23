@@ -5,10 +5,11 @@
  *      Author: Erwin
  */
 
-#ifndef CONFIG_MANAGER_I_CONFIG_MANAGER_HPP_
-#define CONFIG_MANAGER_I_CONFIG_MANAGER_HPP_
+#ifndef I_CONFIG_MANAGER_HPP_
+#define I_CONFIG_MANAGER_HPP_
 
 #include "stdint.h"
+#include "stddef.h"
 #include "I_midi_callbacks.hpp"
 #include "midi_defines.hpp"
 #include <touchgfx/Callback.hpp>
@@ -44,16 +45,16 @@ public:
     virtual void setChanalNr(uint8_t chanalNr) = 0;                     // setter for the chanal number
     virtual void setBankNr(uint16_t bankNr) = 0;                        // setter for the bank number
 
-    void setConfigChangedCb(touchgfx::GenericCallback< const ConfigManager& >& callback)
+    void setConfigChangedCb(touchgfx::GenericCallback<I_ConfigManager& >& callback)
     {
         configChangedCb = &callback;
     }
-
+    touchgfx::GenericCallback< I_ConfigManager& >* configChangedCb;
 protected:
-    touchgfx::GenericCallback< const I_ConfigManager& >* configChangedCb;
+    //touchgfx::GenericCallback< const I_ConfigManager& >* configChangedCb;
 
 };
 
 
 
-#endif /* CONFIG_MANAGER_I_CONFIG_MANAGER_HPP_ */
+#endif /* I_CONFIG_MANAGER_HPP_ */

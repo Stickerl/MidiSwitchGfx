@@ -1,7 +1,7 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include "stdint.h"
+#include <cstdint>
 #include "I_config_manager.hpp"
 #include "gui_queue.h"
 #include "global_defines.hpp"
@@ -42,23 +42,12 @@ public:
      */
     void tick();
 
-    uint8_t getControllerNumber();
-
-    uint16_t getConfigNumber();
-
-    uint8_t getControllerValue();
-
-    uint8_t getProgramNumber();
-
-    updatePatchCfgMsg getPatchCfgData();
+    patchCfgMsg getPatchCfgData();
 
     /*****************************************************************
      * respond = application updates Gui
      * request = Gui requests new data from the application
      *****************************************************************/
-
-    void respondMidiState(I_ConfigManager::programConfig_t& newConfig);
-
     void requestProgramNrDecrement();
 
     void requestProgramNrIncrement();
@@ -69,10 +58,8 @@ protected:
      */
     ModelListener* modelListener;
 
-    I_ConfigManager::programConfig_t displayedCfg;
-
-    updatePatchCfgMsg patchCfgData;
-    uint8_t configNr;
+    patchCfgMsg patchCfgData;
+    std::uint8_t chanalNr;
     GuiQueue& _queToMidi;
     GuiQueue& _queToGui;
 

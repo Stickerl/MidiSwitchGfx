@@ -28,7 +28,7 @@ void PatchConfigPresenter::nextButtonPressed()
 
 void PatchConfigPresenter::patchConfigChanged()
 {
-    updatePatchCfgMsg newPatchConfig = model->getPatchCfgData();
+    patchCfgMsg newPatchConfig = model->getPatchCfgData();
     view.setProgramNumber(newPatchConfig.programNr);
     view.setController1Number(newPatchConfig.switch1Name);
     view.setController1Value(newPatchConfig.switch1Value);

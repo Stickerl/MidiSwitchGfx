@@ -53,11 +53,6 @@ void midi_task_run(void* params)
     ConfigManager cfgManager(flash, CONFIG_MANAGER_FLASH_ID);
     cfgManager.init();
 
-    // set up the connection to the gui via queues
-    GuiQueue& queueToGui = GuiQueue::getQueToGuiRef();
-    GuiQueue& queueToMidi = GuiQueue::getQueToMidiRef();
-    GuiQueue::GuiMessage_t txMsg;
-    GuiQueue::GuiMessage_t rxMsg;
     GuiCommunication guiCom(cfgManager);
 
     // set up midi decoder
@@ -65,34 +60,11 @@ void midi_task_run(void* params)
     midiDecoder.register_control_change_cb(&cfgManager);
     midiDecoder.register_program_change_cb(&cfgManager);
 
-    txMsg.name = GuiQueue::PROG_NR;
     while(1)
     {
         midiSysTime++;
         midiDecoder.decode();
-        if(queueToMidi.getElement(rxMsg) == true)
-        {
-            switch(rxMsg.name)
-            {
-            case GuiQueue::PROG_NR:
-                txMsg.data[0] = rxMsg.data[0];
-                queueToGui.sendElement(txMsg);
-                break;
-
-            case GuiQueue::SAVE_BUTTON:
-                cfgManager.store();
-                break;
-
-            case GuiQueue::SWITCH_SETTING:
-                cfgManager.store();
-                break;
-
-            default:
-                // message unknown or not implemented
-                break;
-            }
-        }
-
+        guiCom.run();
         vTaskDelay(10);
     }
 }
