@@ -42,7 +42,6 @@ void ConfigManager::init()
         }
         store();
     }
-    // TODO something is strange in the NVM neighborhood. Data is read wrongly
     switchCfg(_startupProgNr);
 }
 

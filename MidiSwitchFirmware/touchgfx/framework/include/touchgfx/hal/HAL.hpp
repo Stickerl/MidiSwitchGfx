@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef HAL_HPP
 #define HAL_HPP
@@ -22,7 +28,6 @@
 
 namespace touchgfx
 {
-
 class UIEventListener;
 class LCD;
 
@@ -264,6 +269,17 @@ public:
     virtual void unlockFrameBuffer();
 
     /**
+    * @fn virtual uint16_t* HAL::getTFTFrameBuffer() const = 0;
+    *
+    * @brief Gets the frame buffer address used by the TFT controller.
+    *
+    *        Gets the frame buffer address used by the TFT controller.
+    *
+    * @return The address of the frame buffer currently being displayed on the TFT.
+    */
+    virtual uint16_t* getTFTFrameBuffer() const = 0;
+
+    /**
      * @fn static LCD& HAL::lcd()
      *
      * @brief Gets a reference to the LCD.
@@ -496,6 +512,27 @@ public:
      * @return A pointer to the memory address containing the copy of the frame buffer.
      */
     virtual uint16_t* copyFBRegionToMemory(Rect meAbs);
+
+    /**
+     * @fn virtual uint16_t* HAL::copyFBRegionToMemory(Rect meAbs, uint16_t* dst, uint32_t stride);
+     *
+     * @brief Copies a region of the currently displayed frame buffer to memory.
+     *
+     *        Copies a region of the currently displayed frame buffer
+     *        to a buffer. Used for e.g.  SlideTransition and for
+     *        displaying pre-rendered drawables e.g. in animations
+     *        where redrawing the drawable is not necessary. The
+     *        buffer can e.g. be a dynamic bitmap.
+     *
+     * @note Requires animation storage to be present.
+     *
+     * @param meAbs  The frame buffer region to copy.
+     * @param dst    Address of the buffer to store the copy in.
+     * @param stride The width of the target buffer (row length).
+     *
+     * @return A pointer to the memory address containing the copy of the frame buffer.
+     */
+    virtual uint16_t* copyFBRegionToMemory(Rect meAbs, uint16_t* dst, uint32_t stride);
 
     /**
      * @fn uint16_t HAL::getDisplayWidth() const
@@ -1026,7 +1063,7 @@ public:
      *       REFRESH_STRATEGY_OPTIM_SINGLE_BUFFER_TFT_CTRL is selected. Otherwise it is not
      *       necessary to register a delay function.
      */
-    void registerTaskDelayFunction(void (*delayF)(uint16_t))
+    void registerTaskDelayFunction(void(*delayF)(uint16_t))
     {
         taskDelayFunc = delayF;
     }
@@ -1107,17 +1144,6 @@ protected:
      *        Called when a rendering pass is completed.
      */
     virtual void endFrame();
-
-    /**
-     * @fn virtual uint16_t* HAL::getTFTFrameBuffer() const = 0;
-     *
-     * @brief Gets the frame buffer address used by the TFT controller.
-     *
-     *        Gets the frame buffer address used by the TFT controller.
-     *
-     * @return The address of the frame buffer currently being displayed on the TFT.
-     */
-    virtual uint16_t* getTFTFrameBuffer() const = 0;
 
     /**
      * @fn virtual void HAL::setTFTFrameBuffer(uint16_t* address) = 0;
@@ -1207,7 +1233,7 @@ protected:
     static                 bool isDrawing;              ///< True if currently in the process of rendering a screen.
     Gestures               gestures;                    ///< Class for low-level interpretation of touch events.
     DisplayOrientation     nativeDisplayOrientation;    ///< Contains the native display orientation. If desired orientation is different, apply rotation.
-    void (*taskDelayFunc)(uint16_t);                    ///< Pointer to a function that can delay GUI task for a number of milliseconds.
+    void(*taskDelayFunc)(uint16_t);                    ///< Pointer to a function that can delay GUI task for a number of milliseconds.
     uint16_t*              frameBuffer0;                ///< Pointer to the first frame buffer.
     uint16_t*              frameBuffer1;                ///< Pointer to the second frame buffer.
     uint16_t*              frameBuffer2;                ///< Pointer to the optional third frame buffer used for animation storage.
@@ -1217,7 +1243,7 @@ protected:
     bool                   frameBufferUpdatedThisFrame; ///< True if something was drawn in the current frame.
 
 private:
-    UIEventListener*   listener;
+    UIEventListener* listener;
     static             HAL* instance;
     int32_t            lastX;
     int32_t            lastY;
@@ -1242,6 +1268,5 @@ private:
 
     uint16_t* getDstAddress(uint16_t x, uint16_t y, uint16_t* startAddress) const;
 };
-
 } // namespace touchgfx
 #endif // HAL_HPP

@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef UNICODE_HPP
 #define UNICODE_HPP
@@ -160,12 +166,12 @@ public:
      *        the size of the generated field (length) and whether the number should be
      *        prefixed with zeros (or blanks).
      *
-     * @param [out] dst Buffer to place the result in.
-     * @param dstSize   Size of the buffer.
-     * @param format    The string to format.
-     * @param ...       Variable arguments providing additional information.
+     * @param [out] dst   Buffer for the formatted string.
+     * @param dstSize     Size of the dst buffer measured by number of UnicodeChars the buffer can hold.
+     * @param [in] format The format string.
+     * @param ...         The values to insert in the format string.
      *
-     * @return pointer to the first element in the buffer.
+     * @return pointer to the first element in the buffer where the formatted string is placed.
      *
      * @see snprintfFloat, snprintfFloats
      */
@@ -178,12 +184,12 @@ public:
      *
      *        Variant of snprintf. See snprintf for details.
      *
-     * @param [in] dst If non-null, destination for the.
-     * @param dstSize  Size of the destination.
-     * @param format   Describes the format to use.
-     * @param pArg     The argument.
+     * @param [out] dst   Buffer for the formatted string.
+     * @param dstSize     Size of the dst buffer measured by number of UnicodeChars the buffer can hold.
+     * @param [in] format The format string.
+     * @param pArg        The values to insert in the format string.
      *
-     * @return null if it fails, else an UnicodeChar*.
+     * @return pointer to the first element in the buffer where the formatted string is placed.
      *
      * @see snprintf
      */
@@ -222,12 +228,12 @@ public:
      *        precision is '*' the actual precision is read from the parameters passed to this
      *        function.
      *
-     * @param [out] dst   Buffer to place the result in.
-     * @param dstSize     Size of the buffer.
-     * @param [in] format The string to format.
-     * @param ...         Variable arguments providing additional information.
+     * @param [out] dst   Buffer for the formatted string.
+     * @param dstSize     Size of the dst buffer measured by number of UnicodeChars the buffer can hold.
+     * @param [in] format The format string.
+     * @param ...         The values to insert in the format string.
      *
-     * @return pointer to the first element in the buffer.
+     * @return pointer to the first element in the buffer where the formatted string is placed.
      *
      * @note \%f is not supported by this function because floats are converted to doubles when
      *       given as parameters in a variable argument list (va_list). Use snprintfFloat or
@@ -252,12 +258,12 @@ public:
      *
      *        Variant of snprintf. See snprintf for details.
      *
-     * @param [in] dst If non-null, destination for the.
-     * @param dstSize  Size of the destination.
-     * @param format   Describes the format to use.
-     * @param pArg     The argument.
+     * @param [out] dst   Buffer for the formatted string.
+     * @param dstSize     Size of the dst buffer measured by number of UnicodeChars the buffer can hold.
+     * @param [in] format The format string.
+     * @param pArg        The values to insert in the format string.
      *
-     * @return null if it fails, else an UnicodeChar*.
+     * @return pointer to the first element in the buffer where the formatted string is placed.
      *
      * @see snprintf
      */
@@ -285,13 +291,12 @@ public:
      *        </pre>
      *
      *        Where width is the desired width of the output. If the value is larger, more
-     *        characters may be generated, but not more than the parameter dstSize. If width is
-     *        '*' the actual width is read from the list of values passed to this function.
+     *        characters may be generated, but not more than the parameter dstSize. If width is '*'
+     *        the actual width is read from the list of values passed to this function.
      *
-     *        Where precision is the number of number of digits after the decimal point,
-     *        default is 3. Use "%.f" to not generate any numbers after the decimal point. If
-     *        precision is '*' the actual precision is read from the list of values passed to
-     *        this function.
+     *        Where precision is the number of number of digits after the decimal point, default is
+     *        3. Use "%.f" to not generate any numbers after the decimal point. If precision is '*'
+     *        the actual precision is read from the list of values passed to this function.
      *        \code{.cpp}
      *        float param1[3] = { 6.0f, 4.0f, 3.14159f };
      *        Unicode::snprintfFloats(buffer, 20, "%*.*f", param1);
@@ -301,12 +306,14 @@ public:
      *        // buffer="3.142 -123.400"
      *        \endcode
      *
-     * @param [out] dst   Buffer to place the result in.
-     * @param dstSize     Size of the buffer.
-     * @param [in] format The string to format.
-     * @param [in] values Variable arguments providing additional information.
+     * @param [out] dst     Buffer for the formatted string.
+     * @param       dstSize Size of the dst buffer measured by number of UnicodeChars the buffer can
+     *                      hold.
+     * @param [in]  format  The format string containing %f's.
+     * @param [in]  values  The floating point values to insert for %f. The number of elements in the
+     *                      array must match the number of %f's in the format string.
      *
-     * @return pointer to the first element in the buffer.
+     * @return pointer to the first element in the buffer where the formatted string is placed.
      *
      * @see snprintf, snprintfFloat
      */
@@ -351,12 +358,12 @@ public:
      *        If more control over the output is needed, see snprintfFloats which can have more
      *        than a single "%f" in the string and also supports "*" in place of a number.
      *
-     * @param [out] dst   Buffer to place the result in.
-     * @param dstSize     Size of the buffer.
-     * @param [in] format The string to format.
-     * @param value       Variable arguments providing additional information.
+     * @param [out] dst   Buffer for the formatted string.
+     * @param dstSize     Size of the dst buffer measured by number of UnicodeChars the buffer can hold.
+     * @param [in] format The format string containing exactly on occurrence of %f.
+     * @param value       The floating point value to insert for %f.
      *
-     * @return pointer to the first element in the buffer.
+     * @return pointer to the first element in the buffer where the formatted string is placed.
      *
      * @see snprintf, snprintfFloats
      */
@@ -387,13 +394,12 @@ public:
      *        </pre>
      *
      *        Where width is the desired width of the output. If the value is larger, more
-     *        characters may be generated, but not more than the parameter dstSize. If width is
-     *        '*' the actual width is read from the list of values passed to this function.
+     *        characters may be generated, but not more than the parameter dstSize. If width is '*'
+     *        the actual width is read from the list of values passed to this function.
      *
-     *        Where precision is the number of number of digits after the decimal point,
-     *        default is 3. Use "%.f" to not generate any numbers after the decimal point. If
-     *        precision is '*' the actual precision is read from the list of values passed to
-     *        this function.
+     *        Where precision is the number of number of digits after the decimal point, default is
+     *        3. Use "%.f" to not generate any numbers after the decimal point. If precision is '*'
+     *        the actual precision is read from the list of values passed to this function.
      *        \code{.cpp}
      *        float param1[3] = { 6.0f, 4.0f, 3.14159f };
      *        Unicode::snprintfFloats(buffer, 20, "%*.*f", param1);
@@ -403,14 +409,17 @@ public:
      *        // buffer="3.142 -123.400"
      *        \endcode
      *
-     * @param [out] dst   Buffer to place the result in.
-     * @param dstSize     Size of the buffer.
-     * @param [in] format The string to format.
-     * @param [in] values Variable arguments providing additional information.
+     * @param [out] dst     Buffer for the formatted string.
+     * @param       dstSize Size of the dst buffer measured by number of UnicodeChars the buffer can
+     *                      hold.
+     * @param [in]  format  The format string containing %f's.
+     * @param [in]  values  The floating point values to insert for %f. The number of elements in the
+     *                      array must match the number of %f's in the format string.
      *
-     * @return pointer to the first element in the buffer.
+     * @return pointer to the first element in the buffer where the formatted string is placed.
      *
-     * @warning The format string is internally copied from at char* to a UnicodeChar*. This buffer
+     *         @warning The format string is internally copied from at char* to a UnicodeChar*. This
+     *         buffer
      *          has a limit of 63 characters, so if the format is longer than 63 characters, the
      *          caller must do this copying to prevent an assert from triggering:
      *          \code{.cpp}
@@ -465,12 +474,21 @@ public:
      *        If more control over the output is needed, see snprintfFloats which can have more
      *        than a single "%f" in the string and also supports "*" in place of a number.
      *
-     * @param [out] dst   Buffer to place the result in.
-     * @param dstSize     Size of the buffer.
-     * @param [in] format The string to format.
-     * @param value       Variable arguments providing additional information.
+     * @param [out] dst   Buffer for the formatted string.
+     * @param dstSize     Size of the dst buffer measured by number of UnicodeChars the buffer can hold.
+     * @param [in] format The format string containing exactly on occurrence of %f.
+     * @param value       The floating point value to insert for %f.
      *
-     * @return pointer to the first element in the buffer.
+     * @return pointer to the first element in the buffer where the formatted string is placed.
+     *
+     * @warning The format string is internally copied from at char* to a UnicodeChar*. This buffer
+     *          has a limit of 63 characters, so if the format is longer than 63 characters, the
+     *          caller must do this copying to prevent an assert from triggering:
+     *          \code{.cpp}
+     *          touchgfx::Unicode::UnicodeChar tmpfmt[200];
+     *          touchgfx::Unicode::strncpy(tmpfmt, "Very, very, very, very, very, very, very, very, very long format %f", 200);
+     *          touchgfx::Unicode::snprintfFloats(dst, dstSize, tmpfmt, values);
+     *          \endcode
      *
      * @see snprintf, snprintfFloats
      */
@@ -521,6 +539,41 @@ public:
      */
     static int strncmp_ignore_white_spaces(const UnicodeChar* RESTRICT str1, const UnicodeChar* RESTRICT str2, uint16_t maxchars);
 
+    /**
+     * @fn static uint16_t Unicode::fromUTF8(const uint8_t* utf8, UnicodeChar* dst, uint16_t maxchars);
+     *
+     * @brief Convert a string from utf8 to unicode.
+     *
+     *        Convert a string from utf8 to unicode. The conversion stops if there is no more room
+     *        in the destination or if the terminating zero character has been converted.
+     *
+     * @param       utf8     The UTF8 string.
+     * @param [out] dst      The destination buffer for the converted string.
+     * @param       maxchars The maximum number of chars that the dst array can hold.
+     *
+     * @return The number of characters successfully converted from utf8 to unicode including the
+     *         terminating zero.
+     */
+    static uint16_t fromUTF8(const uint8_t* utf8, UnicodeChar* dst, uint16_t maxchars);
+
+    /**
+     * @fn static uint16_t Unicode::toUTF8(const UnicodeChar *unicode, uint8_t* utf8, uint16_t maxbytes);
+     *
+     * @brief Converts a string from unicode to utf8.
+     *
+     *        Converts a string from unicode to utf8. The conversion stops if there is no more room
+     *        in the destination or if the terminating zero character has been converted. U+10000
+     *        through U+10FFFF are skipped.
+     *
+     * @param       unicode  The unicode string.
+     * @param [out] utf8     The destination buffer for the converted string.
+     * @param       maxbytes The maximum number of bytes that the utf8 array can hold.
+     *
+     * @return The number of characters successfully converted from unicode to utf8 including the
+     *         terminating zero.
+     */
+    static uint16_t toUTF8(const UnicodeChar* unicode, uint8_t* utf8, uint16_t maxbytes);
+
 private:
     static void composeString(const UnicodeChar*& bufptr, const UnicodeChar sign, const UnicodeChar* format, bool hasPrecision, bool zeroPrefix, int precision, bool hasWidth, int width, bool alignLeft, int& charNumber, uint16_t dstSize, UnicodeChar* dst);
 
@@ -528,7 +581,6 @@ private:
 
     static const UnicodeChar* skip_white_spaces(const UnicodeChar* str);
 };
-
 } // namespace touchgfx
 
 #endif // UNICODE_HPP

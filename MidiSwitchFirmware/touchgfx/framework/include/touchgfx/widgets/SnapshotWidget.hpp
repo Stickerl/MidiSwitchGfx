@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef SNAPSHOTWIDGET_HPP
 #define SNAPSHOTWIDGET_HPP
@@ -21,6 +27,10 @@ namespace touchgfx
  *
  *        A widget that is able to make a snapshot of the area the SnapshotWidget covers. The
  *        SnapshotWidget will show the snapshot captured when it is drawn.
+ *        Note: The snapshot must be taken from a byte aligned position.
+ *        On BPP=4, this means on even positions, x=0, 2, 4, 8,...
+ *        On BPP=2, this means on positions, x= 0, 4, 8, 12,...
+ *        On BPP=1, this means on positions, x= 0, 8, 16,...
  *
  * @see Widget
  */
@@ -76,8 +86,23 @@ public:
      *
      *        Makes a snapshot of the area the SnapshotWidget currently covers. This area is
      *        defined by setting the dimensions and the position of the SnapshotWidget.
+     *        The snapshot is stored in Animation Storage.
      */
     virtual void makeSnapshot();
+
+    /**
+     * @fn virtual void SnapshotWidget::makeSnapshot(const BitmapId bmp);
+     *
+     * @brief Makes a snapshot of the area the SnapshotWidget currently to a bitmap.
+     *
+     *        Makes a snapshot of the area the SnapshotWidget
+     *        currently covers. This area is defined by setting the
+     *        dimensions and the position of the SnapshotWidget. The
+     *        snapshot is stored in the provided dynamic bitmap.
+     *
+     * @param bmp The target dynamic bitmap.
+     */
+    virtual void makeSnapshot(const BitmapId bmp);
 
     /**
      * @fn void SnapshotWidget::setAlpha(const uint8_t a)
@@ -122,10 +147,9 @@ public:
     }
 
 protected:
-    uint16_t* fbCopy; ///< Pointer to the animation storage in which the pixel data for this snapshot is stored. Zero if no snapshot has been made.
+    uint16_t* fbCopy;   ///< Pointer to the animation storage in which the pixel data for this snapshot is stored. Zero if no snapshot has been made.
     uint8_t   alpha;  ///< The alpha with which to draw this snapshot.
 };
-
 } // namespace touchgfx
 
 #endif // SNAPSHOTWIDGET_HPP

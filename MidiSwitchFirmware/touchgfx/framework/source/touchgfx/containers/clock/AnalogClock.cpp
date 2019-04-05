@@ -1,17 +1,22 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #include <touchgfx/containers/clock/AnalogClock.hpp>
 
 namespace touchgfx
 {
-
 AnalogClock::AnalogClock() :
     AbstractClock(),
     animationEquation(EasingEquations::linearEaseNone),
@@ -55,6 +60,12 @@ void AnalogClock::setBackground(const BitmapId backgroundBitmapId, const int16_t
     setHeight(background.getHeight());
 }
 
+void AnalogClock::setRotationCenter(int16_t rotationCenterX, int16_t rotationCenterY)
+{
+    clockRotationCenterX = rotationCenterX;
+    clockRotationCenterY = rotationCenterY;
+}
+
 void AnalogClock::setupHourHand(const BitmapId hourHandBitmapId, int16_t rotationCenterX, int16_t rotationCenterY)
 {
     setupHand(hourHand, hourHandBitmapId, rotationCenterX, rotationCenterY);
@@ -75,12 +86,12 @@ void AnalogClock::setupHand(TextureMapper& hand, const BitmapId bitmapId, int16_
     remove(hand);
 
     hand.setBitmap(Bitmap(bitmapId));
-    hand.setWidth(background.getWidth());
-    hand.setHeight(background.getHeight());
+    hand.setWidth(getWidth());
+    hand.setHeight(getHeight());
     hand.setXY(0, 0);
     hand.setBitmapPosition(clockRotationCenterX - rotationCenterX, clockRotationCenterY - rotationCenterY);
     hand.setCameraDistance(300.0f);
-    hand.setOrigo((float) clockRotationCenterX, (float) clockRotationCenterY, hand.getCameraDistance());
+    hand.setOrigo((float)clockRotationCenterX, (float)clockRotationCenterY, hand.getCameraDistance());
     hand.setCamera(hand.getOrigoX(), hand.getOrigoY());
     hand.setRenderingAlgorithm(TextureMapper::BILINEAR_INTERPOLATION);
 
@@ -129,13 +140,17 @@ void AnalogClock::updateClock()
     if (hourHand.isVisible() && ((currentHour != lastHour) || (hourHandMinuteCorrectionActive && (currentMinute != lastMinute))))
     {
         newHandAngle = convertHandValueToAngle(12, currentHour, hourHandMinuteCorrectionActive ? currentMinute : 0);
-        if (animationEnabled())
+        if (animationEnabled() && !hourHand.isTextureMapperAnimationRunning())
         {
             hourHand.setupAnimation(AnimationTextureMapper::Z_ROTATION, newHandAngle, animationDuration, 0, animationEquation);
             hourHand.startAnimation();
         }
         else
         {
+            if (animationEnabled())
+            {
+                hourHand.cancelAnimationTextureMapperAnimation();
+            }
             hourHand.updateZAngle(newHandAngle);
         }
     }
@@ -144,13 +159,17 @@ void AnalogClock::updateClock()
     if (minuteHand.isVisible() && ((currentMinute != lastMinute) || (minuteHandSecondCorrectionActive && (currentSecond != lastSecond))))
     {
         newHandAngle = convertHandValueToAngle(60, currentMinute, minuteHandSecondCorrectionActive ? currentSecond : 0);
-        if (animationEnabled())
+        if (animationEnabled() && !minuteHand.isTextureMapperAnimationRunning())
         {
             minuteHand.setupAnimation(AnimationTextureMapper::Z_ROTATION, newHandAngle, animationDuration, 0, animationEquation);
             minuteHand.startAnimation();
         }
         else
         {
+            if (animationEnabled())
+            {
+                minuteHand.cancelAnimationTextureMapperAnimation();
+            }
             minuteHand.updateZAngle(newHandAngle);
         }
     }
@@ -159,13 +178,17 @@ void AnalogClock::updateClock()
     if (secondHand.isVisible() && (currentSecond != lastSecond))
     {
         newHandAngle = convertHandValueToAngle(60, currentSecond);
-        if (animationEnabled())
+        if (animationEnabled() && !secondHand.isTextureMapperAnimationRunning())
         {
             secondHand.setupAnimation(AnimationTextureMapper::Z_ROTATION, newHandAngle, animationDuration, 0, animationEquation);
             secondHand.startAnimation();
         }
         else
         {
+            if (animationEnabled())
+            {
+                secondHand.cancelAnimationTextureMapperAnimation();
+            }
             secondHand.updateZAngle(newHandAngle);
         }
     }
@@ -212,5 +235,4 @@ void AnalogClock::setAnimation(uint16_t duration, EasingEquation animationProgre
     animationDuration = duration;
     animationEquation = animationProgressionEquation;
 }
-
 }

@@ -32,5 +32,5 @@ void touchgfx::Texts::setLanguage(touchgfx::LanguageId id)
     currentLanguagePtr = languagesArray[currentLanguage];
 
     touchgfx::TypedText::registerTypedTextDatabase(TypedTextDatabase::getInstance(currentLanguage),
-            TypedTextDatabase::getFonts(), TypedTextDatabase::getInstanceSize());
+                                                   TypedTextDatabase::getFonts(), TypedTextDatabase::getInstanceSize());
 }

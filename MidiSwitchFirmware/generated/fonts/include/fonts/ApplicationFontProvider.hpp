@@ -8,16 +8,16 @@
 
 struct Typography
 {
-  static const touchgfx::FontId PAGEHEADLINE = 0;
-  static const touchgfx::FontId LARGE = 1;
-  static const touchgfx::FontId SMALL = 2;
-  static const touchgfx::FontId DEFAULTTEXT = 3;
+    static const touchgfx::FontId PAGEHEADLINE = 0;
+    static const touchgfx::FontId LARGE = 1;
+    static const touchgfx::FontId SMALL = 2;
+    static const touchgfx::FontId DEFAULTTEXT = 3;
 };
 
 class ApplicationFontProvider : public touchgfx::FontProvider
 {
 public:
-  virtual touchgfx::Font* getFont(touchgfx::FontId fontId);
+    virtual touchgfx::Font* getFont(touchgfx::FontId fontId);
 };
 
 #endif /* APPLICATIONFONTPROVIDER_HPP */

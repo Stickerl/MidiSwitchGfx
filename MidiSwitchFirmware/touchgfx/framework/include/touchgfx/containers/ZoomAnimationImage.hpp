@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef ZOOMANIMATIONIMAGE_HPP
 #define ZOOMANIMATIONIMAGE_HPP
@@ -351,8 +357,20 @@ public:
      *        Is there currently an animation running.
      *
      * @return true if there is an animation running.
+     * @deprecated use isZoomAnimationRunning()
      */
     virtual bool isRunning() const;
+
+    /**
+     * @fn virtual bool ZoomAnimationImage::isZoomAnimationRunning() const;
+     *
+     * @brief Is there currently an animation running.
+     *
+     *        Is there currently an animation running.
+     *
+     * @return  true if there is an animation running.
+     */
+    virtual bool isZoomAnimationRunning() const;
 
     /**
      * @fn virtual uint16_t ZoomAnimationImage::getType() const
@@ -457,6 +475,5 @@ protected:
      */
     virtual void updateZoomAnimationDeltaXY();
 };
-
 } // namespace touchgfx
 #endif // ZOOMANIMATIONIMAGE_HPP

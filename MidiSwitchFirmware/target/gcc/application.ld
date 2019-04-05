@@ -4,11 +4,10 @@ _HEAPSIZE = 512;
 
 MEMORY
 {
-    CODE (rx)       : ORIGIN = 0x08000000, LENGTH = 1792K
-    RAM (rw)        : ORIGIN = 0x20000000, LENGTH = 320K
-    CCMRAM (rw)     : ORIGIN = 0x10000000, LENGTH = 64K
-    QUADSPI (r)     : ORIGIN = 0x90000000, LENGTH = 16M
-    /* USER_DATA (rw)  : ORIGIN = 0x081B5800, LENGTH = 256K */
+    CODE (rx)   : ORIGIN = 0x08000000, LENGTH = 2048K
+    RAM (rw)    : ORIGIN = 0x20000000, LENGTH = 320K
+    CCMRAM (rw) : ORIGIN = 0x10000000, LENGTH = 64K
+    QUADSPI (r) : ORIGIN = 0x90000000, LENGTH = 16M
 }
 
 /* Section Definitions */
@@ -17,13 +16,6 @@ ENTRY(ResetISR)
 
 SECTIONS
 {
-    /*.user_data :
-     {
-       . = ALIGN(4);
-        KEEP(*(.user_data))
-       . = ALIGN(4);
-     } > USER_DATA*/
-
 	/* first section is .text which is used for code */
 	.text :
 	{
@@ -192,5 +184,3 @@ SECTIONS
 }
 
  __valid_user_code_checksum = 0 - (__stack_end__ + ResetISR + 1 + NMI_Handler + 1 + HardFault_Handler + 1 + MemManage_Handler + 1 + BusFault_Handler + 1 + UsageFault_Handler + 1);
- 
- 

@@ -6,7 +6,7 @@
 #include <touchgfx/Color.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
 
-PatchConfigViewBase::PatchConfigViewBase()  :
+PatchConfigViewBase::PatchConfigViewBase() :
     savingDelayCounter(0),
     buttonCallback(this, &PatchConfigViewBase::buttonCallbackHandler),
     headlinFadeEndedCallback(this, &PatchConfigViewBase::headlinFadeEndedCallbackHandler),
@@ -45,12 +45,11 @@ PatchConfigViewBase::PatchConfigViewBase()  :
     HeadlineBox.setAlpha(130);
     ContrastBoxes.add(HeadlineBox);
 
-
-    Next.setPosition(750, 434, 32, 30);
+    Next.setXY(750, 434);
     Next.setBitmaps(Bitmap(BITMAP_DARK_ICONS_GO_NEXT_32_ID), Bitmap(BITMAP_DARK_ICONS_GO_NEXT_32_ID));
     Next.setAlpha(200);
 
-    Prev.setPosition(15, 434, 32, 30);
+    Prev.setXY(15, 434);
     Prev.setBitmaps(Bitmap(BITMAP_DARK_ICONS_GO_BACK_32_ID), Bitmap(BITMAP_DARK_ICONS_GO_BACK_32_ID));
     Prev.setAlpha(200);
 
@@ -101,20 +100,19 @@ PatchConfigViewBase::PatchConfigViewBase()  :
     outputCfg_0.setXY(5, 46);
     OutputBox.add(outputCfg_0);
 
-
-    options.setPosition(729, 10, 48, 48);
+    options.setXY(729, 10);
     options.setVisible(false);
     options.setBitmaps(Bitmap(BITMAP_DARK_ICONS_SETTINGS_48_ID), Bitmap(BITMAP_DARK_ICONS_SETTINGS_48_ID));
     options.setAction(buttonCallback);
     options.setAlpha(200);
 
-    Save.setPosition(657, 12, 48, 41);
+    Save.setXY(657, 12);
     Save.setVisible(false);
     Save.setBitmaps(Bitmap(BITMAP_DARK_ICONS_INBOX_48_ID), Bitmap(BITMAP_DARK_ICONS_INBOX_48_ID));
     Save.setAction(buttonCallback);
     Save.setAlpha(200);
 
-    TeachButton.setPosition(517, 14, 113, 40);
+    TeachButton.setXY(517, 14);
     TeachButton.setVisible(false);
     TeachButton.setBitmaps(Bitmap(BITMAP_TEACH_ROUND_SMALL_ID), Bitmap(BITMAP_TEACH_ROUND_SMALL_PRESSED_ID));
     TeachButton.setAlpha(200);
@@ -133,52 +131,54 @@ PatchConfigViewBase::PatchConfigViewBase()  :
     Saveing.setTypedText(TypedText(T_SINGLEUSEID12));
     SaveingPopUp.add(Saveing);
 
-
     progNrVal.setPosition(225, 103, 70, 31);
     progNrVal.setVisible(false);
     progNrVal.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
     progNrVal.setLinespacing(0);
-    progNrVal.setTypedText(TypedText(T_SINGLEUSEID15));
     progNrValBuffer[0] = 0;
     progNrVal.setWildcard(progNrValBuffer);
+    progNrVal.setTypedText(TypedText(T_SINGLEUSEID15));
 
     switch1ConNrVal.setPosition(155, 202, 70, 31);
     switch1ConNrVal.setVisible(false);
     switch1ConNrVal.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
     switch1ConNrVal.setLinespacing(0);
-    switch1ConNrVal.setTypedText(TypedText(T_SINGLEUSEID14));
     switch1ConNrValBuffer[0] = 0;
     switch1ConNrVal.setWildcard(switch1ConNrValBuffer);
+    switch1ConNrVal.setTypedText(TypedText(T_SINGLEUSEID14));
 
     switch1ConValueVal.setPosition(225, 202, 70, 31);
     switch1ConValueVal.setVisible(false);
     switch1ConValueVal.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
     switch1ConValueVal.setLinespacing(0);
-    switch1ConValueVal.setTypedText(TypedText(T_SINGLEUSEID16));
     switch1ConValueValBuffer[0] = 0;
     switch1ConValueVal.setWildcard(switch1ConValueValBuffer);
+    switch1ConValueVal.setTypedText(TypedText(T_SINGLEUSEID16));
 
     switch2ConNrVal.setPosition(155, 252, 70, 31);
     switch2ConNrVal.setVisible(false);
     switch2ConNrVal.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
     switch2ConNrVal.setLinespacing(0);
-    switch2ConNrVal.setTypedText(TypedText(T_SINGLEUSEID17));
     switch2ConNrValBuffer[0] = 0;
     switch2ConNrVal.setWildcard(switch2ConNrValBuffer);
+    switch2ConNrVal.setTypedText(TypedText(T_SINGLEUSEID17));
 
     switch2ConValueVal.setPosition(225, 252, 70, 31);
     switch2ConValueVal.setVisible(false);
     switch2ConValueVal.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
     switch2ConValueVal.setLinespacing(0);
-    switch2ConValueVal.setTypedText(TypedText(T_SINGLEUSEID18));
     switch2ConValueValBuffer[0] = 0;
     switch2ConValueVal.setWildcard(switch2ConValueValBuffer);
+    switch2ConValueVal.setTypedText(TypedText(T_SINGLEUSEID18));
 
     DefaultOutput.setPosition(15, 152, 276, 29);
     DefaultOutput.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
     DefaultOutput.setLinespacing(0);
     DefaultOutput.setAlpha(0);
     DefaultOutput.setTypedText(TypedText(T_SINGLEUSEID19));
+
+    numericKeyboard1.setXY(250, 329);
+    numericKeyboard1.setVisible(false);
 
     add(ConfigBG);
     add(ContrastBoxes);
@@ -199,6 +199,15 @@ PatchConfigViewBase::PatchConfigViewBase()  :
     add(switch2ConNrVal);
     add(switch2ConValueVal);
     add(DefaultOutput);
+    add(numericKeyboard1);
+}
+
+void PatchConfigViewBase::setupScreen()
+{
+    outputCfg_2.initialize();
+    outputCfg_1.initialize();
+    outputCfg_0.initialize();
+    numericKeyboard1.initialize();
 }
 
 //Handles delays
@@ -341,7 +350,7 @@ void PatchConfigViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& 
     {
         //OptionsButtonPressed
         //When options clicked change screen to GlobalConfig
-        //Go to GlobalConfig with slide screen transition towards North
+        //Go to GlobalConfig with screen transition towards North
         application().gotoGlobalConfigScreenSlideTransitionNorth();
     }
     else if (&src == &Save)

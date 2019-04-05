@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #include <touchgfx/widgets/canvas/Canvas.hpp>
 
@@ -35,10 +41,10 @@ Canvas::Canvas(const CanvasWidget* _widget, const Rect& invalidatedArea) : widge
 
     offsetX = dirtyArea.x;
     offsetY = dirtyArea.y;
-    invalidatedAreaX = CWRUtil::toQ5(dirtyArea.x);
-    invalidatedAreaY = CWRUtil::toQ5(dirtyArea.y);
-    invalidatedAreaWidth = CWRUtil::toQ5(dirtyArea.width);
-    invalidatedAreaHeight = CWRUtil::toQ5(dirtyArea.height);
+    invalidatedAreaX = CWRUtil::toQ5<int>(dirtyArea.x);
+    invalidatedAreaY = CWRUtil::toQ5<int>(dirtyArea.y);
+    invalidatedAreaWidth = CWRUtil::toQ5<int>(dirtyArea.width);
+    invalidatedAreaHeight = CWRUtil::toQ5<int>(dirtyArea.height);
 
     // Create the rendering buffer
     uint8_t* RESTRICT buf = reinterpret_cast<uint8_t*>(HAL::getInstance()->lockFrameBuffer());
@@ -171,6 +177,11 @@ bool Canvas::render()
         return true; // Redrawing a rect with fewer scanlines will not help, fake "ok" to move on
     }
 
+    if (ras.wasOutlineTooComplex())
+    {
+        return false; // Try again with fewer scanlines
+    }
+
     if (!penHasBeenDown)
     {
         return true; // Nothing drawn. Done
@@ -221,7 +232,7 @@ void Canvas::transformFrameBufferToDisplay(CWRUtil::Q5& x, CWRUtil::Q5& y) const
         break;
     case rotate90:
         CWRUtil::Q5 tmpY = y;
-        y = CWRUtil::toQ5(widget->getWidth()) - x;
+        y = CWRUtil::toQ5<int>(widget->getWidth()) - x;
         x = tmpY;
         break;
     }

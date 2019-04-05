@@ -1,17 +1,22 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #include <touchgfx/containers/progress_indicators/BoxProgress.hpp>
 
 namespace touchgfx
 {
-
 BoxProgress::BoxProgress()
     : AbstractDirectionProgress(), box()
 {
@@ -52,26 +57,34 @@ uint8_t BoxProgress::getAlpha() const
 void BoxProgress::setValue(int value)
 {
     AbstractProgressIndicator::setValue(value);
-    uint16_t progress = AbstractProgressIndicator::getProgress();
     box.invalidate();
-    int16_t w = (progressIndicatorContainer.getWidth() * progress) / 100;
-    int16_t h = (progressIndicatorContainer.getHeight() * progress) / 100;
+    int16_t progress = 0;
     switch (progressDirection)
     {
     case AbstractDirectionProgress::RIGHT:
-        box.setPosition(0, 0, w, progressIndicatorContainer.getHeight());
-        break;
     case AbstractDirectionProgress::LEFT:
-        box.setPosition(getWidth() - w, 0, w, progressIndicatorContainer.getHeight());
+        progress = AbstractProgressIndicator::getProgress(progressIndicatorContainer.getWidth());
         break;
     case AbstractDirectionProgress::DOWN:
-        box.setPosition(0, 0, progressIndicatorContainer.getWidth(), h);
+    case AbstractDirectionProgress::UP:
+        progress = AbstractProgressIndicator::getProgress(progressIndicatorContainer.getHeight());
+        break;
+    }
+    switch (progressDirection)
+    {
+    case AbstractDirectionProgress::RIGHT:
+        box.setPosition(0, 0, progress, progressIndicatorContainer.getHeight());
+        break;
+    case AbstractDirectionProgress::LEFT:
+        box.setPosition(getWidth() - progress, 0, progress, progressIndicatorContainer.getHeight());
+        break;
+    case AbstractDirectionProgress::DOWN:
+        box.setPosition(0, 0, progressIndicatorContainer.getWidth(), progress);
         break;
     case AbstractDirectionProgress::UP:
-        box.setPosition(0, progressIndicatorContainer.getHeight() - h, progressIndicatorContainer.getWidth(), h);
+        box.setPosition(0, progressIndicatorContainer.getHeight() - progress, progressIndicatorContainer.getWidth(), progress);
         break;
     }
     box.invalidate();
 }
-
 }

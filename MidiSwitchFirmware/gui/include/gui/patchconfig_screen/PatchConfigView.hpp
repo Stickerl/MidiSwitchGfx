@@ -12,6 +12,8 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
 
+    void progNrClickCallback(const ClickEvent&);
+
     void setConfigNumber(uint8_t configNr);
 
     void setProgramNumber(uint8_t programNr);
@@ -31,6 +33,8 @@ public:
 protected:
     touchgfx::Callback<PatchConfigView, const AbstractButton& > prevButtonCb;
     touchgfx::Callback<PatchConfigView, const AbstractButton& > nextButtonCb;
+
+    touchgfx::Callback<PatchConfigView,const ClickEvent& > progNrClickCb;
 
 };
 

@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef LISTLAYOUT_HPP
 #define LISTLAYOUT_HPP
@@ -44,7 +50,7 @@ public:
      * @param d The direction to grow in when adding children.
      */
     ListLayout(const Direction d = SOUTH)
-        : Container(), direction(d), xOffset(0), yOffset(0)
+        : Container(), direction(d), offset(0)
     {
         assert((d == SOUTH || d == EAST) && "Chosen direction not supported");
     }
@@ -57,6 +63,36 @@ public:
      *        Destructor.
      */
     virtual ~ListLayout() { }
+
+    /**
+     * @fn virtual void ListLayout::setDirection(const Direction d);
+     *
+     * @brief Sets the direction of the ListLayout.
+     *
+     *        Sets the direction of the ListLayout. If elements have already been added to the
+     *        ListLayout, these elements will be repositioned to adhere to the new direction.
+     *
+     * @param d The new Direction to grow in when added children (either SOUTH or EAST).
+     *
+     * @see getDirection()
+     */
+    virtual void setDirection(const Direction d);
+
+    /**
+     * @fn virtual Direction ListLayout::getDirection() const
+     *
+     * @brief Gets the direction of the ListLayout.
+     *
+     *        Gets the direction of the ListLayout.
+     *
+     * @return The current direction to grow in when added children (either SOUTH or EAST).
+     *
+     * @see setDirection()
+     */
+    virtual Direction getDirection() const
+    {
+        return direction;
+    }
 
     /**
      * @fn virtual void ListLayout::add(Drawable& d);
@@ -98,8 +134,8 @@ public:
      *
      * @brief Removes all children.
      *
-     *         Removes all children by resetting their parent and sibling pointers. In addition,
-     *         the geometry is reset and any parent is signaled of the change.
+     *        Removes all children by resetting their parent and sibling pointers. In addition, the
+     *        geometry is reset and any parent is signaled of the change.
      */
     virtual void removeAll();
 
@@ -118,12 +154,11 @@ public:
     }
 
 private:
-    void internalAddElement(Drawable& d, int16_t coord);
+    void internalAddElementAt(Drawable& d, int16_t coord);
+    void internalAddElement(Drawable& d);
     void internalRemoveElement(Drawable& d, int16_t coord);
-    const Direction direction;
-    int16_t xOffset;
-    int16_t yOffset;
+    Direction direction;
+    int16_t offset;
 };
-
 } // namespace touchgfx
 #endif // LISTLAYOUT_HPP

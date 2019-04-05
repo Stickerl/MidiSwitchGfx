@@ -95,8 +95,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 
-
-
 /** @addtogroup STM32F4xx_HAL_Driver
   * @{
   */
@@ -178,7 +176,6 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint
 {
   HAL_StatusTypeDef status = HAL_ERROR;
   
-
   /* Process Locked */
   __HAL_LOCK(&pFlash);
   
@@ -217,6 +214,7 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t Address, uint
     /* If the program operation is completed, disable the PG Bit */
     FLASH->CR &= (~FLASH_CR_PG);  
   }
+  
   /* Process Unlocked */
   __HAL_UNLOCK(&pFlash);
   

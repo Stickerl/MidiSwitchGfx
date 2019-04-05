@@ -4,13 +4,13 @@
 #include <gui_generated/welcome_screen/WelcomeViewBase.hpp>
 #include "BitmapDatabase.hpp"
 
-WelcomeViewBase::WelcomeViewBase()  :
+WelcomeViewBase::WelcomeViewBase() :
     buttonCallback(this, &WelcomeViewBase::buttonCallbackHandler)
 {
     AlbumCoverWide.setXY(0, 0);
     AlbumCoverWide.setBitmap(Bitmap(BITMAP_MIDISWITCHBG_ID));
 
-    ExitPage.setPosition(0, 0, 800, 480);
+    ExitPage.setXY(0, 0);
     ExitPage.setBitmaps(Bitmap(BITMAP_MIDISWITCHBG_ID), Bitmap(BITMAP_MIDISWITCHBG_ID));
     ExitPage.setAction(buttonCallback);
     ExitPage.setAlpha(0);
@@ -19,13 +19,18 @@ WelcomeViewBase::WelcomeViewBase()  :
     add(ExitPage);
 }
 
+void WelcomeViewBase::setupScreen()
+{
+
+}
+
 void WelcomeViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
 {
     if (&src == &ExitPage)
     {
         //LeavScreen
         //When ExitPage clicked change screen to PatchConfig
-        //Go to PatchConfig with slide screen transition towards West
+        //Go to PatchConfig with screen transition towards West
         application().gotoPatchConfigScreenSlideTransitionWest();
     }
 }

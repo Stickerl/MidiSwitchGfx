@@ -2,20 +2,31 @@
 
 PatchConfigView::PatchConfigView():
     prevButtonCb(this, &PatchConfigView::prevButtonActionCb),
-    nextButtonCb(this, &PatchConfigView::nextButtonActionCb)
+    nextButtonCb(this, &PatchConfigView::nextButtonActionCb),
+    progNrClickCb(this, &PatchConfigView::progNrClickCallback)
 {
     Prev.setAction(prevButtonCb);
     Next.setAction(nextButtonCb);
+    numericKeyboard1.initKeyboard(&progNrVal, PROGNRVAL_SIZE);
+    numericKeyboard1.invalidate();
+    progNrVal.setTouchable(true);
+    progNrVal.setClickCb(progNrClickCb);
 }
 
 void PatchConfigView::setupScreen()
 {
-
+    presenter->patchConfigChanged();
 }
 
 void PatchConfigView::tearDownScreen()
 {
 
+}
+
+void PatchConfigView::progNrClickCallback(const ClickEvent&)
+{
+    numericKeyboard1.initKeyboard(&progNrVal, PROGNRVAL_SIZE);
+    numericKeyboard1.invalidate();
 }
 
 void PatchConfigView::setProgramNumber(uint8_t programNr)

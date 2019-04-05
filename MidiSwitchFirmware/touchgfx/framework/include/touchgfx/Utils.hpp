@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef UTILS_HPP
 #define UTILS_HPP
@@ -114,12 +120,12 @@ RenderingVariant lookupBilinearRenderVariant(const Bitmap& bitmap);
  *
  *        Simple implementation of the standard abs function.
  *
- * @tparam T The class type on which to perform the abs.
+ * @tparam T The type on which to perform the abs.
  * @param d The entity on which to perform the abs.
  *
  * @return The absolute (non-negative) value of d.
  */
-template <class T>
+template <typename T>
 T abs(T d)
 {
     if (d < 0)
@@ -129,6 +135,69 @@ T abs(T d)
     return d;
 }
 
+/**
+ * @fn template <typename T> T gcd(T a, T b)
+ *
+ * @brief Find greatest common divisor
+ *
+ *        Find greatest common divisor of two given numbers.
+ *
+ * @tparam T Generic type parameter.
+ * @param a The first number.
+ * @param b The second number.
+ *
+ * @return A T.
+ */
+template <typename T>
+T gcd(T a, T b)
+{
+    for (;;)
+    {
+        if (a == 0)
+        {
+            return b;
+        }
+        b %= a;
+        if (b == 0)
+        {
+            return a;
+        }
+        a %= b;
+    }
+}
+
+/**
+ * @fn static int32_t clz(int32_t x)
+ *
+ * @brief Count leading zeros.
+ *
+ *        Count leading zeros in the binary representation of the given value.
+ *
+ * @param x The value to count the number of leading zeros in.
+ *
+ * @return An int32_t.
+ */
+int32_t clz(int32_t x);
+
+/**
+ * @fn static int32_t muldiv(int32_t factor1, int32_t factor2, int32_t divisor, int32_t& remainder)
+ *
+ * @brief Multiply and divide.
+ *
+ *        Multiply and divide without causing overflow. Multiplying two large values and
+ *        subsequently dividing the result with another large value might cause an overflow in
+ *        the intermediate result. The function muldiv() will multiply the two first values and
+ *        divide the result by the third value without causing overflow (unless the final
+ *        result would overflow). The remainder from the calculation is also returned.
+ *
+ * @param       factor1   The first factor.
+ * @param       factor2   The second factor.
+ * @param       divisor   The divisor.
+ * @param [out] remainder The remainder.
+ *
+ * @return An int32_t.
+ */
+int32_t muldiv(int32_t factor1, int32_t factor2, int32_t divisor, int32_t& remainder);
 } // namespace touchgfx
 
 #endif // UTILS_HPP

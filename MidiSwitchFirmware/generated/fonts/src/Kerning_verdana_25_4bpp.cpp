@@ -5,7 +5,8 @@ using namespace touchgfx;
 #endif
 
 FONT_LOCATION_FLASH_PRAGMA
-KEEP extern const touchgfx::KerningNode kerning_verdana_25_4bpp[] FONT_LOCATION_FLASH_ATTRIBUTE = {
+KEEP extern const touchgfx::KerningNode kerning_verdana_25_4bpp[] FONT_LOCATION_FLASH_ATTRIBUTE =
+{
     {0x002E, -2},  // (First char = [0x002E, ], Second char = [0x002D, ], Kerning dist = -2) 
     {0x0066, -1},  // (First char = [0x0066, ], Second char = [0x002D, ], Kerning dist = -1) 
     {0x006B, -1},  // (First char = [0x006B, ], Second char = [0x002D, ], Kerning dist = -1) 

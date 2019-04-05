@@ -4,33 +4,33 @@
 #include <gui_generated/containers/OutputCfgBase.hpp>
 #include "BitmapDatabase.hpp"
 
-OutputCfgBase::OutputCfgBase()  
+OutputCfgBase::OutputCfgBase()
 {
     setWidth(352);
     setHeight(44);
 
-    Out_0.setPosition(0, 0, 44, 44);
+    Out_0.setXY(0, 0);
     Out_0.setBitmaps(Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_INACTIVE_ID), Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_ACTIVE_ID));
 
-    Out_1.setPosition(44, 0, 44, 44);
+    Out_1.setXY(44, 0);
     Out_1.setBitmaps(Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_INACTIVE_ID), Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_ACTIVE_ID));
 
-    Out_2.setPosition(88, 0, 44, 44);
+    Out_2.setXY(88, 0);
     Out_2.setBitmaps(Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_INACTIVE_ID), Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_ACTIVE_ID));
 
-    Out_3.setPosition(132, 0, 44, 44);
+    Out_3.setXY(132, 0);
     Out_3.setBitmaps(Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_INACTIVE_ID), Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_ACTIVE_ID));
 
-    Out_4.setPosition(176, 0, 44, 44);
+    Out_4.setXY(176, 0);
     Out_4.setBitmaps(Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_INACTIVE_ID), Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_ACTIVE_ID));
 
-    Out_5.setPosition(220, 0, 44, 44);
+    Out_5.setXY(220, 0);
     Out_5.setBitmaps(Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_INACTIVE_ID), Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_ACTIVE_ID));
 
-    Out_6.setPosition(264, 0, 44, 44);
+    Out_6.setXY(264, 0);
     Out_6.setBitmaps(Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_INACTIVE_ID), Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_ACTIVE_ID));
 
-    Out_7.setPosition(308, 0, 44, 44);
+    Out_7.setXY(308, 0);
     Out_7.setBitmaps(Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_INACTIVE_ID), Bitmap(BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_ACTIVE_ID));
 
     add(Out_0);
@@ -41,4 +41,9 @@ OutputCfgBase::OutputCfgBase()
     add(Out_5);
     add(Out_6);
     add(Out_7);
+}
+
+void OutputCfgBase::initialize()
+{
+	
 }

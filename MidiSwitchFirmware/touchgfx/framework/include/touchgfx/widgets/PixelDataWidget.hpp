@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef PIXELDATAWIDGET_HPP
 #define PIXELDATAWIDGET_HPP
@@ -110,13 +116,11 @@ public:
      */
     uint8_t getAlpha() const;
 
-
 protected:
-    uint8_t* buffer;             ///< The buffer where the pixels are copied from
+    uint8_t* buffer;               ///< The buffer where the pixels are copied from
     Bitmap::BitmapFormat format; ///< The pixel format for the data.
     uint8_t alpha;               ///< The Alpha for this widget.
 };
-
 } // namespace touchgfx
 
 #endif // PIXELDATAWIDGET_HPP

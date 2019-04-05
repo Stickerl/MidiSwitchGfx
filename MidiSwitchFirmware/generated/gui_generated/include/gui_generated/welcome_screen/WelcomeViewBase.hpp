@@ -16,9 +16,11 @@ public:
     WelcomeViewBase();
     virtual ~WelcomeViewBase() {}
 
+    virtual void setupScreen();
+
 protected:
-    FrontendApplication& application() { 
-        return *static_cast<FrontendApplication*>(Application::getInstance()); 
+    FrontendApplication& application() {
+        return *static_cast<FrontendApplication*>(Application::getInstance());
     }
 
     /*

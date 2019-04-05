@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef SCROLLABLECONTAINER_HPP
 #define SCROLLABLECONTAINER_HPP
@@ -110,19 +116,26 @@ public:
     }
 
     /**
-     * @fn void ScrollableContainer::setScrollbarsVisible(bool newVisible)
+     * @fn void ScrollableContainer::setScrollbarsVisible(bool newVisible);
      *
-     * @brief Sets scrollbars visible.
+     * @brief Sets the visibility of the scrollbars, when the scrollable area is pressed.
      *
-     *        Sets scrollbars visible.
+     *        Sets the visibility of the scrollbars, when the scrollable area is pressed.
      *
-     * @param newVisible If true (default), the scrollbars are visible. If false, scrollbars are
-     *                   hidden.
+     * @param newVisible If true (default), the scrollbars are visible when scrollable area is pressed.
+     *                   If false, scrollbars are always hidden.
      */
-    void setScrollbarsVisible(bool newVisible)
-    {
-        scrollbarsVisible = newVisible;
-    }
+    void setScrollbarsVisible(bool newVisible);
+
+    /**
+     * @fn void ScrollableContainer::setScrollbarsPermanentlyVisible()
+     *
+     * @brief sets the visibility for the scrollbars to be permanent.
+     *
+     *        sets the visibility for the scrollbars to be permanent.
+     *
+     */
+    void setScrollbarsPermanentlyVisible();
 
     /**
      * @fn virtual void ScrollableContainer::add(Drawable& d);
@@ -375,7 +388,7 @@ protected:
     uint8_t   scrollbarPadding;                           ///< The amount of padding. The scrollbar will have a bit of space to the borders of the container.
     uint8_t   scrollbarWidth;                             ///< The width of the scrollbar.
     uint8_t   scrollbarAlpha;                             ///< The scrollbar is semitransparent
-    static    const uint8_t SCROLLBAR_LINE = 1;           ///< The scrollbar line.
+    static    const uint8_t SCROLLBAR_LINE = 0;           ///< The scrollbar line.
     colortype scrollbarColor;                             ///< The color of the scrollbar
     static    const uint16_t SCROLLBAR_MIN_VELOCITY = 5;  ///< The minimum velocity of a scroll due to a swipe
     static    const uint16_t SCROLLBAR_MAX_VELOCITY = 17; ///< The (default) maximum velocity of a scroll due to a swipe
@@ -481,7 +494,8 @@ protected:
     bool scrollableX; ///< Is the container scrollable in the horizontal direction.
     bool scrollableY; ///< Is the container scrollable in the vertical direction.
 
-    bool scrollbarsVisible; ///< Are scrollbars visible.
+    bool scrollbarsVisible; ///< Are scrollbars always visible.
+    bool scrollbarsPermanentlyVisible; ///< Are scrollbars alway visible.
 
     uint16_t scrollDuration; ///< Number of ticks the scroll animation should use.
 
@@ -496,7 +510,6 @@ protected:
 
     bool hasIssuedCancelEvent; ///< true if the pressed drawable has received cancel event
 };
-
 } // namespace touchgfx
 
 #endif // SCROLLABLECONTAINER_HPP

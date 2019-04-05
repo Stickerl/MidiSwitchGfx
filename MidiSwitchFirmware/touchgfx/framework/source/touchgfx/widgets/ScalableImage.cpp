@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #include <touchgfx/widgets/ScalableImage.hpp>
 #include <touchgfx/transforms/DisplayTransformation.hpp>
@@ -13,7 +19,6 @@
 
 namespace touchgfx
 {
-
 ScalableImage::ScalableImage() :
     Widget(),
     currentScalingAlgorithm(BILINEAR_INTERPOLATION),
@@ -23,7 +28,6 @@ ScalableImage::ScalableImage() :
 
 ScalableImage::~ScalableImage()
 {
-
 }
 
 void ScalableImage::setBitmap(const Bitmap& bmp)
@@ -43,7 +47,6 @@ ScalableImage::ScalingAlgorithm ScalableImage::getScalingAlgorithm()
     return currentScalingAlgorithm;
 }
 
-
 void ScalableImage::drawTriangle(const Rect& invalidatedArea, uint16_t* fb, const float* triangleXs, const float* triangleYs, const float* triangleZs, const float* triangleUs, const float* triangleVs) const
 {
     // Area to redraw. Relative to the scalableImage.
@@ -62,7 +65,7 @@ void ScalableImage::drawTriangle(const Rect& invalidatedArea, uint16_t* fb, cons
     DisplayTransformation::transformDisplayToFrameBuffer(dirtyAreaAbsolute);
 
     // Get a pointer to the bitmap data, return if no bitmap found
-    const uint16_t* textmap = (const uint16_t*) bitmap.getData();
+    const uint16_t* textmap = (const uint16_t*)bitmap.getData();
     if (!textmap)
     {
         return;
@@ -80,9 +83,9 @@ void ScalableImage::drawTriangle(const Rect& invalidatedArea, uint16_t* fb, cons
     DisplayTransformation::transformDisplayToFrameBuffer(x2, y2, this->getRect());
 
     Point3D vertices[3];
-    Point3D point0 = {floatToFixed28_4(x0), floatToFixed28_4(y0), (float)(triangleZs[0]), (float)(triangleUs[0]), (float)(triangleVs[0])};
-    Point3D point1 = {floatToFixed28_4(x1), floatToFixed28_4(y1), (float)(triangleZs[1]), (float)(triangleUs[1]), (float)(triangleVs[1])};
-    Point3D point2 = {floatToFixed28_4(x2), floatToFixed28_4(y2), (float)(triangleZs[2]), (float)(triangleUs[2]), (float)(triangleVs[2])};
+    Point3D point0 = { floatToFixed28_4(x0), floatToFixed28_4(y0), (float)(triangleZs[0]), (float)(triangleUs[0]), (float)(triangleVs[0]) };
+    Point3D point1 = { floatToFixed28_4(x1), floatToFixed28_4(y1), (float)(triangleZs[1]), (float)(triangleUs[1]), (float)(triangleVs[1]) };
+    Point3D point2 = { floatToFixed28_4(x2), floatToFixed28_4(y2), (float)(triangleZs[2]), (float)(triangleUs[2]), (float)(triangleVs[2]) };
 
     vertices[0] = point0;
     vertices[1] = point1;
@@ -174,7 +177,6 @@ void ScalableImage::draw(const Rect& invalidatedArea) const
 
     drawTriangle(invalidatedArea, fb, triangleXs, triangleYs, triangleZs, triangleUs, triangleVs);
 
-
     triangleXs[0] = imageX0;
     triangleXs[1] = imageX2;
     triangleXs[2] = imageX3;
@@ -208,6 +210,4 @@ Rect ScalableImage::getSolidRect() const
     }
     return Rect(0, 0, 0, 0);
 }
-
-
 } // namespace touchgfx

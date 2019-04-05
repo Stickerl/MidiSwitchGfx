@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef CANVAS_HPP
 #define CANVAS_HPP
@@ -100,7 +106,7 @@ public:
     void lineTo(CWRUtil::Q5 x, CWRUtil::Q5 y);
 
     /**
-     * @fn template <class T> void Canvas::moveTo(T x, T y)
+     * @fn template <typename T> void Canvas::moveTo(T x, T y)
      *
      * @brief Move the current pen position.
      *
@@ -113,14 +119,14 @@ public:
      * @param x The x coordinate for the pen position.
      * @param y The y coordinate for the pen position.
      */
-    template <class T>
+    template <typename T>
     void moveTo(T x, T y)
     {
         moveTo(CWRUtil::toQ5<T>(x), CWRUtil::toQ5<T>(y));
     }
 
     /**
-     * @fn template <class T> void Canvas::lineTo(T x, T y)
+     * @fn template <typename T> void Canvas::lineTo(T x, T y)
      *
      * @brief Draw line from current pen position.
      *
@@ -132,7 +138,7 @@ public:
      * @param x The x coordinate for the pen position.
      * @param y The y coordinate for the pen position.
      */
-    template <class T>
+    template <typename T>
     void lineTo(T x, T y)
     {
         lineTo(CWRUtil::toQ5<T>(x), CWRUtil::toQ5<T>(y));
@@ -209,9 +215,7 @@ private:
         *        Closes the path being drawn using moveTo and lineTo.
         */
     void close();
-
 };
-
 } // namespace touchgfx
 
 #endif // CANVAS_HPP

@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #include <touchgfx/widgets/canvas/Line.hpp>
 
@@ -144,17 +150,58 @@ void Line::updateCachedShape()
 {
     CWRUtil::Q5 dx = x2 - x1;
     CWRUtil::Q5 dy = y2 - y1;
-    CWRUtil::Q5 d = CWRUtil::sqrtQ10(dy * dy + dx * dx);
-
-    if (d == 0)
+    CWRUtil::Q5 d = CWRUtil::toQ5<int>(0);
+    // Look for horizontal, vertical or no-line
+    if ((int32_t)dx == 0)
     {
-        xCorner[0] = xCorner[1] = xCorner[2] = xCorner[3] = x1;
-        yCorner[0] = yCorner[1] = yCorner[2] = yCorner[3] = y1;
-        return;
+        if ((int32_t)dy == 0)
+        {
+            xCorner[0] = xCorner[1] = xCorner[2] = xCorner[3] = x1;
+            yCorner[0] = yCorner[1] = yCorner[2] = yCorner[3] = y1;
+            return;
+        }
+        d = abs(dy);
+    }
+    else if ((int32_t)dy == 0)
+    {
+        d = abs(dx);
+    }
+    else
+    {
+        // We want to hit as close to the limit inside 32bits.
+        // sqrt(0x7FFFFFFF / 2) = 46340, which is roughly toQ5(1448)
+        static const int32_t MAXVAL = 46340;
+        int32_t common_divisor = gcd(abs((int32_t)dx), abs((int32_t)dy));
+        // First try to scale down
+        if (common_divisor != 1)
+        {
+            dx = CWRUtil::Q5((int32_t)dx / common_divisor);
+            dy = CWRUtil::Q5((int32_t)dy / common_divisor);
+        }
+        // Neither dx or dy is zero, find the largest multiplier / smallest divisor to stay within limit
+        if (abs((int32_t)dx) <= MAXVAL || abs((int32_t)dy) <= MAXVAL)
+        {
+            // Look for largest multiplier
+            int32_t mulx = MAXVAL / abs((int32_t)dx);
+            int32_t muly = MAXVAL / abs((int32_t)dy);
+            int32_t mult = MIN(mulx, muly);
+            dx = CWRUtil::Q5(mult * (int32_t)dx);
+            dy = CWRUtil::Q5(mult * (int32_t)dy);
+        }
+        else
+        {
+            // Look for smallest divisor
+            int32_t divx = abs((int32_t)dx) / MAXVAL;
+            int32_t divy = abs((int32_t)dy) / MAXVAL;
+            int32_t divi = MAX(divx, divy) + 1;
+            dx = CWRUtil::Q5((int32_t)dx / divi);
+            dy = CWRUtil::Q5((int32_t)dy / divi);
+        }
+        d = CWRUtil::sqrtQ10(dy * dy + dx * dx);
     }
 
-    dy = (lineWidth * dy / d) / 2;
-    dx = (lineWidth * dx / d) / 2;
+    dy = CWRUtil::muldivQ5(lineWidth, dy, d) / 2;
+    dx = CWRUtil::muldivQ5(lineWidth, dx, d) / 2;
 
     switch (lineEnding)
     {
@@ -184,11 +231,11 @@ void Line::updateCachedShape()
         break;
     }
 
-    xMin = xCorner[0];
-    xMax = xCorner[0];
-    yMin = yCorner[0];
-    yMax = yCorner[0];
-    for (int i = 1 ; i < 4; i++)
+    CWRUtil::Q5 xMin = xCorner[0];
+    CWRUtil::Q5 xMax = xCorner[0];
+    CWRUtil::Q5 yMin = yCorner[0];
+    CWRUtil::Q5 yMax = yCorner[0];
+    for (int i = 1; i < 4; i++)
     {
         if (xCorner[i] < xMin)
         {
@@ -207,6 +254,12 @@ void Line::updateCachedShape()
             yMax = yCorner[i];
         }
     }
+    int16_t minX = xMin.to<int16_t>();
+    int16_t minY = yMin.to<int16_t>();
+    int16_t maxX = xMax.to<int16_t>();
+    int16_t maxY = yMax.to<int16_t>();
+    minimalRect = Rect(minX, minY, maxX - minX + 1, maxY - minY + 1);
+
     if (lineEnding == ROUND_CAP_ENDING)
     {
         xCorner[0] = x1 - dy;
@@ -222,12 +275,6 @@ void Line::updateCachedShape()
 
 Rect Line::getMinimalRect() const
 {
-    int minX = xMin.to<int>();
-    int minY = yMin.to<int>();
-    int maxX = xMax.to<int>();
-    int maxY = yMax.to<int>();
-
-    return Rect(minX, minY, maxX - minX + 1, maxY - minY + 1);
+    return minimalRect;
 }
-
 } // namespace touchgfx

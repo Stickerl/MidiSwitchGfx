@@ -178,7 +178,7 @@ void hw_init()
     HAL_LTDC_SetPitch(&hltdc_eval, BSP_LCD_GetXSize(), 0);
 
     GPIO::init();
-
+    __HAL_RCC_CRC_CLK_ENABLE(); 
 }
 STM32F4DMA dma;
 OTM8009TouchController tc;
@@ -348,7 +348,7 @@ static void SystemClock_Config(void)
     RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
     RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-    ret = HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_6);
+    ret = HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5);
     if (ret != HAL_OK)
     {
         while (1)

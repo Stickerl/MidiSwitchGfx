@@ -1,21 +1,27 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #include <touchgfx/widgets/canvas/AbstractShape.hpp>
 #include <touchgfx/widgets/canvas/Canvas.hpp>
 
 namespace touchgfx
 {
-
 AbstractShape::AbstractShape() : CanvasWidget(),
     dx(0), dy(0), shapeAngle(0),
-    xScale(CWRUtil::toQ5<int>(1)), yScale(CWRUtil::toQ5<int>(1))
+    xScale(CWRUtil::toQ5<int>(1)), yScale(CWRUtil::toQ5<int>(1)),
+    minimalRect(Rect())
 {
     Drawable::setWidth(0);
     Drawable::setHeight(0);
@@ -23,35 +29,6 @@ AbstractShape::AbstractShape() : CanvasWidget(),
 
 AbstractShape::~AbstractShape()
 {
-}
-
-void AbstractShape::setAngle(int angle)
-{
-    if (shapeAngle != angle)
-    {
-        shapeAngle = angle;
-        updateAbstractShapeCache();
-    }
-}
-
-void AbstractShape::updateAngle(int angle)
-{
-    if (shapeAngle != angle)
-    {
-        Rect rectBefore = getMinimalRect();
-
-        shapeAngle = angle;
-        updateAbstractShapeCache();
-
-        Rect rectAfter = getMinimalRect();
-        rectBefore.expandToFit(rectAfter);
-        invalidateRect(rectBefore);
-    }
-}
-
-int AbstractShape::getAngle() const
-{
-    return shapeAngle;
 }
 
 bool AbstractShape::drawCanvasWidget(const Rect& invalidatedArea) const
@@ -75,41 +52,41 @@ void AbstractShape::updateAbstractShapeCache()
 {
     int numPoints = getNumPoints();
 
+    int xMin = 0;
+    int xMax = 0;
+    int yMin = 0;
+    int yMax = 0;
+
     for (int i = 0; i < numPoints; i++)
     {
         CWRUtil::Q5 xCorner = getCornerX(i);
         CWRUtil::Q5 yCorner = getCornerY(i);
 
-        CWRUtil::Q5 xCache = dx + ((CWRUtil::Q5(xCorner * xScale) * CWRUtil::cosine(shapeAngle))) - ((CWRUtil::Q5(yCorner * yScale) * CWRUtil::sine(shapeAngle)));
-        if (i == 0 || xCache > xMax)
+        CWRUtil::Q5 xCache = dx + ((CWRUtil::mulQ5(xCorner, xScale) * CWRUtil::cosine(shapeAngle))) - ((CWRUtil::mulQ5(yCorner, yScale) * CWRUtil::sine(shapeAngle)));
+        if (i == 0 || xCache.to<int>() > xMax)
         {
-            xMax = xCache;
+            xMax = xCache.to<int>();
         }
-        if (i == 0 || xCache < xMin)
+        if (i == 0 || xCache.to<int>() < xMin)
         {
-            xMin = xCache;
+            xMin = xCache.to<int>();
         }
-        CWRUtil::Q5 yCache = dy + ((CWRUtil::Q5(yCorner * yScale) * CWRUtil::cosine(shapeAngle))) + ((CWRUtil::Q5(xCorner * xScale) * CWRUtil::sine(shapeAngle)));
-        if (i == 0 || yCache > yMax)
+        CWRUtil::Q5 yCache = dy + ((CWRUtil::mulQ5(yCorner, yScale) * CWRUtil::cosine(shapeAngle))) + ((CWRUtil::mulQ5(xCorner, xScale) * CWRUtil::sine(shapeAngle)));
+        if (i == 0 || yCache.to<int>() > yMax)
         {
-            yMax = yCache;
+            yMax = yCache.to<int>();
         }
-        if (i == 0 || yCache < yMin)
+        if (i == 0 || yCache.to<int>() < yMin)
         {
-            yMin = yCache;
+            yMin = yCache.to<int>();
         }
         setCache(i, xCache, yCache);
     }
+    minimalRect = Rect(xMin, yMin, xMax - xMin + 1, yMax - yMin + 1);
 }
 
 Rect AbstractShape::getMinimalRect() const
 {
-    int minX = xMin.to<int>();
-    int minY = yMin.to<int>();
-    int maxX = xMax.to<int>();
-    int maxY = yMax.to<int>();
-
-    return Rect(minX, minY, maxX - minX + 1, maxY - minY + 1);
+    return minimalRect;
 }
-
 } // namespace touchgfx

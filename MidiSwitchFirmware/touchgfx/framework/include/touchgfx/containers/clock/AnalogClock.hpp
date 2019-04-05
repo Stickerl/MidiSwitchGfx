@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef ANALOGCLOCK_HPP
 #define ANALOGCLOCK_HPP
@@ -75,6 +81,19 @@ public:
      * @param rotationCenterY    The rotation center y coordinate.
      */
     virtual void setBackground(const BitmapId backgroundBitmapId, int16_t rotationCenterX, int16_t rotationCenterY);
+
+    /**
+     * @fn virtual void AnalogClock::setRotationCenter(int16_t rotationCenterX, int16_t rotationCenterY);
+     *
+     * @brief Sets the rotation center of the clock.
+     *
+     *        Sets the rotation center of the clock. The clock rotation center is the point
+     *        that the clock hands rotates around.
+     *
+     * @param rotationCenterX The rotation center x coordinate.
+     * @param rotationCenterY The rotation center y coordinate.
+     */
+    virtual void setRotationCenter(int16_t rotationCenterX, int16_t rotationCenterY);
 
     /**
      * @fn virtual void AnalogClock::setupHourHand(const BitmapId hourHandBitmapId, int16_t rotationCenterX, int16_t rotationCenterY);
@@ -172,7 +191,7 @@ public:
     virtual void setMinuteHandSecondCorrection(bool active);
 
     /**
-     * @fn virtual bool AnalogClock::getMinuteHandSecondCorrection();
+     * @fn virtual bool AnalogClock::getMinuteHandSecondCorrection() const;
      *
      * @brief Gets minute hand second correction.
      *
@@ -189,8 +208,8 @@ public:
      *
      * @brief Setup the clock to use animation for hand movements.
      *
-     * @param duration                     The animation duration.
-     * @param animationProgressionEquation The animation progression equation.
+     * @param duration                     (Optional) The animation duration.
+     * @param animationProgressionEquation (Optional) The animation progression equation.
      */
     virtual void setAnimation(uint16_t duration = 10, EasingEquation animationProgressionEquation = EasingEquations::backEaseInOut);
 
@@ -211,10 +230,10 @@ public:
      *
      * @brief Sets the time with input format as 24H. No animations are performed.
      *
-     *        Sets the time with input format as 24H. No animations are performed regardless of the
-     *        animation settings. This is often useful when setting up the AnalogClock where you do
-     *        not want an initial animation. Note that this does not affect any selected
-     *        presentation formats.
+     *        Sets the time with input format as 24H. No animations are performed regardless of
+     *        the animation settings. This is often useful when setting up the AnalogClock
+     *        where you do not want an initial animation. Note that this does not affect any
+     *        selected presentation formats.
      *
      * @param hour   The hours (in 24H format).
      * @param minute The minutes (in 24H format).
@@ -227,10 +246,10 @@ public:
      *
      * @brief Sets the time with input format as 12H. No animations are performed.
      *
-     *        Sets the time with input format as 12H. No animations are performed regardless of the
-     *        animation settings. This is often useful when setting up the AnalogClock where you do
-     *        not want an initial animation. Note that this does not affect any selected
-     *        presentation formats.
+     *        Sets the time with input format as 12H. No animations are performed regardless of
+     *        the animation settings. This is often useful when setting up the AnalogClock
+     *        where you do not want an initial animation. Note that this does not affect any
+     *        selected presentation formats.
      *
      * @param hour   The hours (in 12H format).
      * @param minute The minutes (in 12H format).
@@ -285,9 +304,9 @@ protected:
      * @param steps           Number of steps the primary hand value is divided into (e.g. 60 for
      *                        minutes/seconds and 12 for hour).
      * @param handValue       The actual value for the hand in question (in the range [0;steps]).
-     * @param secondHandValue If the angle should be corrected for a secondary hand its value
-     *                        should be specified here (in the range [0;60]). This is the case
-     *                        when setHourHandMinuteCorrection(true) or
+     * @param secondHandValue (Optional) If the angle should be corrected for a secondary hand its
+     *                        value should be specified here (in the range [0;60]). This is the
+     *                        case when setHourHandMinuteCorrection(true) or
      *                        setMinuteHandSecondCorrection(true) is selected.
      *
      * @return The converted value to angle.
@@ -295,7 +314,7 @@ protected:
     virtual float convertHandValueToAngle(uint8_t steps, uint8_t handValue, uint8_t secondHandValue = 0) const;
 
     /**
-     * @fn virtual bool AnalogClock::animationEnabled();
+     * @fn virtual bool AnalogClock::animationEnabled() const;
      *
      * @brief Is animation enabled.
      *
@@ -304,9 +323,7 @@ protected:
      * @return true if animation is enabled.
      */
     virtual bool animationEnabled() const;
-
 };
-
 }
 
 #endif // ANALOGCLOCK_HPP

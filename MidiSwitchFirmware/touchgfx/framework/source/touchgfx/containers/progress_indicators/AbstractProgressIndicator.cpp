@@ -1,17 +1,22 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #include <touchgfx/containers/progress_indicators/AbstractProgressIndicator.hpp>
 
 namespace touchgfx
 {
-
 AbstractProgressIndicator::AbstractProgressIndicator()
     : Container(), rangeMin(0), rangeMax(100), currentValue(0), rangeSteps(100), rangeStepsMin(0)
 {
@@ -124,13 +129,11 @@ uint16_t AbstractProgressIndicator::getProgress(uint16_t range /*= 100*/) const
     {
         return 0;
     }
-    uint16_t progress = ((currentValue - rangeMin) * range) / (rangeMax - rangeMin);
-    // Calculate range/rangeSteps as "intpart+fracpart/rangeSteps"
-    uint16_t intpart = range / rangeSteps;
-    uint16_t fracpart = range % rangeSteps;
-    // Now "progress/(intpart+fracpart/rangeSteps)" = "(progress*rangeSteps)/(intpart*rangeSteps+fracpart)"
-    uint16_t count = rangeStepsMin + (progress * (rangeSteps - rangeStepsMin)) / range;
-    return (count * intpart + (count * fracpart) / rangeSteps);
+    int32_t remainder; // Not used here
+    // Find out at what step the current value is.
+    int32_t step = rangeStepsMin + muldiv(currentValue - rangeMin, rangeSteps - rangeStepsMin, rangeMax - rangeMin, remainder);
+    // Scale the step up to [0..range]
+    int32_t prog = muldiv(step, range, rangeSteps, remainder);
+    return (uint16_t)prog;
 }
-
-}
+} // namespace touchgfx

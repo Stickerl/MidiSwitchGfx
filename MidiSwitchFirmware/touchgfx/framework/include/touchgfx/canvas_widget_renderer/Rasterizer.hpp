@@ -1,19 +1,25 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef RASTERIZER_HPP
 #define RASTERIZER_HPP
 
-#include <touchgfx/canvas_widget_renderer/Scanline.hpp>
+#include <touchgfx/canvas_widget_renderer/Outline.hpp>
 #include <touchgfx/canvas_widget_renderer/Rasterizer.hpp>
 #include <touchgfx/canvas_widget_renderer/Renderer.hpp>
-#include <touchgfx/canvas_widget_renderer/Outline.hpp>
+#include <touchgfx/canvas_widget_renderer/Scanline.hpp>
 
 namespace touchgfx
 {
@@ -55,22 +61,22 @@ public:
     /**
      * @brief Determine the sub pixel accuracy, to be more precise, the number of bits of the fractional part of the coordinates.
      */
-    enum    ///< Determine the sub pixel accuracy, to be more precise, the number of bits of the fractional part of the coordinates.
+    enum ///< Determine the sub pixel accuracy, to be more precise, the number of bits of the fractional part of the coordinates.
     {
-        POLY_BASE_SHIFT = 5,    ///< Number of bits reserved for fraction part
-        POLY_BASE_SIZE  = 1 << POLY_BASE_SHIFT, ///< The value to divide or multiply with to convert to / from this format
-        POLY_BASE_MASK  = POLY_BASE_SIZE - 1    ///< The value used to mask the fraction
+        POLY_BASE_SHIFT = 5,                   ///< Number of bits reserved for fraction part
+        POLY_BASE_SIZE = 1 << POLY_BASE_SHIFT, ///< The value to divide or multiply with to convert to / from this format
+        POLY_BASE_MASK = POLY_BASE_SIZE - 1    ///< The value used to mask the fraction
     };
 
     /**
      * @brief Determine the area accuracy, to be more precise, the number of bits of the fractional part of the areas when calculating scanlines.
      */
-    enum    ///< Determine the area accuracy, to be more precise, the number of bits of the fractional part of the areas when calculating scanlines.
+    enum ///< Determine the area accuracy, to be more precise, the number of bits of the fractional part of the areas when calculating scanlines.
     {
-        AA_SHIFT = 8,   ///< Number of bits reserved for fraction part when calculating the area
-        AA_NUM   = 1 << AA_SHIFT,   ///< The value to divide or multiply with to convert to / from this format
-        AA_MASK  = AA_NUM - 1,  ///< The value used to mask the fraction
-        AA_2NUM  = AA_NUM * 2,  ///< Number of fraction bits when multiplying two area numbers
+        AA_SHIFT = 8,           ///< Number of bits reserved for fraction part when calculating the area
+        AA_NUM = 1 << AA_SHIFT, ///< The value to divide or multiply with to convert to / from this format
+        AA_MASK = AA_NUM - 1,   ///< The value used to mask the fraction
+        AA_2NUM = AA_NUM * 2,   ///< Number of fraction bits when multiplying two area numbers
         AA_2MASK = AA_2NUM - 1  ///< Mask for fraction bits when multiplying two area numbers
     };
 
@@ -83,8 +89,8 @@ public:
      */
     enum FillingRule
     {
-        FILL_NON_ZERO,  ///< Filling rule to fill anything inside the outmost border of the outline.
-        FILL_EVEN_ODD   ///< Filling rule to fill using xor rule inside the outline.
+        FILL_NON_ZERO, ///< Filling rule to fill anything inside the outmost border of the outline.
+        FILL_EVEN_ODD  ///< Filling rule to fill using xor rule inside the outline.
     };
 
     /**
@@ -94,8 +100,8 @@ public:
      *
      *        Default constructor.
      */
-    Rasterizer() :
-        fillingRule(FILL_NON_ZERO)
+    Rasterizer()
+        : fillingRule(FILL_NON_ZERO)
     {
     }
 
@@ -137,7 +143,12 @@ public:
      */
     void moveTo(int x, int y)
     {
-        outline.moveTo(x, y);
+#ifndef SIMULATOR
+        if (!outline.wasOutlineTooComplex())
+#endif
+        {
+            outline.moveTo(x, y);
+        }
     }
 
     /**
@@ -152,7 +163,12 @@ public:
      */
     void lineTo(int x, int y)
     {
-        outline.lineTo(x, y);
+#ifndef SIMULATOR
+        if (!outline.wasOutlineTooComplex())
+#endif
+        {
+            outline.lineTo(x, y);
+        }
     }
 
     /**
@@ -190,7 +206,7 @@ public:
     }
 
     /**
-     * @fn template<class Renderer> bool Rasterizer::render(Renderer& r)
+     * @fn template <class Renderer> bool Rasterizer::render(Renderer& r)
      *
      * @brief Renders this object.
      *
@@ -199,10 +215,11 @@ public:
      * @tparam Renderer Type of the renderer.
      * @param [in] r The Renderer to process.
      *
-     * @return true there was enough memory available to draw the outline and render the
-     *         graphics, false if there was insufficient memory and nothing was drawn.
+     * @return true there was enough memory available to draw the outline and render the graphics,
+     *         false if there was insufficient memory and nothing was drawn.
      */
-    template<class Renderer> bool render(Renderer& r)
+    template <class Renderer>
+    bool render(Renderer& r)
     {
         const Cell* cells = outline.getCells();
         unsigned numCells = outline.getNumCells();
@@ -231,11 +248,11 @@ public:
         {
             const Cell* startCell = curCell;
 
-            int coord  = curCell->packedCoord();
+            int coord = curCell->packedCoord();
             x = curCell->x;
             y = curCell->y;
 
-            area   = startCell->area;
+            area = startCell->area;
             cover += startCell->cover;
 
             //accumulate all start cells
@@ -246,7 +263,7 @@ public:
                 {
                     break;
                 }
-                area  += curCell->area;
+                area += curCell->area;
                 cover += curCell->cover;
             }
 
@@ -297,9 +314,8 @@ public:
      *
      * @brief Sets maximum render y coordinate.
      *
-     *        Sets maximum render y coordinate. This is passed to the Outline to avoid
-     *        registering any Cell that has a y coordinate less than zero of higher than the
-     *        given y.
+     *        Sets maximum render y coordinate. This is passed to the Outline to avoid registering
+     *        any Cell that has a y coordinate less than zero of higher than the given y.
      *
      * @param y The max y coordinate to render for the Outline.
      */
@@ -308,8 +324,21 @@ public:
         outline.setMaxRenderY(y);
     }
 
-private:
+    /**
+     * @fn bool Rasterizer::wasOutlineTooComplex()
+     *
+     * @brief Determines if we the outline was too complex to draw completely.
+     *
+     *        Determines if we the outline was too complex to draw completely.
+     *
+     * @return True if it was too complex, false if not.
+     */
+    bool wasOutlineTooComplex()
+    {
+        return outline.wasOutlineTooComplex();
+    }
 
+private:
     /**
      * @fn Rasterizer::Rasterizer(const Rasterizer&);
      *
@@ -320,7 +349,7 @@ private:
     Rasterizer(const Rasterizer&);
 
     /**
-     * @fn const Rasterizer& Rasterizer::operator= (const Rasterizer&);
+     * @fn const Rasterizer& Rasterizer::operator=(const Rasterizer&);
      *
      * @brief Assignment operator.
      *
@@ -328,13 +357,12 @@ private:
      *
      * @return A shallow copy of this object.
      */
-    const Rasterizer& operator = (const Rasterizer&);
+    const Rasterizer& operator=(const Rasterizer&);
 
-    Outline     outline;    ///< The outline
-    Scanline    scanline;   ///< The scanline
-    FillingRule fillingRule;    ///< The filling rule
+    Outline outline;         ///< The outline
+    Scanline scanline;       ///< The scanline
+    FillingRule fillingRule; ///< The filling rule
 };
-
 } // namespace touchgfx
 
 #endif // RASTERIZER_HPP

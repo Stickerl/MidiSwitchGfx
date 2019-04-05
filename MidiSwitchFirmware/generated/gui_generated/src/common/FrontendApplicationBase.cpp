@@ -52,7 +52,7 @@ void FrontendApplicationBase::gotoPatchConfigScreenSlideTransitionWest()
 
 void FrontendApplicationBase::gotoPatchConfigScreenSlideTransitionWestImpl()
 {
-    makeTransition<PatchConfigView, PatchConfigPresenter, SlideTransition<WEST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    makeTransition<PatchConfigView, PatchConfigPresenter, touchgfx::SlideTransition<WEST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
 
@@ -64,7 +64,7 @@ void FrontendApplicationBase::gotoPatchConfigScreenSlideTransitionEast()
 
 void FrontendApplicationBase::gotoPatchConfigScreenSlideTransitionEastImpl()
 {
-    makeTransition<PatchConfigView, PatchConfigPresenter, SlideTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    makeTransition<PatchConfigView, PatchConfigPresenter, touchgfx::SlideTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
 // GlobalConfig
@@ -77,6 +77,6 @@ void FrontendApplicationBase::gotoGlobalConfigScreenSlideTransitionNorth()
 
 void FrontendApplicationBase::gotoGlobalConfigScreenSlideTransitionNorthImpl()
 {
-    makeTransition<GlobalConfigView, GlobalConfigPresenter, SlideTransition<NORTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    makeTransition<GlobalConfigView, GlobalConfigPresenter, touchgfx::SlideTransition<NORTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 

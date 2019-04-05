@@ -10,19 +10,21 @@
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/containers/Container.hpp>
 #include <touchgfx/widgets/Box.hpp>
+
 #include <touchgfx/widgets/Button.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
-
 class GlobalConfigViewBase : public touchgfx::View<GlobalConfigPresenter>
 {
 public:
     GlobalConfigViewBase();
     virtual ~GlobalConfigViewBase() {}
 
+    virtual void setupScreen();
+
 protected:
-    FrontendApplication& application() { 
-        return *static_cast<FrontendApplication*>(Application::getInstance()); 
+    FrontendApplication& application() {
+        return *static_cast<FrontendApplication*>(Application::getInstance());
     }
 
     /*
@@ -33,6 +35,7 @@ protected:
     touchgfx::Box HeadlineBox;
     touchgfx::Box MidiChanalBox;
     touchgfx::Box BankNrBox;
+
     touchgfx::Button Next;
     touchgfx::Button Pev;
     touchgfx::TextArea GlobalCfgHeadline;

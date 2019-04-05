@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #include <platform/hal/simulator/sdl2/HALSDL2.hpp>
 #include <vector>
@@ -20,7 +26,7 @@
 #include <SDL2/SDL_syswm.h>
 #include <touchgfx/Utils.hpp>
 
-#if defined(WIN32)
+#if defined(WIN32) || defined(_WIN32)
 #include <windows.h>
 #elif defined(__GNUC__)
 #include <sys/types.h>
@@ -38,10 +44,9 @@
 
 namespace touchgfx
 {
-
 static bool isAlive = true;
 static bool sdl_initialized = false;
-
+static int screenshotcount = 0;
 static uint8_t* rotated = NULL;
 static uint8_t* tft24bpp = NULL;
 static SDL_Window* simulatorWindow = 0;
@@ -111,6 +116,7 @@ static void sdlCleanup2()
 {
     if (sdl_initialized)
     {
+        sdl_initialized = false; // Make sure we don't get in here again
         SDL_DestroyRenderer(simulatorRenderer);
         SDL_DestroyWindow(simulatorWindow);
         SDL_VideoQuit();
@@ -154,7 +160,7 @@ bool HALSDL2::sdl_init(int argcount, char** args)
         return false;
     }
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
     strncpy_s(programPath, sizeof(programPath), args[0], strlen(args[0]));
     char* filenamePos = strrchr(programPath, '\\');
     if (filenamePos)
@@ -224,7 +230,7 @@ bool HALSDL2::sdl_init(int argcount, char** args)
     SDL_SetWindowIcon(simulatorWindow, iconSurface);
     SDL_FreeSurface(iconSurface);
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
     FILE* stream;
     //sdl has hijacked output and error on windows
     const char* confile = "CONOUT$";
@@ -480,6 +486,11 @@ void HALSDL2::taskEntry()
                     }
                     backPorchExited();
                     frontPorchEntered();
+                    if (screenshotcount > 0)
+                    {
+                        screenshotcount--;
+                        saveScreenshot();
+                    }
                 }
                 break;
             }
@@ -565,7 +576,29 @@ void HALSDL2::taskEntry()
                 }
                 else if (event.key.keysym.sym == SDLK_F3)
                 {
-                    saveScreenshot();
+                    if (event.key.keysym.mod & KMOD_CTRL)
+                    {
+                        // Repeat
+                        saveNextScreenshots(50);
+                    }
+                    else if (event.key.keysym.mod & KMOD_SHIFT)
+                    {
+                        // clipboard
+                        copyScreenshotToClipboard();
+                    }
+                    else if (event.key.keysym.mod & KMOD_ALT)
+                    {
+                        // Do nothing
+                    }
+                    else if (event.key.keysym.mod & KMOD_GUI)
+                    {
+                        // Do nothing
+                    }
+                    else
+                    {
+                        // No modifiers
+                        saveScreenshot();
+                    }
                 }
                 else if (event.key.keysym.sym == SDLK_F4)
                 {
@@ -842,7 +875,7 @@ void HALSDL2::setVsyncInterval(float ms)
 void HALSDL2::saveScreenshot(char* folder, char* filename)
 {
     const char* dir = "screenshots";
-#if defined(WIN32)
+#if defined(WIN32) || defined(_WIN32)
     CreateDirectory(dir, 0);
 #elif defined(__GNUC__)
     mkdir(dir, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
@@ -852,7 +885,7 @@ void HALSDL2::saveScreenshot(char* folder, char* filename)
     if (folder)
     {
         sprintf_s(fullPathAndName, sizeof(fullPathAndName), "%s/%s", dir, folder);
-#if defined(WIN32)
+#if defined(WIN32) || defined(_WIN32)
         CreateDirectory(fullPathAndName, 0);
 #elif defined(__GNUC__)
         mkdir(fullPathAndName, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
@@ -916,6 +949,71 @@ void HALSDL2::saveScreenshot()
     saveScreenshot(0, baseName);
 }
 
+void HALSDL2::saveNextScreenshots(int n)
+{
+    screenshotcount += n;
+}
+
+//copy 24 bit framebuffer to clipboard on Win32
+void HALSDL2::copyScreenshotToClipboard()
+{
+#ifdef __linux__
+    touchgfx_printf("Copying to clipboard has not been implemented for Linux\n");
+#else
+    if (!OpenClipboard(NULL))
+    {
+        touchgfx_printf("Unable to OpenClipboard\n");
+        return;
+    }
+
+    if (!EmptyClipboard())
+    {
+        touchgfx_printf("Unable to EmptyClipboard\n");
+        return;
+    }
+
+    uint8_t* buffer24 = doRotate(scaleTo24bpp(getTFTFrameBuffer(), DISPLAY_WIDTH, DISPLAY_HEIGHT, lcd().bitDepth()), DISPLAY_WIDTH, DISPLAY_HEIGHT);
+    DWORD size_pixels = DISPLAY_WIDTH * DISPLAY_HEIGHT * 3;
+
+    HGLOBAL hMem = GlobalAlloc(GHND, sizeof(BITMAPV5HEADER) + size_pixels);
+    if (!hMem)
+    {
+        touchgfx_printf("Error allocating memory for bitmap data");
+        return;
+    }
+
+    BITMAPV5HEADER* hdr = (BITMAPV5HEADER*)GlobalLock(hMem);
+    if (!hdr)
+    {
+        touchgfx_printf("Error locking memory for bitmap data");
+        GlobalFree(hMem);
+        return;
+    }
+
+    memset(hdr, 0, sizeof(BITMAPV5HEADER));
+
+    hdr->bV5Size = sizeof(BITMAPV5HEADER);
+    hdr->bV5Width = DISPLAY_WIDTH;
+    hdr->bV5Height = -DISPLAY_HEIGHT;
+    hdr->bV5Planes = 1;
+    hdr->bV5BitCount = 24;
+    hdr->bV5Compression = BI_RGB;
+    hdr->bV5SizeImage = size_pixels;
+    hdr->bV5Intent = LCS_GM_GRAPHICS;
+    hdr->bV5CSType = 0x57696E20;
+
+    CopyMemory(hdr + 1, buffer24, size_pixels);
+    GlobalUnlock(hMem);
+
+    if (!SetClipboardData(CF_DIBV5, hMem))
+    {
+        touchgfx_printf("Unable to SetClipboardData\n");
+    }
+
+    CloseClipboard();
+#endif
+}
+
 #ifndef __linux__
 char** HALSDL2::getArgv(int* argc)
 {
@@ -929,9 +1027,9 @@ char** HALSDL2::getArgv(int* argc)
         wcstombs_s(&numChars, buffer, sizeof(buffer), argvw[i], numChars);
         argv[i] = new char[numChars];
         memcpy_s(argv[i], numChars, buffer, numChars);
+        argv[i][numChars] = '\0';
     }
     return argv;
 }
 #endif
-
 } // namespace touchgfx

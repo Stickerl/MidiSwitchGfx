@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef BLITOP_HPP
 #define BLITOP_HPP
@@ -23,15 +29,15 @@ namespace touchgfx
  */
 enum BlitOperations
 {
-    BLIT_OP_COPY                         = 1 << 0, ///< Copy the source to the destination
-    BLIT_OP_FILL                         = 1 << 1, ///< Fill the destination with color
-    BLIT_OP_COPY_WITH_ALPHA              = 1 << 2, ///< Copy the source to the destination using the given alpha
-    BLIT_OP_FILL_WITH_ALPHA              = 1 << 3, ///< Fill the destination with color using the given alpha
+    BLIT_OP_COPY = 1 << 0, ///< Copy the source to the destination
+    BLIT_OP_FILL = 1 << 1, ///< Fill the destination with color
+    BLIT_OP_COPY_WITH_ALPHA = 1 << 2, ///< Copy the source to the destination using the given alpha
+    BLIT_OP_FILL_WITH_ALPHA = 1 << 3, ///< Fill the destination with color using the given alpha
     BLIT_OP_COPY_WITH_TRANSPARENT_PIXELS = 1 << 4, ///< Deprecated, ignored. (Copy the source to the destination, but not the transparent pixels)
-    BLIT_OP_COPY_ARGB8888                = 1 << 5, ///< Copy the source to the destination, performing per-pixel alpha blending
-    BLIT_OP_COPY_ARGB8888_WITH_ALPHA     = 1 << 6, ///< Copy the source to the destination, performing per-pixel alpha blending and blending the result with an image-wide alpha
-    BLIT_OP_COPY_A4                      = 1 << 7, ///< Copy 4-bit source text to destination, performing per-pixel alpha blending
-    BLIT_OP_COPY_A8                      = 1 << 8 ///< Copy 8-bit source text to destination, performing per-pixel alpha blending
+    BLIT_OP_COPY_ARGB8888 = 1 << 5, ///< Copy the source to the destination, performing per-pixel alpha blending
+    BLIT_OP_COPY_ARGB8888_WITH_ALPHA = 1 << 6, ///< Copy the source to the destination, performing per-pixel alpha blending and blending the result with an image-wide alpha
+    BLIT_OP_COPY_A4 = 1 << 7, ///< Copy 4-bit source text to destination, performing per-pixel alpha blending
+    BLIT_OP_COPY_A8 = 1 << 8 ///< Copy 8-bit source text to destination, performing per-pixel alpha blending
 };
 
 /**
@@ -55,6 +61,5 @@ struct BlitOp
     colortype       color;         ///< Color to fill
     uint8_t         alpha;         ///< The alpha to use
 };
-
 } // namespace touchgfx
 #endif // BLITOP_HPP

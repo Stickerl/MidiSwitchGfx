@@ -149,7 +149,7 @@ bool Flash::read(uint16_t id, uint8_t* target, uint32_t size, uint32_t addr)
         {
             if((validFrames[index].data != NULL) && ((size + addr) <= validFrames[index].size))
             {
-                memcpy(target, validFrames[index].data, size);
+                memcpy(target, &validFrames[index].data[addr], size);
                 ret = true;
             }
             break;

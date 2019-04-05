@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef LCD_HPP
 #define LCD_HPP
@@ -17,7 +23,6 @@
 #include <touchgfx/Bitmap.hpp>
 #include <touchgfx/Unicode.hpp>
 #include <touchgfx/TextProvider.hpp>
-
 
 namespace touchgfx
 {
@@ -146,14 +151,16 @@ public:
     virtual void blitCopy(const uint8_t* sourceData, Bitmap::BitmapFormat sourceFormat, const Rect& source, const Rect& blitRect, uint8_t alpha, bool hasTransparentPixels) = 0;
 
     /**
-     * @fn virtual uint16_t* LCD::copyFrameBufferRegionToMemory(const Rect& region) = 0;
+     * @fn virtual uint16_t* LCD::copyFrameBufferRegionToMemory(const Rect& region, const BitmapId bitmap = BITMAP_ANIMATION_STORAGE) = 0;
      *
      * @brief Copies a part of the frame buffer.
      *
-     *        Copies a part of the frame buffer to an extra copy of the frame buffer also known
-     *        as animation storage. Only the part specified with by parameter region is copied.
+     *        Copies a part of the frame buffer to a bitmap. The
+     *        bitmap must be a dynamic bitmap. Only the part specified
+     *        with by parameter region is copied.
      *
      * @param region The part to copy.
+     * @param bitmap The bitmap to store the data in. Default parameter is Animation Storage.
      *
      * @return A pointer to the copy.
      *
@@ -162,7 +169,7 @@ public:
      *
      * @see blitCopy
      */
-    virtual uint16_t* copyFrameBufferRegionToMemory(const Rect& region) = 0;
+    virtual uint16_t* copyFrameBufferRegionToMemory(const Rect& region, const BitmapId bitmap = BITMAP_ANIMATION_STORAGE) = 0;
 
     /**
      * @fn virtual void LCD::fillRect(const Rect& rect, colortype color, uint8_t alpha = 255) = 0;
@@ -309,7 +316,7 @@ public:
      * @param widgetArea         The area covered by the drawing widget in absolute coordinates.
      * @param invalidatedArea    The (sub)region of the widget area to draw, expressed relative to
      *                           the widget area. If the widgetArea is (x, y, width, height) = (10,
-     *                           10, 20, 20) and invalidatedArea is (x, y ,width, height) = (5, 5,
+     *                           10, 20, 20) and invalidatedArea is (x, y, width, height) = (5, 5,
      *                           6, 6) the widgetArea drawn on the LCD is (x, y, width, height) =
      *                           (15, 15, 6, 6).
      * @param [in] stringVisuals The string visuals (font, alignment, line space, color)
@@ -484,7 +491,7 @@ protected:
      * @param widgetArea      The area covered by the drawing widget in absolute coordinates.
      * @param invalidatedArea The (sub)region of the widget area to draw, expressed relative to the
      *                        widget area. If the widgetArea is (x, y, width, height) = (10, 10,
-     *                        20, 20) and invalidatedArea is (x, y ,width, height) = (5, 5, 6,
+     *                        20, 20) and invalidatedArea is (x, y, width, height) = (5, 5, 6,
      *                        6) the widgetArea drawn on the LCD is (x, y, width, height) = (15,
      *                        15, 6, 6).
      * @param [in] visuals    The string visuals (font, alignment, line space, color)
@@ -513,7 +520,7 @@ protected:
      * @param widgetArea      The area covered by the drawing widget in absolute coordinates.
      * @param invalidatedArea The (sub)region of the widget area to draw, expressed relative to the
      *                        widget area. If the widgetArea is (x, y, width, height) = (10, 10,
-     *                        20, 20) and invalidatedArea is (x, y ,width, height) = (5, 5, 6,
+     *                        20, 20) and invalidatedArea is (x, y, width, height) = (5, 5, 6,
      *                        6) the widgetArea drawn on the LCD is (x, y, width, height) = (15,
      *                        15, 6, 6).
      * @param [in] visuals    The string visuals (font, alignment, line space, color)
@@ -576,7 +583,7 @@ private:
     class DrawStringInternalStruct
     {
     public:
-        uint16_t*            frameBuffer;
+        uint16_t* frameBuffer;
         const Rect*          widgetArea;
         int16_t              widgetRectY;
         const Rect*          toDraw;
@@ -644,10 +651,7 @@ private:
         uint16_t             ellipsisGlyphWidth;
         bool                 useEllipsis;
     };
-
-
 };
-
 } // namespace touchgfx
 
 #endif // LCD_HPP

@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef LINE_HPP
 #define LINE_HPP
@@ -51,7 +57,7 @@ public:
         BUTT_CAP_ENDING,  ///< The line ending is cut 90 degrees at the end of the line
         ROUND_CAP_ENDING, ///< The line ending is rounded as a circle with center at the end of the line
         SQUARE_CAP_ENDING ///< The line ending is cut 90 degrees, but extends half the width of the line
-    } ;
+    };
 
     /**
      * @fn Line::Line();
@@ -63,7 +69,7 @@ public:
     Line();
 
     /**
-     * @fn template <class T> void Line::setLine(T x1, T y1, T x2, T y2)
+     * @fn template <typename T> void Line::setLine(T x1, T y1, T x2, T y2)
      *
      * @brief Sets the endpoints of the line.
      *
@@ -80,7 +86,7 @@ public:
      * @see setStart
      * @see setEnd
      */
-    template <class T>
+    template <typename T>
     void setLine(T x1, T y1, T x2, T y2)
     {
         setStart(x1, y1);
@@ -88,7 +94,7 @@ public:
     }
 
     /**
-     * @fn template <class T> void Line::setStart(T x, T y)
+     * @fn template <typename T> void Line::setStart(T x, T y)
      *
      * @brief Sets the start point for this Line.
      *
@@ -105,7 +111,7 @@ public:
      * @see setLine
      * @see setEnd
      */
-    template <class T>
+    template <typename T>
     void setStart(T x, T y)
     {
         setStart(CWRUtil::toQ5<T>(x), CWRUtil::toQ5<T>(y));
@@ -131,7 +137,7 @@ public:
     void setStart(CWRUtil::Q5 xQ5, CWRUtil::Q5 yQ5);
 
     /**
-     * @fn template <class T> void Line::updateStart(T x, T y)
+     * @fn template <typename T> void Line::updateStart(T x, T y)
      *
      * @brief Update the start point for this Line.
      *
@@ -147,7 +153,7 @@ public:
      * @see setStart
      * @see updateEnd
      */
-    template <class T>
+    template <typename T>
     void updateStart(T x, T y)
     {
         updateStart(CWRUtil::toQ5<T>(x), CWRUtil::toQ5<T>(y));
@@ -172,7 +178,7 @@ public:
     void updateStart(CWRUtil::Q5 xQ5, CWRUtil::Q5 yQ5);
 
     /**
-     * @fn template <class T> void Line::getStart(T& x, T& y) const
+     * @fn template <typename T> void Line::getStart(T& x, T& y) const
      *
      * @brief Gets the start coordinates for the line.
      *
@@ -185,15 +191,15 @@ public:
      * @see setStart
      * @see setLine
      */
-    template <class T>
+    template <typename T>
     void getStart(T& x, T& y) const
     {
-        x = int(x1) / T(Rasterizer::POLY_BASE_SIZE);
-        y = int(y1) / T(Rasterizer::POLY_BASE_SIZE);
+        x = x1.to<T>();
+        y = y1.to<T>();
     }
 
     /**
-     * @fn template <class T> void Line::setEnd(T x, T y)
+     * @fn template <typename T> void Line::setEnd(T x, T y)
      *
      * @brief Sets the end point for this Line.
      *
@@ -208,7 +214,7 @@ public:
      * @see updateEnd
      * @see getEnd
      */
-    template <class T>
+    template <typename T>
     void setEnd(T x, T y)
     {
         setEnd(CWRUtil::toQ5<T>(x), CWRUtil::toQ5<T>(y));
@@ -232,7 +238,7 @@ public:
     void setEnd(CWRUtil::Q5 xQ5, CWRUtil::Q5 yQ5);
 
     /**
-     * @fn template <class T> void Line::updateEnd(T x, T y)
+     * @fn template <typename T> void Line::updateEnd(T x, T y)
      *
      * @brief Update the end point for this Line.
      *
@@ -245,7 +251,7 @@ public:
      * @param x The x coordinate of the end point.
      * @param y The y coordinate of the end point.
      */
-    template <class T>
+    template <typename T>
     void updateEnd(T x, T y)
     {
         CWRUtil::Q5 xQ5 = CWRUtil::toQ5<T>(x);
@@ -269,7 +275,7 @@ public:
     void updateEnd(CWRUtil::Q5 xQ5, CWRUtil::Q5 yQ5);
 
     /**
-     * @fn template <class T> void Line::getEnd(T& x, T& y) const
+     * @fn template <typename T> void Line::getEnd(T& x, T& y) const
      *
      * @brief Gets the end coordinates for the line.
      *
@@ -282,15 +288,15 @@ public:
      * @see setEnd
      * @see setLine
      */
-    template <class T>
+    template <typename T>
     void getEnd(T& x, T& y) const
     {
-        x = (int)x2 / T(Rasterizer::POLY_BASE_SIZE);
-        y = (int)y2 / T(Rasterizer::POLY_BASE_SIZE);
+        x = x2.to<T>();
+        y = y2.to<T>();
     }
 
     /**
-     * @fn template <class T> void Line::setLineWidth(T width)
+     * @fn template <typename T> void Line::setLineWidth(T width)
      *
      * @brief Sets the width for this Line.
      *
@@ -303,7 +309,7 @@ public:
      *
      * @see updateLineWidth
      */
-    template <class T>
+    template <typename T>
     void setLineWidth(T width)
     {
         setLineWidth(CWRUtil::toQ5<T>(width));
@@ -335,7 +341,7 @@ public:
     }
 
     /**
-     * @fn template <class T> void Line::updateLineWidth(T width)
+     * @fn template <typename T> void Line::updateLineWidth(T width)
      *
      * @brief Update the width for this Line.
      *
@@ -349,7 +355,7 @@ public:
      *
      * @see setLineWidth
      */
-    template <class T>
+    template <typename T>
     void updateLineWidth(T width)
     {
         updateLineWidth(CWRUtil::toQ5<T>(width));
@@ -388,7 +394,7 @@ public:
     }
 
     /**
-     * @fn template <class T> void Line::getLineWidth(T& width) const
+     * @fn template <typename T> void Line::getLineWidth(T& width) const
      *
      * @brief Gets line width.
      *
@@ -399,10 +405,31 @@ public:
      *
      * @see setLineWidth
      */
-    template <class T>
+    template <typename T>
     void getLineWidth(T& width) const
     {
-        width = int(lineWidth) / T(Rasterizer::POLY_BASE_SIZE);
+        width = lineWidth.to<T>();
+    }
+
+    /**
+     * @fn template <typename T> T Line::getLineWidth() const
+     *
+     * @brief Gets line width.
+     *
+     *        Gets line width.
+     *
+     * @tparam T Generic type parameter, either int (default) or float.
+     *
+     * @return The line width.
+     *
+     * @see setLineWidth
+     *
+     * ### param [out] width The line width.
+     */
+    template <typename T>
+    T getLineWidth() const
+    {
+        return lineWidth.to<T>();
     }
 
     /**
@@ -485,12 +512,11 @@ private:
     CWRUtil::Q5 lineWidth;
     LINE_ENDING_STYLE lineEnding;
     CWRUtil::Q5 xCorner[4], yCorner[4];
-    CWRUtil::Q5 xMin, yMin, xMax, yMax;
+    Rect minimalRect;
     int lineCapArcIncrement;
 
     void updateCachedShape();
 };
-
 } // namespace touchgfx
 
 #endif // LINE_HPP

@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef ABSTRACTSHAPE_HPP
 #define ABSTRACTSHAPE_HPP
@@ -33,7 +39,6 @@ namespace touchgfx
 class AbstractShape : public CanvasWidget
 {
 public:
-
     /**
      * @struct ShapePoint AbstractShape.hpp touchgfx/widgets/canvas/AbstractShape.hpp
      *
@@ -42,11 +47,11 @@ public:
      *        Defines an alias representing the array of points making up the abstract shape.
      *        This will help setting up the abstractShape very easily using setAbstractShape().
      *
-     * @tparam T Generic type parameter.
+     * @tparam T Generic type parameter, either int or float.
      *
      * @see setAbstractShape()
      */
-    template <class T>
+    template <typename T>
     struct ShapePoint
     {
         T x; ///< The x coordinate of the points.
@@ -126,7 +131,7 @@ public:
     virtual CWRUtil::Q5 getCornerY(int i) const = 0;
 
     /**
-     * @fn template <class T> void AbstractShape::setShape(ShapePoint<T>* points)
+     * @fn template <typename T> void AbstractShape::setShape(ShapePoint<T>* points)
      *
      * @brief Sets a shape the struct Points.
      *
@@ -138,19 +143,19 @@ public:
      *
      * @note The area containing the shape is not invalidated.
      */
-    template <class T>
+    template <typename T>
     void setShape(ShapePoint<T>* points)
     {
         int numPoints = getNumPoints();
         for (int i = 0; i < numPoints; i++)
         {
-            setCorner(i, CWRUtil::toQ5(points[i].x), CWRUtil::toQ5(points[i].y));
+            setCorner(i, CWRUtil::toQ5<T>(points[i].x), CWRUtil::toQ5<T>(points[i].y));
         }
         updateAbstractShapeCache();
     }
 
     /**
-     * @fn template <class T> void AbstractShape::setOrigin(T x, T y)
+     * @fn template <typename T> void AbstractShape::setOrigin(T x, T y)
      *
      * @brief Sets the position of (0,0).
      *
@@ -159,19 +164,19 @@ public:
      *        these given offsets. Calling setOrigin() again, will not add to the previous
      *        settings of setOrigin() but will replace the old values for origin.
      *
-     * @note The area containing the AbstractShape is not invalidated.
-     *
      * @tparam T Generic type parameter, either int or float.
      * @param x The x coordinate of the shapes position (0,0).
      * @param y The y coordinate of the shapes position (0,0).
      *
+     * @note The area containing the AbstractShape is not invalidated.
+     *
      * @see moveOrigin()
      */
-    template <class T>
+    template <typename T>
     void setOrigin(T x, T y)
     {
-        CWRUtil::Q5 dxNew = CWRUtil::toQ5(x);
-        CWRUtil::Q5 dyNew = CWRUtil::toQ5(y);
+        CWRUtil::Q5 dxNew = CWRUtil::toQ5<T>(x);
+        CWRUtil::Q5 dyNew = CWRUtil::toQ5<T>(y);
 
         if (dx == dxNew && dy == dyNew)
         {
@@ -185,26 +190,27 @@ public:
     }
 
     /**
-     * @fn template <class T> void AbstractShape::moveOrigin(T x, T y)
+     * @fn template <typename T> void AbstractShape::moveOrigin(T x, T y)
      *
      * @brief Moves the start point for this AbstractShape.
      *
      *        Moves the start point for this AbstractShape. The rectangle that surrounds the
      *        old and new area covered by the shape will be invalidated.
      *
-     * @note The area containing the AbstractShape is invalidated before and after the change.
      *
      * @tparam T Generic type parameter, either int or float.
      * @param x The x coordinate of the shapes position (0,0).
      * @param y The y coordinate of the shapes position (0,0).
      *
+     * @note The area containing the AbstractShape is invalidated before and after the change.
+     *
      * @see setOrigin()
      */
-    template <class T>
+    template <typename T>
     void moveOrigin(T x, T y)
     {
-        CWRUtil::Q5 xNew = CWRUtil::toQ5(x);
-        CWRUtil::Q5 yNew = CWRUtil::toQ5(y);
+        CWRUtil::Q5 xNew = CWRUtil::toQ5<T>(x);
+        CWRUtil::Q5 yNew = CWRUtil::toQ5<T>(y);
 
         if (dx == xNew && dy == yNew)
         {
@@ -223,7 +229,7 @@ public:
     }
 
     /**
-     * @fn template <class T> void AbstractShape::getOrigin(T& dx, T& dy) const
+     * @fn template <typename T> void AbstractShape::getOrigin(T& dx, T& dy) const
      *
      * @brief Gets the start coordinates for the line.
      *
@@ -233,48 +239,74 @@ public:
      * @param [out] dx The x coordinate.
      * @param [out] dy The y coordinate.
      */
-    template <class T>
+    template <typename T>
     void getOrigin(T& dx, T& dy) const
     {
-        dx = int(this->dx) / T(Rasterizer::POLY_BASE_SIZE);
-        dy = int(this->dy) / T(Rasterizer::POLY_BASE_SIZE);
+        dx = this->dx.to<T>();
+        dy = this->dy.to<T>();
     }
 
     /**
-     * @fn void AbstractShape::setAngle(int angle);
+     * @fn template <typename T> void AbstractShape::setAngle(T angle)
      *
      * @brief Sets the angle to turn the abstractShape.
      *
      *        Sets the angle to turn the abstractShape. 0 degrees is straight up and 90 degrees
      *        is 3 o'clock.
+     *
+     * @tparam T Generic type parameter.
+     * @param angle The angle to turn the abstractShape to relative to 0 (straight up), not relative
+     *              to the previous angle.
      *
      * @note The area containing the AbstractShape is not invalidated.
      *
-     * @param angle The angle to turn the abstractShape to relative to 0 (straight up), not
-     *              relative to the previous angle.
-     *
      * @see updateAngle()
      */
-    void setAngle(int angle);
+    template <typename T>
+    void setAngle(T angle)
+    {
+        CWRUtil::Q5 angleQ5 = CWRUtil::toQ5<T>(angle);
+        if (shapeAngle != angleQ5)
+        {
+            shapeAngle = angleQ5;
+            updateAbstractShapeCache();
+        }
+    }
 
     /**
-     * @fn void AbstractShape::updateAngle(int angle);
+     * @fn template <typename T> void AbstractShape::updateAngle(T angle)
      *
      * @brief Sets the angle to turn the abstractShape.
      *
      *        Sets the angle to turn the abstractShape. 0 degrees is straight up and 90 degrees
      *        is 3 o'clock.
      *
-     * @note The area containing the AbstractShape is invalidated before and after the change.
-     *
+     * @tparam T Generic type parameter.
      * @param angle The angle to turn the abstractShape.
+     *
+     * @note The area containing the AbstractShape is invalidated before and after the change.
      *
      * @see setAngle()
      */
-    void updateAngle(int angle);
+    template <typename T>
+    void updateAngle(T angle)
+    {
+        CWRUtil::Q5 angleQ5 = CWRUtil::toQ5<T>(angle);
+        if (shapeAngle != angleQ5)
+        {
+            Rect rectBefore = getMinimalRect();
+
+            shapeAngle = angleQ5;
+            updateAbstractShapeCache();
+
+            Rect rectAfter = getMinimalRect();
+            rectBefore.expandToFit(rectAfter);
+            invalidateRect(rectBefore);
+        }
+    }
 
     /**
-     * @fn int AbstractShape::getAngle() const;
+     * @fn template <typename T> T AbstractShape::getAngle() const
      *
      * @brief Gets the current angle of the abstractShape.
      *
@@ -282,49 +314,73 @@ public:
      *
      * @return The angle of the AbstractShape.
      */
-    int getAngle() const;
+    int getAngle() const
+    {
+        return shapeAngle.to<int>();
+    }
 
     /**
-     * @fn template <class T> void AbstractShape::setScale(T newXScale, T newYScale)
+     * @fn template <typename T> void AbstractShape::setScale(T newXScale, T newYScale)
      *
      * @brief Scale the AbstractShape.
      *
-     *        Scale the AbstractShape the given amount in the x direction and the y direction.
+     *        Scale the AbstractShape the given amounts in the x direction and the y direction.
      *
-     * @tparam T Generic type parameter.
+     * @tparam T Generic type parameter, either int or float.
      * @param newXScale The new scale in the x direction.
      * @param newYScale The new scale in the y direction.
      *
      * @note The area containing the AbstractShape is not invalidated.
      *
-     * @see getScale(), updateScale()
+     * @see getScale, updateScale
      */
-    template <class T>
+    template <typename T>
     void setScale(T newXScale, T newYScale)
     {
-        xScale = CWRUtil::toQ5(newXScale);
-        yScale = CWRUtil::toQ5(newYScale);
+        xScale = CWRUtil::toQ5<T>(newXScale);
+        yScale = CWRUtil::toQ5<T>(newYScale);
         updateAbstractShapeCache();
     }
 
     /**
-     * @fn template <class T> void AbstractShape::setScale(T scale)
+     * @fn template <typename T> void AbstractShape::setScale(T scale)
      *
      * @brief Scale the AbstractShape.
      *
      *        Scale the AbstractShape the given amount in the x direction and the y direction.
      *
-     * @note The area containing the AbstractShape is not invalidated.
-     *
      * @tparam T Generic type parameter, either int or float.
      * @param scale The scale in the x direction.
      *
-     * @see getScale()
+     * @note The area containing the AbstractShape is not invalidated.
+     *
+     * @see getScale
      */
-    template <class T>
+    template <typename T>
     void setScale(T scale)
     {
         setScale(scale, scale);
+    }
+
+    /**
+     * @fn template <typename T> void AbstractShape::getScale(T& x, T& y) const
+     *
+     * @brief Gets the x scale and y scale.
+     *
+     *        Gets the x scale and y scale of the shape as previously set using setScale. Default
+     *        is 1 for both x scale and y scale.
+     *
+     * @tparam T Generic type parameter, either int or float.
+     * @param [out] x Scaling of x coordinates.
+     * @param [out] y Scaling of y coordinates.
+     *
+     * @see setScale
+     */
+    template <typename T>
+    void getScale(T& x, T& y) const
+    {
+        x = xScale.to<T>();
+        y = yScale.to<T>();
     }
 
     /**
@@ -407,11 +463,10 @@ protected:
 
 private:
     CWRUtil::Q5 dx, dy;
-    int shapeAngle;
+    CWRUtil::Q5 shapeAngle;
     CWRUtil::Q5 xScale, yScale;
-    CWRUtil::Q5 xMin, yMin, xMax, yMax;
+    Rect minimalRect;
 };
-
 } // namespace touchgfx
 
 #endif // ABSTRACTSHAPE_HPP

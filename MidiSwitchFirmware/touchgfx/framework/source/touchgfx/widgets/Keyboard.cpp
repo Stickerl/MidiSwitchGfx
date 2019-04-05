@@ -1,20 +1,25 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #include <touchgfx/hal/Types.hpp>
 #include <touchgfx/widgets/Keyboard.hpp>
 
 namespace touchgfx
 {
-
 Keyboard::Keyboard()
-    : Container(), keyListener(0), bufferSize(0), bufferPosition(0), highlightImage()
+    : Container(), keyListener(0), bufferSize(0), bufferPosition(0), highlightImage(), cancelIsEmitted(false)
 {
     setTouchable(true);
 
@@ -175,10 +180,17 @@ void Keyboard::handleClickEvent(const ClickEvent& evt)
 
         if ((type == ClickEvent::RELEASED) && callbackArea.callback->isValid())
         {
-            callbackArea.callback->execute();
-            if (keyListener)
+            if (cancelIsEmitted)
             {
-                keyListener->execute(0);
+                cancelIsEmitted = false;
+            }
+            else
+            {
+                callbackArea.callback->execute();
+                if (keyListener)
+                {
+                    keyListener->execute(0);
+                }
             }
         }
     }
@@ -199,23 +211,30 @@ void Keyboard::handleClickEvent(const ClickEvent& evt)
 
             if (type == ClickEvent::RELEASED)
             {
-                if (buffer)
+                if (cancelIsEmitted)
                 {
-                    Unicode::UnicodeChar c = getCharForKey(key.keyId);
-                    if (c != 0)
+                    cancelIsEmitted = false;
+                }
+                else
+                {
+                    if (buffer)
                     {
-                        uint16_t prevBufferPosition = bufferPosition;
-                        if (bufferPosition < (bufferSize - 1))
+                        Unicode::UnicodeChar c = getCharForKey(key.keyId);
+                        if (c != 0)
                         {
-                            buffer[bufferPosition++] = c;
-                            buffer[bufferPosition] = 0;
-                        }
-                        if (prevBufferPosition != bufferPosition)
-                        {
-                            enteredText.invalidate();
-                            if (keyListener)
+                            uint16_t prevBufferPosition = bufferPosition;
+                            if (bufferPosition < (bufferSize - 1))
                             {
-                                keyListener->execute(c);
+                                buffer[bufferPosition++] = c;
+                                buffer[bufferPosition] = 0;
+                            }
+                            if (prevBufferPosition != bufferPosition)
+                            {
+                                enteredText.invalidate();
+                                if (keyListener)
+                                {
+                                    keyListener->execute(c);
+                                }
                             }
                         }
                     }
@@ -229,6 +248,21 @@ void Keyboard::handleClickEvent(const ClickEvent& evt)
         toDraw = highlightImage.getRect();
         highlightImage.setVisible(false);
         invalidateRect(toDraw);
+
+        if (type == ClickEvent::CANCEL)
+        {
+            cancelIsEmitted = true;
+        }
+    }
+}
+
+void Keyboard::handleDragEvent(const DragEvent& evt)
+{
+    if (highlightImage.isVisible() && (!highlightImage.getRect().intersect(static_cast<int16_t>(evt.getNewX()), static_cast<int16_t>(evt.getNewY()))) && (cancelIsEmitted == false))
+    {
+        // Send a CANCEL click event, if user has dragged out of currently pressed/highlighted key.
+        touchgfx::ClickEvent cancelEvent(touchgfx::ClickEvent::CANCEL, static_cast<int16_t>(evt.getOldX()), static_cast<int16_t>(evt.getOldY()));
+        handleClickEvent(cancelEvent);
     }
 }
 
@@ -271,5 +305,4 @@ void Keyboard::setKeymappingList(const KeyMappingList* newKeyMappingList)
     keyMappingList = newKeyMappingList;
     invalidate();
 }
-
 } // namespace touchgfx

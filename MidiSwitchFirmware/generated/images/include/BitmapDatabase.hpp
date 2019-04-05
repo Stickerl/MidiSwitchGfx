@@ -18,16 +18,24 @@ const uint16_t BITMAP_DARK_ICONS_INBOX_48_ID = 8; // Size: 48x41 pixels
 const uint16_t BITMAP_DARK_ICONS_SETTINGS_48_ID = 9; // Size: 48x48 pixels
 const uint16_t BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_ACTIVE_ID = 10; // Size: 44x44 pixels
 const uint16_t BITMAP_DARK_RADIO_BUTTONS_RADIO_ROUND_BUTTON_INACTIVE_ID = 11; // Size: 44x44 pixels
+const uint16_t BITMAP_KEYBOARDBUTTONCANCELPRESSED_ID = 12; // Size: 50x50 pixels
+const uint16_t BITMAP_KEYBOARDBUTTONCANCELRELEASED_ID = 13; // Size: 50x50 pixels
+const uint16_t BITMAP_KEYBOARDBUTTONPRESSED_ID = 14; // Size: 50x50 pixels
+const uint16_t BITMAP_KEYBOARDBUTTONRELEASED_ID = 15; // Size: 50x50 pixels
+const uint16_t BITMAP_KEYBOARDRETURNBUTTONPRESSED_ID = 16; // Size: 50x50 pixels
+const uint16_t BITMAP_KEYBOARDRETURNBUTTONRELEASED_ID = 17; // Size: 50x50 pixels
+const uint16_t BITMAP_KEYBOARDUNDOBUTTONPRESSED_ID = 18; // Size: 50x50 pixels
+const uint16_t BITMAP_KEYBOARDUNDOBUTTONRELEASED_ID = 19; // Size: 50x50 pixels
 
 namespace BitmapDatabase
 {
 #ifndef NO_USING_NAMESPACE_TOUCHGFX
-  using namespace touchgfx;
+using namespace touchgfx;
 #endif
 
-  class BitmapData;
-  const touchgfx::Bitmap::BitmapData* getInstance();
-  uint16_t getInstanceSize();
+class BitmapData;
+const touchgfx::Bitmap::BitmapData* getInstance();
+uint16_t getInstanceSize();
 }
 
 #endif

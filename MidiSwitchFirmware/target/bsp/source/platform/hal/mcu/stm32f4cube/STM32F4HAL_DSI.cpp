@@ -44,8 +44,6 @@
 #include <string.h>
 #include <stdio.h>
 
-
-
 /**
  * About this implementation:
  * This class is for use ONLY with the DSI peripheral. If you have a regular RGB interface display, use the STM32F4HAL.cpp class instead.

@@ -10,26 +10,50 @@
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/containers/Container.hpp>
 #include <touchgfx/widgets/Box.hpp>
+
 #include <touchgfx/widgets/Button.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <gui/containers/OutputCfg.hpp>
 #include <touchgfx/widgets/ToggleButton.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
-#include <touchgfx/mixins/ClickListener.hpp>
+#include <gui/containers/numericKeyboard.hpp>
 #include <touchgfx/EasingEquations.hpp>
 #include <touchgfx/mixins/FadeAnimator.hpp>
+
+
+// todo move this stuff out of the base class!
+class touchableText : public touchgfx::TextAreaWithOneWildcard
+{
+public:
+    void handleClickEvent(const ClickEvent& evt)
+    {
+        if(ClickEvent::RELEASED == evt.getType()){
+            clickCallback->execute(evt);
+        }
+    }
+
+    void setClickCb(touchgfx::GenericCallback<const ClickEvent& >& clickCb)
+    {
+        clickCallback = &clickCb;
+    }
+private:
+    touchgfx::GenericCallback<const ClickEvent& >* clickCallback;
+};
+
 
 class PatchConfigViewBase : public touchgfx::View<PatchConfigPresenter>
 {
 public:
     PatchConfigViewBase();
     virtual ~PatchConfigViewBase() {}
+
+    virtual void setupScreen();
     virtual void handleTickEvent();
     virtual void afterTransition();
 
 protected:
-    FrontendApplication& application() { 
-        return *static_cast<FrontendApplication*>(Application::getInstance()); 
+    FrontendApplication& application() {
+        return *static_cast<FrontendApplication*>(Application::getInstance());
     }
 
     /*
@@ -42,6 +66,7 @@ protected:
     touchgfx::Box ProgrammBox;
     touchgfx::Box ConfigNrBox;
     touchgfx::Box HeadlineBox;
+
     touchgfx::Button Next;
     touchgfx::Button Prev;
     touchgfx::FadeAnimator< touchgfx::TextArea > Switch2Nr;
@@ -51,21 +76,25 @@ protected:
     touchgfx::Container OutputBox;
     touchgfx::Box OutputCfgBox;
     touchgfx::TextArea OutputConfig;
-    touchgfx::ClickListener< OutputCfg > outputCfg_2;
-    touchgfx::ClickListener< OutputCfg > outputCfg_1;
-    touchgfx::ClickListener< OutputCfg > outputCfg_0;
+    OutputCfg outputCfg_2;
+    OutputCfg outputCfg_1;
+    OutputCfg outputCfg_0;
+
     touchgfx::Button options;
     touchgfx::Button Save;
     touchgfx::ToggleButton TeachButton;
     touchgfx::Container SaveingPopUp;
     touchgfx::Box SaveingBox;
     touchgfx::TextArea Saveing;
-    touchgfx::TextAreaWithOneWildcard progNrVal;
+
+    //touchgfx::TextAreaWithOneWildcard progNrVal;
+    touchableText progNrVal; // todo move this stuff out of the base class!
     touchgfx::TextAreaWithOneWildcard switch1ConNrVal;
     touchgfx::TextAreaWithOneWildcard switch1ConValueVal;
     touchgfx::TextAreaWithOneWildcard switch2ConNrVal;
     touchgfx::TextAreaWithOneWildcard switch2ConValueVal;
     touchgfx::FadeAnimator< touchgfx::TextArea > DefaultOutput;
+    numericKeyboard numericKeyboard1;
 
     /*
      * Wildcard Buffers

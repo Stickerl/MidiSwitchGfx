@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef LCD4BPP_HPP
 #define LCD4BPP_HPP
@@ -110,17 +116,19 @@ public:
     virtual void blitCopy(const uint8_t* sourceData, Bitmap::BitmapFormat sourceFormat, const Rect& source, const Rect& blitRect, uint8_t alpha, bool hasTransparentPixels);
 
     /**
-     * @fn virtual uint16_t* LCD4bpp::copyFrameBufferRegionToMemory(const Rect& region);
+     * @fn virtual uint16_t* LCD4bpp::copyFrameBufferRegionToMemory(const Rect& region, const BitmapId bitmap = BITMAP_ANIMATION_STORAGE) = 0;
      *
      * @brief Copies a part of the frame buffer.
      *
-     *        Copies a part of the frame buffer.
+     *        Copies a part of the frame buffer to a bitmap.
      *
      * @param region The part to copy.
+     * @param bitmap The bitmap to store the data in. Default value is Animation Storage.
      *
      * @return A pointer to the copy.
+     *
      */
-    virtual uint16_t* copyFrameBufferRegionToMemory(const Rect& region);
+    virtual uint16_t* copyFrameBufferRegionToMemory(const Rect& region, const BitmapId bitmap = BITMAP_ANIMATION_STORAGE);
 
     /**
      * @fn virtual void LCD4bpp::fillRect(const Rect& rect, colortype color, uint8_t alpha = 255);
@@ -324,6 +332,5 @@ FORCE_INLINE_FUNCTION void LCD4setPixel(uint16_t* addr, int offset, uint8_t valu
 {
     LCD4setPixel(reinterpret_cast<uint8_t*>(addr), offset, value);
 }
-
 } // namespace touchgfx
 #endif // LCD4BPP_HPP

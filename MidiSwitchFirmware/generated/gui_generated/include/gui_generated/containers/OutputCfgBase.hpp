@@ -14,9 +14,11 @@ public:
     OutputCfgBase();
     virtual ~OutputCfgBase() {}
 
+    virtual void initialize();
+
 protected:
-    FrontendApplication& application() { 
-        return *static_cast<FrontendApplication*>(Application::getInstance()); 
+    FrontendApplication& application() {
+        return *static_cast<FrontendApplication*>(Application::getInstance());
     }
 
     /*

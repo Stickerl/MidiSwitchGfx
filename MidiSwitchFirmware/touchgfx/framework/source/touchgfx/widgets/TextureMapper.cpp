@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #include <touchgfx/widgets/TextureMapper.hpp>
 #include <touchgfx/transforms/DisplayTransformation.hpp>
@@ -14,7 +20,6 @@
 
 namespace touchgfx
 {
-
 TextureMapper::TextureMapper() :
     Widget(),
     currentRenderingAlgorithm(NEAREST_NEIGHBOR),
@@ -49,7 +54,6 @@ TextureMapper::TextureMapper() :
 
 TextureMapper::~TextureMapper()
 {
-
 }
 
 void TextureMapper::setBitmap(const Bitmap& bmp)
@@ -59,7 +63,6 @@ void TextureMapper::setBitmap(const Bitmap& bmp)
     setHeight(bitmap.getHeight());
     applyTransformation();
 }
-
 
 void TextureMapper::applyTransformation()
 {
@@ -125,8 +128,6 @@ void TextureMapper::applyTransformation()
     imageX3 = ((float)transformed[3].getX() * cameraDistance / (float)transformed[3].getZ());
     imageY3 = ((float)transformed[3].getY() * cameraDistance / (float)transformed[3].getZ());
     imageZ3 = ((float)transformed[3].getZ());
-
-
 }
 
 Rect TextureMapper::getBoundingRect() const
@@ -176,7 +177,6 @@ void TextureMapper::setScale(float _scale)
 
     applyTransformation();
 }
-
 
 void TextureMapper::draw(const Rect& invalidatedArea) const
 {
@@ -324,7 +324,7 @@ void TextureMapper::drawTriangle(const Rect& invalidatedArea, uint16_t* fb, cons
     DisplayTransformation::transformDisplayToFrameBuffer(dirtyAreaAbsolute);
 
     // Get a pointer to the bitmap data, return if no bitmap found
-    const uint16_t* textmap = (const uint16_t*) bitmap.getData();
+    const uint16_t* textmap = (const uint16_t*)bitmap.getData();
     if (!textmap)
     {
         return;
@@ -342,16 +342,16 @@ void TextureMapper::drawTriangle(const Rect& invalidatedArea, uint16_t* fb, cons
     DisplayTransformation::transformDisplayToFrameBuffer(x2, y2, this->getRect());
 
     Point3D vertices[3];
-    Point3D point0 = {floatToFixed28_4(x0), floatToFixed28_4(y0), (float)(triangleZs[0]), (float)(triangleUs[0]), (float)(triangleVs[0])};
-    Point3D point1 = {floatToFixed28_4(x1), floatToFixed28_4(y1), (float)(triangleZs[1]), (float)(triangleUs[1]), (float)(triangleVs[1])};
-    Point3D point2 = {floatToFixed28_4(x2), floatToFixed28_4(y2), (float)(triangleZs[2]), (float)(triangleUs[2]), (float)(triangleVs[2])};
+    Point3D point0 = { floatToFixed28_4(x0), floatToFixed28_4(y0), (float)(triangleZs[0]), (float)(triangleUs[0]), (float)(triangleVs[0]) };
+    Point3D point1 = { floatToFixed28_4(x1), floatToFixed28_4(y1), (float)(triangleZs[1]), (float)(triangleUs[1]), (float)(triangleVs[1]) };
+    Point3D point2 = { floatToFixed28_4(x2), floatToFixed28_4(y2), (float)(triangleZs[2]), (float)(triangleUs[2]), (float)(triangleVs[2]) };
 
     vertices[0] = point0;
     vertices[1] = point1;
     vertices[2] = point2;
 
-    DrawingSurface dest = { fb, HAL::FRAME_BUFFER_WIDTH};
-    TextureSurface src = { textmap, bitmap.getAlphaData(), bitmap.getWidth(), bitmap.getHeight(), bitmap.getWidth()};
+    DrawingSurface dest = { fb, HAL::FRAME_BUFFER_WIDTH };
+    TextureSurface src = { textmap, bitmap.getAlphaData(), bitmap.getWidth(), bitmap.getHeight(), bitmap.getWidth() };
 
     HAL::lcd().drawTextureMapTriangle(dest, vertices, src, absoluteRect, dirtyAreaAbsolute, lookupRenderVariant(), alpha, subDivisionSize);
 }
@@ -378,5 +378,4 @@ Rect TextureMapper::getSolidRect() const
     }
     return Rect(0, 0, 0, 0);
 }
-
 } // namespace touchgfx

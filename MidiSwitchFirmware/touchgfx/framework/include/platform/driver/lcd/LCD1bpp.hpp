@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef LCD1BPP_HPP
 #define LCD1BPP_HPP
@@ -100,17 +106,19 @@ public:
     virtual void blitCopy(const uint8_t* sourceData, Bitmap::BitmapFormat sourceFormat, const Rect& source, const Rect& blitRect, uint8_t alpha, bool hasTransparentPixels);
 
     /**
-     * @fn virtual uint16_t* LCD1bpp::copyFrameBufferRegionToMemory(const Rect& region);
+     * @fn virtual uint16_t* LCD1bpp::copyFrameBufferRegionToMemory(const Rect& region, const BitmapId bitmap = BITMAP_ANIMATION_STORAGE) = 0;
      *
      * @brief Copies a part of the frame buffer.
      *
-     *        Copies a part of the frame buffer.
+     *        Copies a part of the frame buffer to a bitmap.
      *
      * @param region The part to copy.
+     * @param bitmap The bitmap to store the data in. Default value is Animation Storage.
      *
      * @return A pointer to the copy.
+     *
      */
-    virtual uint16_t* copyFrameBufferRegionToMemory(const Rect& region);
+    virtual uint16_t* copyFrameBufferRegionToMemory(const Rect& region, const BitmapId bitmap = BITMAP_ANIMATION_STORAGE);
 
     /**
      * @fn virtual void LCD1bpp::fillRect(const Rect& rect, colortype color, uint8_t alpha = 255);
@@ -254,11 +262,23 @@ private:
     class bwRLEdata
     {
     public:
-        bwRLEdata(const uint8_t* src) : data(src), rleByte(0), firstHalfByte(true)
+        bwRLEdata(const uint8_t* src = 0) : data(src), rleByte(0), firstHalfByte(true), color(0)
         {
-            // Read two half-bytes ahead
-            thisHalfByte = getNextHalfByte();
-            nextHalfByte = getNextHalfByte();
+            init(src);
+        }
+        void init(const uint8_t* src)
+        {
+            data = src;
+            rleByte = 0;
+            firstHalfByte = true;
+            color = 0;
+            if (src != 0)
+            {
+                // Read two half-bytes ahead
+                thisHalfByte = getNextHalfByte();
+                nextHalfByte = getNextHalfByte();
+                length = getNextLength();
+            }
         }
         uint32_t getNextLength()
         {
@@ -277,7 +297,7 @@ private:
             }
             return length;
         }
-        void skipNext(uint32_t skip, uint32_t& length, uint8_t& color)
+        void skipNext(uint32_t skip)
         {
             while (skip > 0) // Are there more pixels to skip?
             {
@@ -293,6 +313,14 @@ private:
                     color = ~color; // Update the color of next run
                 }
             }
+        }
+        uint8_t getColor() const
+        {
+            return color;
+        }
+        uint32_t getLength() const
+        {
+            return length;
         }
     private:
         uint8_t getNextHalfByte()
@@ -311,8 +339,11 @@ private:
         uint8_t nextHalfByte; // The next half byte after 'thisHalfByte'
         uint8_t rleByte; // Byte read from compressed data
         bool firstHalfByte; // Are we about to process first half byte of rleByte?
+        uint8_t color; // Current color
+        uint32_t length; // Number of pixels with the given color
     };
-};
 
+    friend class PainterBWBitmap;
+};
 } // namespace touchgfx
 #endif // LCD1BPP_HPP

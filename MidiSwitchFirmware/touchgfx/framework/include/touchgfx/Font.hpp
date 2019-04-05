@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef FONT_HPP
 #define FONT_HPP
@@ -24,11 +30,11 @@ namespace touchgfx
  */
 enum GlyphFlags
 {
-    GLYPH_DATA_FORMAT_A4    = 0x01, ///< Indicates whether or not glyph data was generated in A4 data format for an ST platform.
-    GLYPH_DATA_WIDTH_BIT8   = 0x08, ///< The 9th bit of "width"
-    GLYPH_DATA_HEIGHT_BIT8  = 0x10, ///< The 9th bit of "height"
-    GLYPH_DATA_TOP_BIT8     = 0x20, ///< The 9th bit of "top"
-    GLYPH_DATA_TOP_BIT9     = 0x40, ///< The sign bit of "top"
+    GLYPH_DATA_FORMAT_A4 = 0x01, ///< Indicates whether or not glyph data was generated in A4 data format for an ST platform.
+    GLYPH_DATA_WIDTH_BIT8 = 0x08, ///< The 9th bit of "width"
+    GLYPH_DATA_HEIGHT_BIT8 = 0x10, ///< The 9th bit of "height"
+    GLYPH_DATA_TOP_BIT8 = 0x20, ///< The 9th bit of "top"
+    GLYPH_DATA_TOP_BIT9 = 0x40, ///< The sign bit of "top"
     GLYPH_DATA_ADVANCE_BIT8 = 0x80  ///< The 9th bit of "advance"
 };
 
@@ -137,7 +143,7 @@ typedef struct
 typedef uint16_t FontId;
 
 /**
- * @class Font Font.hpp C:\Projects\devel\touchgfx\framework\include\touchgfx\Font.hpp
+ * @class Font Font.hpp touchgfx/Font.hpp
  *
  * @brief The font base class.
  *
@@ -467,7 +473,7 @@ protected:
      *
      * @brief Defines an alias representing the constant.
      */
-    typedef uint16_t (Font::*StringWidthFunctionPointer)(TextDirection textDirection, const Unicode::UnicodeChar* text, va_list pArg) const;
+    typedef uint16_t(Font::*StringWidthFunctionPointer)(TextDirection textDirection, const Unicode::UnicodeChar* text, va_list pArg) const;
 
     static StringWidthFunctionPointer getStringWidthFunction;   ///< The getStringWidth function, either LTR (supporting LTR only) or RTL (supporting RTL and LTR)
 
@@ -500,7 +506,6 @@ protected:
 private:
     Font();
 };
-
 } // namespace touchgfx
 
 #endif // FONT_HPP

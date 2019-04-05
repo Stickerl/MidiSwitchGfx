@@ -1,18 +1,23 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #include <touchgfx/widgets/canvas/PainterGRAY4Bitmap.hpp>
 #include <platform/driver/lcd/LCD4bpp.hpp>
 
 namespace touchgfx
 {
-
 PainterGRAY4Bitmap::PainterGRAY4Bitmap(const Bitmap& bmp, uint8_t alpha) :
     AbstractPainterGRAY4(), bitmapGRAY4Pointer(0), bitmapAlphaPointer(0)
 {
@@ -55,7 +60,6 @@ void PainterGRAY4Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, unsigne
 
     uint8_t totalAlpha = (widgetAlpha * painterAlpha) / 255;
     // Get alpha data (GRAY4 format)
-    const uint8_t* bitmapAlphaPointer = (const uint8_t*)bitmap.getAlphaData();
     if (bitmapAlphaPointer)
     {
         if (totalAlpha == 255)
@@ -195,5 +199,4 @@ bool PainterGRAY4Bitmap::renderNext(uint8_t& gray, uint8_t& alpha)
     }
     return true;
 }
-
 } // namespace touchgfx

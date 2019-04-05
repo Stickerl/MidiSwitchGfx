@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef FADEANIMATOR_HPP
 #define FADEANIMATOR_HPP
@@ -131,8 +137,23 @@ public:
      *        Gets whether or not the fade animation is running.
      *
      * @return true if the fade animation is running.
+     * @deprecated use isFadeAnimationRunning()
      */
     virtual bool isRunning() const
+    {
+        return isFadeAnimationRunning();
+    }
+
+    /**
+     * @fn virtual bool FadeAnimator::isFadeAnimationRunning() const
+     *
+     * @brief Gets whether or not the fade animation is running.
+     *
+     *        Gets whether or not the fade animation is running.
+     *
+     * @return true if the fade animation is running.
+     */
+    virtual bool isFadeAnimationRunning() const
     {
         return fadeAnimationRunning;
     }
@@ -154,7 +175,10 @@ public:
      */
     void startFadeAnimation(uint8_t endAlpha, uint16_t duration, EasingEquation alphaProgressionEquation = &EasingEquations::linearEaseNone)
     {
-        Application::getInstance()->registerTimerWidget(this);
+        if (!fadeAnimationRunning)
+        {
+            Application::getInstance()->registerTimerWidget(this);
+        }
 
         fadeAnimationCounter = 0;
         fadeAnimationStartAlpha = T::getAlpha();
@@ -177,8 +201,11 @@ public:
      */
     void cancelFadeAnimation()
     {
-        Application::getInstance()->unregisterTimerWidget(this);
-        fadeAnimationRunning = false;
+        if (fadeAnimationRunning)
+        {
+            Application::getInstance()->unregisterTimerWidget(this);
+            fadeAnimationRunning = false;
+        }
     }
 
 protected:
@@ -254,6 +281,5 @@ protected:
 
     GenericCallback<const FadeAnimator<T>& >* fadeAnimationEndedCallback; ///< Animation ended Callback.
 };
-
 } //namespace touchgfx
 #endif // FADEANIMATOR_HPP

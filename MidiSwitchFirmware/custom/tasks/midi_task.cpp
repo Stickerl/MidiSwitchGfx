@@ -54,6 +54,7 @@ void midi_task_run(void* params)
     cfgManager.init();
 
     GuiCommunication guiCom(cfgManager);
+    guiCom.sendCurrentPatchData(cfgManager);
 
     // set up midi decoder
     Midi_n::MidiDecoder midiDecoder(midiRxBuffer, midiSysTime, 100u);

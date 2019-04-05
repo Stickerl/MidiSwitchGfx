@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef MOVEANIMATOR_HPP
 #define MOVEANIMATOR_HPP
@@ -130,8 +136,23 @@ public:
      *        Gets whether or not the move animation is running.
      *
      * @return true if the move animation is running.
+     * @deprecated use isMoveAnimationRunning()
      */
     virtual bool isRunning() const
+    {
+        return isMoveAnimationRunning();
+    }
+
+    /**
+     * @fn virtual bool MoveAnimator::isMoveAnimationRunning() const
+     *
+     * @brief Gets whether or not the move animation is running.
+     *
+     *        Gets whether or not the move animation is running.
+     *
+     * @return true if the move animation is running.
+     */
+    virtual bool isMoveAnimationRunning() const
     {
         return moveAnimationRunning;
     }
@@ -159,7 +180,10 @@ public:
      */
     void startMoveAnimation(int16_t endX, int16_t endY, uint16_t duration, EasingEquation xProgressionEquation = &EasingEquations::linearEaseNone, EasingEquation yProgressionEquation = &EasingEquations::linearEaseNone)
     {
-        Application::getInstance()->registerTimerWidget(this);
+        if (!moveAnimationRunning)
+        {
+            Application::getInstance()->registerTimerWidget(this);
+        }
 
         moveAnimationCounter = 0;
         moveAnimationStartX = T::getX();
@@ -187,8 +211,11 @@ public:
      */
     void cancelMoveAnimation()
     {
-        Application::getInstance()->unregisterTimerWidget(this);
-        moveAnimationRunning = false;
+        if (moveAnimationRunning)
+        {
+            Application::getInstance()->unregisterTimerWidget(this);
+            moveAnimationRunning = false;
+        }
     }
 
 protected:
@@ -266,6 +293,5 @@ protected:
 
     GenericCallback<const MoveAnimator<T>& >* moveAnimationEndedCallback; ///< Animation ended Callback.
 };
-
 } //namespace touchgfx
 #endif // MOVEANIMATOR_HPP

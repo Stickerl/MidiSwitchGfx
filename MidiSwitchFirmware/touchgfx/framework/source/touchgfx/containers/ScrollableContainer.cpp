@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #include <touchgfx/containers/ScrollableContainer.hpp>
 #include <touchgfx/EasingEquations.hpp>
@@ -13,10 +19,9 @@
 
 namespace touchgfx
 {
-
 ScrollableContainer::ScrollableContainer()
     : Container(),
-      scrollbarPadding(2),
+      scrollbarPadding(0),
       scrollbarWidth(2),
       scrollbarAlpha(120),
       scrollbarColor(Color::getColorFrom24BitRGB(0xFF, 0xFF, 0xFF)),
@@ -35,6 +40,7 @@ ScrollableContainer::ScrollableContainer()
       scrollableX(true),
       scrollableY(true),
       scrollbarsVisible(true),
+      scrollbarsPermanentlyVisible(false),
       scrollDuration(0),
       beginningValue(0),
       targetValue(0),
@@ -156,8 +162,8 @@ void ScrollableContainer::handleClickEvent(const ClickEvent& evt)
     isScrolling = false;
 
     // Redraw scrollbars.
-    xSlider.setVisible(isPressed && scrollbarsVisible);
-    ySlider.setVisible(isPressed && scrollbarsVisible);
+    xSlider.setVisible((isPressed && scrollbarsVisible) || scrollbarsPermanentlyVisible);
+    ySlider.setVisible((isPressed && scrollbarsVisible) || scrollbarsPermanentlyVisible);
     invalidateScrollbars();
 }
 
@@ -355,7 +361,7 @@ Rect ScrollableContainer::getXScrollbar() const
         {
             int leftPadding = (-1 * contained.x * rect.width) / contained.width;
             int rightPadding = ((contained.right() - rect.width) * rect.width) / contained.width;
-            const int startWidth = rect.width -  2 * scrollbarPadding - 2 * SCROLLBAR_LINE - scrollSpace;
+            const int startWidth = rect.width - 2 * scrollbarPadding - 2 * SCROLLBAR_LINE - scrollSpace;
             int width = startWidth;
             width -= (leftPadding + rightPadding);
             if (width < scrollbarWidth * 2)
@@ -365,7 +371,6 @@ Rect ScrollableContainer::getXScrollbar() const
                 width = scrollbarWidth * 2; // Force scrollbar width to a minimum
                 // Distribute the deviation error based on current scrollbar X position (the amount subtracted from scrollbar xpos increases gradually).
                 leftPadding -= (diff * leftPadding) / startWidth;
-
             }
             res = Rect(leftPadding + scrollbarPadding + SCROLLBAR_LINE, rect.height - scrollbarWidth - scrollbarPadding - SCROLLBAR_LINE, width, scrollbarWidth);
         }
@@ -432,13 +437,31 @@ void ScrollableContainer::invalidateScrollbars()
     Rect xBorder = getXBorder(xBar, yBar);
     Rect yBorder = getYBorder(xBar, yBar);
 
+    // The two if statements ensure that the two sliders is invalidates thereby hides them, before they are set to size zero.
+    if (xSlider.getY() > xBorder.y)
+    {
+        xSlider.invalidate();
+    }
+    if (ySlider.getX() > yBorder.x)
+    {
+        ySlider.invalidate();
+    }
+
     xSlider.setPosition(xBar.x, xBar.y, xBar.width, xBar.height);
     ySlider.setPosition(yBar.x, yBar.y, yBar.width, yBar.height);
+
+    // x-/yBorder is given the coordinates zero and the witdh of the visiable area for the scrollable container,
+    // to ensure that the entire area where for the scrollable bars is and have been is invalidated correct.
+    xBorder.x = 0;
+    xBorder.width = rect.width;
+    yBorder.height = rect.height;
+    yBorder.y = 0;
 
     if (!xBorder.isEmpty())
     {
         invalidateRect(xBorder);
     }
+
     if (!yBorder.isEmpty())
     {
         invalidateRect(yBorder);
@@ -502,6 +525,7 @@ bool ScrollableContainer::doScroll(int16_t deltaX, int16_t deltaY)
         scrolledXDistance += deltaX;
         scrolledYDistance += deltaY;
         moveChildrenRelative(deltaX, deltaY);
+
         invalidateScrollbars();
         couldScroll = true;
     }
@@ -549,6 +573,7 @@ void ScrollableContainer::add(Drawable& d)
 {
     remove(xSlider);
     remove(ySlider);
+
     Container::add(d);
     Container::add(xSlider);
     Container::add(ySlider);
@@ -558,6 +583,8 @@ Rect ScrollableContainer::getContainedArea() const
 {
     Drawable* d = firstChild;
     Rect contained(0, 0, 0, 0);
+    Rect r(0, 0, rect.width, rect.height);
+    contained.expandToFit(r);
     while (d)
     {
         if ((d != &xSlider) && (d != &ySlider) && (d->isVisible()))
@@ -609,10 +636,11 @@ void ScrollableContainer::handleTickEvent()
             }
 
             // Convert to delta value relative to current X or Y
-            int16_t scrollX = (accelDirection == GestureEvent::SWIPE_VERTICAL)   ? 0 : (calculatedValue - getContainedArea().x);
+            int16_t scrollX = (accelDirection == GestureEvent::SWIPE_VERTICAL) ? 0 : (calculatedValue - getContainedArea().x);
             int16_t scrollY = (accelDirection == GestureEvent::SWIPE_HORIZONTAL) ? 0 : (calculatedValue - getContainedArea().y);
 
-            // Perform the actual animation step, stop animation if scrolling was not possible
+            // Perform the actual animation step, stop animation if
+            // scrolling was not possible (doScroll invalidates children)
             animate = doScroll(scrollX, scrollY);
         }
         else
@@ -620,7 +648,6 @@ void ScrollableContainer::handleTickEvent()
             animate = false;
         }
 
-        invalidate();
         if (!animate)
         {
             Application::getInstance()->unregisterTimerWidget(this);
@@ -653,6 +680,19 @@ void ScrollableContainer::setScrollbarWidth(uint8_t width)
     scrollbarWidth = width;
 }
 
+void ScrollableContainer::setScrollbarsVisible(bool newVisible)
+{
+    scrollbarsVisible = newVisible;
+}
+
+void ScrollableContainer::setScrollbarsPermanentlyVisible()
+{
+    scrollbarsPermanentlyVisible = true;
+    xSlider.setVisible(true);
+    ySlider.setVisible(true);
+    invalidateScrollbars();
+}
+
 int16_t ScrollableContainer::getScrolledX() const
 {
     return scrolledXDistance;
@@ -662,5 +702,4 @@ int16_t ScrollableContainer::getScrolledY() const
 {
     return scrolledYDistance;
 }
-
 } // namespace touchgfx

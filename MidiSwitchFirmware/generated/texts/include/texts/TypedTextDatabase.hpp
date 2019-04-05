@@ -9,14 +9,14 @@
 namespace TypedTextDatabase
 {
 #ifndef NO_USING_NAMESPACE_TOUCHGFX
-  using namespace touchgfx;
+using namespace touchgfx;
 #endif
 
-  class TypedTextData;
-  const touchgfx::TypedText::TypedTextData* getInstance(touchgfx::LanguageId id);
-  const touchgfx::TypedText::TypedTextData* getInstance();
-  const touchgfx::Font* const * getFonts();
-  uint16_t getInstanceSize();
+class TypedTextData;
+const touchgfx::TypedText::TypedTextData* getInstance(touchgfx::LanguageId id);
+const touchgfx::TypedText::TypedTextData* getInstance();
+const touchgfx::Font* const* getFonts();
+uint16_t getInstanceSize();
 }
 
 #endif

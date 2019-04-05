@@ -15,22 +15,17 @@ extern touchgfx::InternalFlashFont& getFont_verdana_25_4bpp();
 
 touchgfx::Font* ApplicationFontProvider::getFont(touchgfx::FontId fontId)
 {
-  switch(fontId)
-  {
-    
+    switch (fontId)
+    {
     case Typography::PAGEHEADLINE:
-      return &(getFont_verdana_35_4bpp());
-    
+        return &(getFont_verdana_35_4bpp());
     case Typography::LARGE:
-      return &(getFont_verdana_40_4bpp());
-    
+        return &(getFont_verdana_40_4bpp());
     case Typography::SMALL:
-      return &(getFont_verdana_10_4bpp());
-    
+        return &(getFont_verdana_10_4bpp());
     case Typography::DEFAULTTEXT:
-      return &(getFont_verdana_25_4bpp());
-    
+        return &(getFont_verdana_25_4bpp());
     default:
-      return 0;
-  }
+        return 0;
+    }
 }

@@ -6,7 +6,7 @@
 #include <touchgfx/Color.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
 
-GlobalConfigViewBase::GlobalConfigViewBase()  :
+GlobalConfigViewBase::GlobalConfigViewBase() :
     buttonCallback(this, &GlobalConfigViewBase::buttonCallbackHandler)
 {
     ClobalCfgBG.setXY(0, 0);
@@ -29,12 +29,11 @@ GlobalConfigViewBase::GlobalConfigViewBase()  :
     BankNrBox.setAlpha(130);
     ContrastBoxes.add(BankNrBox);
 
-
-    Next.setPosition(750, 434, 32, 30);
+    Next.setXY(750, 434);
     Next.setBitmaps(Bitmap(BITMAP_DARK_ICONS_GO_NEXT_32_ID), Bitmap(BITMAP_DARK_ICONS_GO_NEXT_32_ID));
     Next.setAlpha(200);
 
-    Pev.setPosition(15, 434, 32, 30);
+    Pev.setXY(15, 434);
     Pev.setBitmaps(Bitmap(BITMAP_DARK_ICONS_GO_BACK_32_ID), Bitmap(BITMAP_DARK_ICONS_GO_BACK_32_ID));
     Pev.setAction(buttonCallback);
     Pev.setAlpha(200);
@@ -63,6 +62,11 @@ GlobalConfigViewBase::GlobalConfigViewBase()  :
     add(BankNr);
 }
 
+void GlobalConfigViewBase::setupScreen()
+{
+
+}
+
 void GlobalConfigViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
 {
     if (&src == &Next)
@@ -73,7 +77,7 @@ void GlobalConfigViewBase::buttonCallbackHandler(const touchgfx::AbstractButton&
     {
         //Prev
         //When Pev clicked change screen to PatchConfig
-        //Go to PatchConfig with slide screen transition towards East
+        //Go to PatchConfig with screen transition towards East
         application().gotoPatchConfigScreenSlideTransitionEast();
     }
 }

@@ -1,11 +1,17 @@
-/******************************************************************************
- * This file is part of the TouchGFX 4.9.3 distribution.
- * Copyright (C) 2017 Draupner Graphics A/S <http://www.touchgfx.com>.
- ******************************************************************************
- * This is licensed software. Any use hereof is restricted by and subject to 
- * the applicable license terms. For further information see "About/Legal
- * Notice" in TouchGFX Designer or in your TouchGFX installation directory.
- *****************************************************************************/
+/**
+  ******************************************************************************
+  * This file is part of the TouchGFX 4.10.0 distribution.
+  *
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 
 #ifndef BUTTONWITHICON_HPP
 #define BUTTONWITHICON_HPP
@@ -29,7 +35,7 @@ public:
     ButtonWithIcon();
 
 #ifdef __IAR_SYSTEMS_ICC__  // Only include in IAR compilation
-#pragma diag_suppress=Pe997 // Suppress warning for intentional virtual function override 
+#pragma diag_suppress=Pe997 // Suppress warning for intentional virtual function override
 #elif __ARMCC_VERSION
 #pragma diag_suppress 997
 #endif
@@ -168,7 +174,6 @@ protected:
     int16_t iconX;        ///< x coordinate offset for icon.
     int16_t iconY;        ///< y coordinate offset for icon.
 };
-
 } // namespace touchgfx
 
 #endif // BUTTONWITHICON_HPP
