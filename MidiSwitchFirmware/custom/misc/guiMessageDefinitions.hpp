@@ -36,4 +36,10 @@ struct progNrMsg
     std::uint8_t programNr;
 };
 
+struct outputCfgMsg
+{
+    std::uint8_t outputCfgNr;
+    std::uint8_t outputVal;
+};
+
 #endif // GUI_MESSAGE_DEFINITIONS_HPP_

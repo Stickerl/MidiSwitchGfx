@@ -3,14 +3,19 @@
 PatchConfigView::PatchConfigView():
     prevButtonCb(this, &PatchConfigView::prevButtonActionCb),
     nextButtonCb(this, &PatchConfigView::nextButtonActionCb),
-    progNrClickCb(this, &PatchConfigView::progNrClickCallback)
+    saveButtonCb(this, &PatchConfigView::saveButtonActionCb),
+    progNrClickCb(this, &PatchConfigView::progNrClickCallback),
+    defaultOutputCfgCb(this, &PatchConfigView::defaultOutputCfgActionCb)
 {
+	// event registrations
     Prev.setAction(prevButtonCb);
     Next.setAction(nextButtonCb);
-    numericKeyboard1.initKeyboard(&progNrVal, PROGNRVAL_SIZE);
-    numericKeyboard1.invalidate();
+    Save.setAction(saveButtonCb);
+    //progNrVal.setClickCb(progNrClickCb);
+    outputCfg_0.setAction(defaultOutputCfgCb);
+	
     progNrVal.setTouchable(true);
-    progNrVal.setClickCb(progNrClickCb);
+
 }
 
 void PatchConfigView::setupScreen()
@@ -59,6 +64,11 @@ void PatchConfigView::setController2Value(uint8_t controllerVal)
     switch2ConValueVal.invalidate();
 }
 
+void PatchConfigView::setDefaultOutputCfg(std::uint8_t value)
+{
+    outputCfg_0.setValue(value);
+}
+
 void PatchConfigView::prevButtonActionCb(const AbstractButton& button)
 {
     presenter->prevButtonPressed();
@@ -67,5 +77,16 @@ void PatchConfigView::prevButtonActionCb(const AbstractButton& button)
 void PatchConfigView::nextButtonActionCb(const AbstractButton& button)
 {
     presenter->nextButtonPressed();
+}
+
+void PatchConfigView::saveButtonActionCb(const AbstractButton& button)
+{
+    presenter->saveButtonPressed();
+}
+
+void PatchConfigView::defaultOutputCfgActionCb(const OutputCfg& outputCfg)
+{
+    std::uint8_t tmp = outputCfg.getValue();
+    presenter->defaultOutputChanged(tmp);
 }
 

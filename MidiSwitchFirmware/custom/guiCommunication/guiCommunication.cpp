@@ -13,7 +13,6 @@ GuiCommunication::GuiCommunication(I_ConfigManager& configManager) :
     cfgManager(configManager)
 {
     configManager.setConfigChangedCb(configChangedCb);
-    sendCurrentPatchData(cfgManager);
 }
 
 GuiCommunication::~GuiCommunication() {
@@ -54,7 +53,12 @@ void GuiCommunication::run()
             break;
 
         case GuiQueue::SWITCH_SETTING:
-            cfgManager.store();
+            // TODO: Nix gut!! :(
+            break;
+
+        case GuiQueue::OUTPUT_CFG:
+            cfgManager.setOutputCfg(((outputCfgMsg*) rxMsg.data)->outputCfgNr,
+                                    ((outputCfgMsg*) rxMsg.data)->outputVal);
             break;
 
         default:

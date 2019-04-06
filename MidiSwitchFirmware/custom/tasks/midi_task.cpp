@@ -51,10 +51,10 @@ void midi_task_run(void* params)
     Flash::sector_t sec2(FLASH_SECTOR_23, (uint8_t*) 0x081E0000, 0x20000); // Sector 23 size 128k
     Flash flash(sec1, sec2);
     ConfigManager cfgManager(flash, CONFIG_MANAGER_FLASH_ID);
-    cfgManager.init();
 
     GuiCommunication guiCom(cfgManager);
-    guiCom.sendCurrentPatchData(cfgManager);
+    // GuiCommunication has to register in the cfgManager
+    cfgManager.init();
 
     // set up midi decoder
     Midi_n::MidiDecoder midiDecoder(midiRxBuffer, midiSysTime, 100u);

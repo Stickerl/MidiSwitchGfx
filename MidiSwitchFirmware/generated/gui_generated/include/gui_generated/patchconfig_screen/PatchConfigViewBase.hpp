@@ -21,25 +21,6 @@
 #include <touchgfx/mixins/FadeAnimator.hpp>
 
 
-// todo move this stuff out of the base class!
-class touchableText : public touchgfx::TextAreaWithOneWildcard
-{
-public:
-    void handleClickEvent(const ClickEvent& evt)
-    {
-        if(ClickEvent::RELEASED == evt.getType()){
-            clickCallback->execute(evt);
-        }
-    }
-
-    void setClickCb(touchgfx::GenericCallback<const ClickEvent& >& clickCb)
-    {
-        clickCallback = &clickCb;
-    }
-private:
-    touchgfx::GenericCallback<const ClickEvent& >* clickCallback;
-};
-
 
 class PatchConfigViewBase : public touchgfx::View<PatchConfigPresenter>
 {
@@ -88,7 +69,7 @@ protected:
     touchgfx::TextArea Saveing;
 
     //touchgfx::TextAreaWithOneWildcard progNrVal;
-    touchableText progNrVal; // todo move this stuff out of the base class!
+    touchgfx::TextAreaWithOneWildcard progNrVal;
     touchgfx::TextAreaWithOneWildcard switch1ConNrVal;
     touchgfx::TextAreaWithOneWildcard switch1ConValueVal;
     touchgfx::TextAreaWithOneWildcard switch2ConNrVal;

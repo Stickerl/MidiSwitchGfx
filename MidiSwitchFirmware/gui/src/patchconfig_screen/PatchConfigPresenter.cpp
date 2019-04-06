@@ -34,5 +34,15 @@ void PatchConfigPresenter::patchConfigChanged()
     view.setController1Value(newPatchConfig.switch1Value);
     view.setController2Number(newPatchConfig.switch2Name);
     view.setController2Value(newPatchConfig.switch2Value);
+    view.setDefaultOutputCfg(newPatchConfig.defaultOut);
 }
 
+void PatchConfigPresenter::defaultOutputChanged(std::uint8_t newVal)
+{
+    model->requestDefaultOutputChange(newVal);
+}
+
+void PatchConfigPresenter::saveButtonPressed()
+{
+    model->requestGeneralSave();
+}

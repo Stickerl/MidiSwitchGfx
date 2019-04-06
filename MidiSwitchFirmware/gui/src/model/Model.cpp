@@ -64,8 +64,27 @@ void Model::requestProgramNrIncrement()
     _queToMidi.sendElement(txMsg);
 }
 
+void Model::requestDefaultOutputChange(std::uint8_t newVal)
+{
+    GuiQueue::GuiMessage_t txMsg;
+    outputCfgMsg payload;
+    payload.outputCfgNr = 0;
+    payload.outputVal = newVal;
+    txMsg.name = GuiQueue::OUTPUT_CFG;
+    memcpy(txMsg.data, &payload, sizeof(payload));
+    _queToMidi.sendElement(txMsg);
+}
+
+void Model::requestGeneralSave()
+{
+    GuiQueue::GuiMessage_t txMsg;
+    txMsg.name = GuiQueue::SAVE_BUTTON;
+    _queToMidi.sendElement(txMsg);
+}
 
 patchCfgMsg Model::getPatchCfgData(){
     return patchCfgData;
 }
+
+
 

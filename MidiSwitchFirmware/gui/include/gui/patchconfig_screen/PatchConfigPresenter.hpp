@@ -32,7 +32,11 @@ public:
 
     virtual void nextButtonPressed();
 
+    virtual void saveButtonPressed();
+
     virtual void patchConfigChanged();
+
+    virtual void defaultOutputChanged(std::uint8_t newVal);
 
 private:
     PatchConfigPresenter();

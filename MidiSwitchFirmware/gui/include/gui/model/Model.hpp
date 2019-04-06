@@ -52,6 +52,10 @@ public:
 
     void requestProgramNrIncrement();
 
+    void requestDefaultOutputChange(std::uint8_t newVal);
+
+    void requestGeneralSave();
+
 protected:
     /**
      * Pointer to the currently active presenter.
