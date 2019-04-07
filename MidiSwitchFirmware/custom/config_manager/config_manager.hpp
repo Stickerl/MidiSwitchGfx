@@ -32,6 +32,8 @@ public:
     void setChanalNr(std::uint8_t chanalNr);                     // setter for the chanal number
     void setBankNr(std::uint16_t bankNr);                        // setter for the bank number
     void setOutputCfg(std::uint8_t cfgNum, std::uint8_t value);
+    void setSwitchCfg(std::uint8_t index, std::uint8_t switchName, std::uint8_t switchOnVal);
+
 private:
     std::uint8_t _chanalNr;
     std::uint8_t _startupProgNr;

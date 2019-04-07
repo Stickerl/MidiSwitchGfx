@@ -16,7 +16,7 @@ GuiCommunication::GuiCommunication(I_ConfigManager& configManager) :
 }
 
 GuiCommunication::~GuiCommunication() {
-    // TODO Auto-generated destructor stub
+
 }
 
 void GuiCommunication::sendCurrentPatchData(I_ConfigManager& configManager){
@@ -53,7 +53,9 @@ void GuiCommunication::run()
             break;
 
         case GuiQueue::SWITCH_SETTING:
-            // TODO: Nix gut!! :(
+            cfgManager.setSwitchCfg(((switchSettingMsg*)rxMsg.data)->switchIndex,
+                                    ((switchSettingMsg*)rxMsg.data)->switchNumber,
+                                    ((switchSettingMsg*)rxMsg.data)->switchValue);
             break;
 
         case GuiQueue::OUTPUT_CFG:

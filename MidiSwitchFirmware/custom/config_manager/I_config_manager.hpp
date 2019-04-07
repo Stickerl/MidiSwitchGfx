@@ -46,6 +46,7 @@ public:
     virtual void setChanalNr(std::uint8_t chanalNr) = 0;                     // setter for the chanal number
     virtual void setBankNr(std::uint16_t bankNr) = 0;                        // setter for the bank number
     virtual void setOutputCfg(std::uint8_t cfgNum, std::uint8_t value) = 0;
+    virtual void setSwitchCfg(std::uint8_t index, std::uint8_t switchName, std::uint8_t switchOnVal) = 0;
 
     void setConfigChangedCb(touchgfx::GenericCallback<I_ConfigManager& >& callback)
     {

@@ -37,7 +37,7 @@ public:
     {
         GuiControls name;
         uint8_t data[QUEUE_DATA_LENGTH];
-        GuiMessage():name(GuiControls::NONE){};
+        GuiMessage():name(GuiControls::NONE), data{0}{};
         GuiMessage(GuiControls name_in, uint8_t data_in[QUEUE_DATA_LENGTH]):
             name(name_in)
             {

@@ -42,4 +42,11 @@ struct outputCfgMsg
     std::uint8_t outputVal;
 };
 
+struct switchSettingMsg
+{
+    std::uint8_t switchIndex;
+    std::uint8_t switchNumber;
+    std::uint8_t switchValue;
+};
+
 #endif // GUI_MESSAGE_DEFINITIONS_HPP_

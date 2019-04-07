@@ -1,6 +1,6 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
-
+#include <new>
 
 
 Model::Model() :
@@ -35,15 +35,15 @@ void Model::requestProgramNrDecrement()
 {
     GuiQueue::GuiMessage_t txMsg;
     txMsg.name = GuiQueue::PROG_NR;
+    progNrMsg& payload = *(new(txMsg.data) progNrMsg);
     if(patchCfgData.programNr == 0)
     {
-        patchCfgData.programNr = (NUMBER_OF_PROGRAMS - 1);
+        payload.programNr = (NUMBER_OF_PROGRAMS - 1);
     }
     else
     {
-        patchCfgData.programNr--;
+        payload.programNr = patchCfgData.programNr - 1;
     }
-    txMsg.data[0] = patchCfgData.programNr;
     _queToMidi.sendElement(txMsg);
 }
 
@@ -52,15 +52,15 @@ void Model::requestProgramNrIncrement()
 {
     GuiQueue::GuiMessage_t txMsg;
     txMsg.name = GuiQueue::PROG_NR;
+    progNrMsg& payload = *(new(txMsg.data) progNrMsg);
     if(patchCfgData.programNr >= (NUMBER_OF_PROGRAMS - 1))
     {
-        patchCfgData.programNr = 0;
+        payload.programNr = 0;
     }
     else
     {
-        patchCfgData.programNr++;
+        payload.programNr = patchCfgData.programNr + 1;
     }
-    txMsg.data[0] = patchCfgData.programNr;
     _queToMidi.sendElement(txMsg);
 }
 
@@ -79,6 +79,37 @@ void Model::requestGeneralSave()
 {
     GuiQueue::GuiMessage_t txMsg;
     txMsg.name = GuiQueue::SAVE_BUTTON;
+    _queToMidi.sendElement(txMsg);
+}
+
+void Model::requestProgNrChange(std::uint8_t newVal)
+{
+    GuiQueue::GuiMessage_t txMsg;
+    txMsg.name = GuiQueue::PROG_NR;
+    progNrMsg& payload = *(new(txMsg.data) progNrMsg);
+    payload.programNr = newVal;
+    _queToMidi.sendElement(txMsg);
+}
+
+void Model::requestSwitchNrChange(std::uint8_t switchIndex, std::uint8_t switchNr)
+{
+    GuiQueue::GuiMessage_t txMsg;
+    txMsg.name = GuiQueue::SWITCH_SETTING;
+    switchSettingMsg& payload = *(new(txMsg.data) switchSettingMsg);
+    payload.switchIndex = switchIndex;
+    payload.switchNumber = switchNr;
+    payload.switchValue = (0 == switchIndex) ? patchCfgData.switch1Value : patchCfgData.switch2Value;
+    _queToMidi.sendElement(txMsg);
+}
+
+void Model::requestSwitchValChange(std::uint8_t switchIndex, std::uint8_t newVal)
+{
+    GuiQueue::GuiMessage_t txMsg;
+    txMsg.name = GuiQueue::SWITCH_SETTING;
+    switchSettingMsg& payload = *(new(txMsg.data) switchSettingMsg);
+    payload.switchIndex = switchIndex;
+    payload.switchNumber = (0 == switchIndex) ? patchCfgData.switch1Name : patchCfgData.switch2Name;
+    payload.switchValue = newVal;
     _queToMidi.sendElement(txMsg);
 }
 

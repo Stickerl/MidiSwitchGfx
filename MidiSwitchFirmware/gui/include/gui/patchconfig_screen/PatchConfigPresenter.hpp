@@ -36,7 +36,15 @@ public:
 
     virtual void patchConfigChanged();
 
+    virtual void restorePatchConfig();
+
     virtual void defaultOutputChanged(std::uint8_t newVal);
+
+    virtual void progNrChanged(std::uint8_t newVal);
+
+    virtual void switchNrChanged(std::uint8_t switchIndex, std::uint8_t switchNr);
+
+    virtual void switchValChanged(std::uint8_t switchIndex, std::uint8_t newVal);
 
 private:
     PatchConfigPresenter();

@@ -19,9 +19,6 @@
 #include <gui/containers/numericKeyboard.hpp>
 #include <touchgfx/EasingEquations.hpp>
 #include <touchgfx/mixins/FadeAnimator.hpp>
-
-
-
 class PatchConfigViewBase : public touchgfx::View<PatchConfigPresenter>
 {
 public:
@@ -68,7 +65,6 @@ protected:
     touchgfx::Box SaveingBox;
     touchgfx::TextArea Saveing;
 
-    //touchgfx::TextAreaWithOneWildcard progNrVal;
     touchgfx::TextAreaWithOneWildcard progNrVal;
     touchgfx::TextAreaWithOneWildcard switch1ConNrVal;
     touchgfx::TextAreaWithOneWildcard switch1ConValueVal;
@@ -82,13 +78,13 @@ protected:
      */
     static const uint16_t PROGNRVAL_SIZE = 4;
     touchgfx::Unicode::UnicodeChar progNrValBuffer[PROGNRVAL_SIZE];
-    static const uint16_t SWITCH1CONNRVAL_SIZE = 3;
+    static const uint16_t SWITCH1CONNRVAL_SIZE = 4;
     touchgfx::Unicode::UnicodeChar switch1ConNrValBuffer[SWITCH1CONNRVAL_SIZE];
-    static const uint16_t SWITCH1CONVALUEVAL_SIZE = 3;
+    static const uint16_t SWITCH1CONVALUEVAL_SIZE = 4;
     touchgfx::Unicode::UnicodeChar switch1ConValueValBuffer[SWITCH1CONVALUEVAL_SIZE];
-    static const uint16_t SWITCH2CONNRVAL_SIZE = 3;
+    static const uint16_t SWITCH2CONNRVAL_SIZE = 4;
     touchgfx::Unicode::UnicodeChar switch2ConNrValBuffer[SWITCH2CONNRVAL_SIZE];
-    static const uint16_t SWITCH2CONVALUEVAL_SIZE = 3;
+    static const uint16_t SWITCH2CONVALUEVAL_SIZE = 4;
     touchgfx::Unicode::UnicodeChar switch2ConValueValBuffer[SWITCH2CONVALUEVAL_SIZE];
 
 private:

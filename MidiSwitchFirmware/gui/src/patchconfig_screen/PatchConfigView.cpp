@@ -1,20 +1,55 @@
 #include <gui/patchconfig_screen/PatchConfigView.hpp>
+#include <cstdio>
 
 PatchConfigView::PatchConfigView():
     prevButtonCb(this, &PatchConfigView::prevButtonActionCb),
     nextButtonCb(this, &PatchConfigView::nextButtonActionCb),
     saveButtonCb(this, &PatchConfigView::saveButtonActionCb),
-    progNrClickCb(this, &PatchConfigView::progNrClickCallback),
-    defaultOutputCfgCb(this, &PatchConfigView::defaultOutputCfgActionCb)
+    returnKeyCb(this, &PatchConfigView::keyboardReturnActionCb),
+    cancelKeyCb(this, &PatchConfigView::keyboardCancleActionCb),
+    textClickCb(this, &PatchConfigView::textClickActionCb),
+    defaultOutputCfgCb(this, &PatchConfigView::defaultOutputCfgActionCb),
+    touchProgNrVal(progNrVal),
+    touchSwitch1ConNrVal(switch1ConNrVal),
+    touchSwitch1ConValueVal(switch1ConValueVal),
+    touchSwitch2ConNrVal(switch2ConNrVal),
+    touchSwitch2ConValueVal(switch2ConValueVal),
+    savingPopUpCounter(0)
 {
 	// event registrations
     Prev.setAction(prevButtonCb);
     Next.setAction(nextButtonCb);
     Save.setAction(saveButtonCb);
-    //progNrVal.setClickCb(progNrClickCb);
+    numericKeyboard1.setReturnCallback(returnKeyCb);
+    numericKeyboard1.setCancelCallback(cancelKeyCb);
+
+
+    touchProgNrVal.setReleasedCb(textClickCb);
+    touchSwitch1ConNrVal.setReleasedCb(textClickCb);
+    touchSwitch1ConValueVal.setReleasedCb(textClickCb);
+    touchSwitch2ConNrVal.setReleasedCb(textClickCb);
+    touchSwitch2ConValueVal.setReleasedCb(textClickCb);
+    add(touchProgNrVal);
+    add(touchSwitch1ConNrVal);
+    add(touchSwitch1ConValueVal);
+    add(touchSwitch2ConNrVal);
+    add(touchSwitch2ConValueVal);
+
     outputCfg_0.setAction(defaultOutputCfgCb);
-	
-    progNrVal.setTouchable(true);
+}
+
+void PatchConfigView::handleTickEvent()
+{
+    PatchConfigViewBase::handleTickEvent();
+    if(savingPopUpCounter > 0)
+    {
+        savingPopUpCounter--;
+        if(savingPopUpCounter == 0)
+        {
+            SaveingPopUp.setVisible(false);
+            SaveingPopUp.invalidate();
+        }
+    }
 
 }
 
@@ -26,12 +61,6 @@ void PatchConfigView::setupScreen()
 void PatchConfigView::tearDownScreen()
 {
 
-}
-
-void PatchConfigView::progNrClickCallback(const ClickEvent&)
-{
-    numericKeyboard1.initKeyboard(&progNrVal, PROGNRVAL_SIZE);
-    numericKeyboard1.invalidate();
 }
 
 void PatchConfigView::setProgramNumber(uint8_t programNr)
@@ -67,6 +96,19 @@ void PatchConfigView::setController2Value(uint8_t controllerVal)
 void PatchConfigView::setDefaultOutputCfg(std::uint8_t value)
 {
     outputCfg_0.setValue(value);
+    outputCfg_0.invalidate();
+}
+
+void PatchConfigView::setSwitch1OutputCfg(std::uint8_t value)
+{
+    outputCfg_1.setValue(value);
+    outputCfg_1.invalidate();
+}
+
+void PatchConfigView::setSwitch2OutputCfg(std::uint8_t value)
+{
+    outputCfg_2.setValue(value);
+    outputCfg_2.invalidate();
 }
 
 void PatchConfigView::prevButtonActionCb(const AbstractButton& button)
@@ -82,11 +124,76 @@ void PatchConfigView::nextButtonActionCb(const AbstractButton& button)
 void PatchConfigView::saveButtonActionCb(const AbstractButton& button)
 {
     presenter->saveButtonPressed();
+    savingPopUpCounter = 60;    // equals 1s at 60 fps
+    SaveingPopUp.setVisible(true);
+    SaveingPopUp.invalidate();
 }
 
+// TODO implement a more generic way just like the textClickActionCb implementation
 void PatchConfigView::defaultOutputCfgActionCb(const OutputCfg& outputCfg)
 {
     std::uint8_t tmp = outputCfg.getValue();
     presenter->defaultOutputChanged(tmp);
 }
+
+void PatchConfigView::textClickActionCb(Drawable& objRev, const ClickEvent& evt)
+{
+    std::uint16_t maxCharCnt = 0;
+    if(&objRev == &progNrVal) {
+        maxCharCnt = PROGNRVAL_SIZE;
+    }
+    else if(&objRev == &switch1ConNrVal) {
+        maxCharCnt = SWITCH1CONNRVAL_SIZE;
+    }
+    else if(&objRev == &switch1ConValueVal) {
+        maxCharCnt = SWITCH1CONVALUEVAL_SIZE;
+    }
+    else if(&objRev == &switch2ConNrVal) {
+        maxCharCnt = SWITCH2CONNRVAL_SIZE;
+    }
+    else if(&objRev == &switch2ConValueVal) {
+        maxCharCnt = SWITCH2CONVALUEVAL_SIZE;
+    }
+    numericKeyboard1.initKeyboard((touchgfx::TextAreaWithOneWildcard*)&objRev, maxCharCnt);
+    numericKeyboard1.invalidate();
+}
+
+void PatchConfigView::keyboardReturnActionCb(touchgfx::TextAreaWithOneWildcard* element) {
+    std::uint8_t inputVal = Unicode::atoi(element->getWildcard());
+    if(element == &progNrVal) {
+        presenter->progNrChanged(inputVal);
+    }
+    else if(element == &switch1ConNrVal) {
+        presenter->switchNrChanged(0, inputVal);
+    }
+    else if(element == &switch1ConValueVal) {
+        presenter->switchValChanged(0, inputVal);
+    }
+    else if(element == &switch2ConNrVal) {
+        presenter->switchNrChanged(1, inputVal);
+    }
+    else if(element == &switch2ConValueVal) {
+        presenter->switchValChanged(1, inputVal);
+    }
+}
+
+void PatchConfigView::keyboardCancleActionCb(touchgfx::TextAreaWithOneWildcard* element) {
+    if(element == &progNrVal) {
+
+    }
+    else if(element == &switch1ConNrVal) {
+
+    }
+    else if(element == &switch1ConValueVal) {
+
+    }
+    else if(element == &switch2ConNrVal) {
+
+    }
+    else if(element == &switch2ConValueVal) {
+
+    }
+    presenter->restorePatchConfig();
+}
+
 

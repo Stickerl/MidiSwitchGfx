@@ -13,7 +13,8 @@ ConfigManager::ConfigManager(I_Flash& flashManager, std::uint16_t flashUserId):
     currentCfg(0),
     _bankNr(0),
     _chanalNr(0),
-    _flashUserId(flashUserId)
+    _flashUserId(flashUserId),
+    _startupProgNr(0)
 {
 
 }
@@ -177,7 +178,13 @@ void ConfigManager::setOutputCfg(std::uint8_t cfgNum, std::uint8_t value)
     }
 }
 
-
+void ConfigManager::setSwitchCfg(std::uint8_t index, std::uint8_t switchName, std::uint8_t switchOnVal)
+{
+    // TODO in case of invalid data ignore the change request
+    currentCfg->switches[index].switchName = switchName;
+    currentCfg->switches[index].switchOnVal = switchOnVal;
+    configChangedCb->execute(*this);
+}
 
 
 

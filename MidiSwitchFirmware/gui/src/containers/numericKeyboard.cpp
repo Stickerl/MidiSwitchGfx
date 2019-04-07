@@ -3,10 +3,12 @@
 
 numericKeyboard::numericKeyboard() :
     readKeyCb(this, &numericKeyboard::readKeyCallback),
-    cancleCb(this, &numericKeyboard::cancelCallback),
-    returnCb(this, &numericKeyboard::returnCallback),
+    cancleKeyCb(this, &numericKeyboard::cancelKeyCallback),
+    returnKeyCb(this, &numericKeyboard::returnKeyCallback),
     wildcardSize(0),
-    textWithOneWildcard(NULL)
+    textWithOneWildcard(NULL),
+    cancleCb(NULL),
+    returnCb(NULL)
 {
     key_0.setAction(readKeyCb);
     key_1.setAction(readKeyCb);
@@ -18,7 +20,8 @@ numericKeyboard::numericKeyboard() :
     key_7.setAction(readKeyCb);
     key_8.setAction(readKeyCb);
     key_9.setAction(readKeyCb);
-    cancel.setAction(returnCb);
+    cancel.setAction(cancleKeyCb);
+    returnButton.setAction(returnKeyCb);
 }
 
 void numericKeyboard::initialize()
@@ -29,12 +32,26 @@ void numericKeyboard::initialize()
 void numericKeyboard::initKeyboard(touchgfx::TextAreaWithOneWildcard* element, std::uint16_t charCnt)
 {
     assert(NULL != element);
+    if(NULL != textWithOneWildcard)
+    {
+        if(NULL != cancleCb) {
+            cancleCb->execute(textWithOneWildcard);
+        }
+    }
     textWithOneWildcard = element;
     wildcardSize = charCnt;
     Unicode::UnicodeChar* wildcard = (Unicode::UnicodeChar*)textWithOneWildcard->getWildcard();
     memset(wildcard, 0, wildcardSize * sizeof(Unicode::UnicodeChar));
     this->setVisible(true);
     this->invalidate();
+}
+
+void numericKeyboard::setReturnCallback(touchgfx::GenericCallback<touchgfx::TextAreaWithOneWildcard* >& returnCallback) {
+    returnCb = &returnCallback;
+}
+
+void numericKeyboard::setCancelCallback(touchgfx::GenericCallback<touchgfx::TextAreaWithOneWildcard* >& cancleCallback) {
+    cancleCb = &cancleCallback;
 }
 
 void numericKeyboard::readKeyCallback(const AbstractButton& button)
@@ -79,18 +96,22 @@ void numericKeyboard::readKeyCallback(const AbstractButton& button)
     textWithOneWildcard->invalidate();
 }
 
-void numericKeyboard::cancelCallback(const AbstractButton& button)
+void numericKeyboard::cancelKeyCallback(const AbstractButton& button)
 {
-    // todo communicate that the action was canceled
+    if(NULL != cancleCb) {
+        cancleCb->execute(textWithOneWildcard);
+    }
     wildcardSize = 0;
     textWithOneWildcard = NULL;
     this->setVisible(false);
     this->invalidate();
 }
 
-void numericKeyboard::returnCallback(const AbstractButton& button)
+void numericKeyboard::returnKeyCallback(const AbstractButton& button)
 {
-    // todo coumunicate that the action succeeded
+    if(NULL != returnCb) {
+        returnCb->execute(textWithOneWildcard);
+    }
     wildcardSize = 0;
     textWithOneWildcard = NULL;
     this->setVisible(false);

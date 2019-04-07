@@ -56,6 +56,12 @@ public:
 
     void requestGeneralSave();
 
+    void requestProgNrChange(std::uint8_t newVal);
+
+    void requestSwitchNrChange(std::uint8_t switchIndex, std::uint8_t switchNr);
+
+    void requestSwitchValChange(std::uint8_t switchNr, std::uint8_t newVal);
+
 protected:
     /**
      * Pointer to the currently active presenter.
@@ -63,7 +69,6 @@ protected:
     ModelListener* modelListener;
 
     patchCfgMsg patchCfgData;
-    std::uint8_t chanalNr;
     GuiQueue& _queToMidi;
     GuiQueue& _queToGui;
 
