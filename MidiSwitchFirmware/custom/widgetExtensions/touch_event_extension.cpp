@@ -18,7 +18,7 @@ touch_event_extension::touch_event_extension(Drawable& widget) :
     cancelCb(NULL),
     tickCb(NULL)
 {
-    setPosition(widgetRev.getX(), widgetRev.getY(), widgetRev.getHeight(), widgetRev.getWidth());
+    setPosition(widgetRev.getX(), widgetRev.getY(), widgetRev.getWidth(), widgetRev.getHeight());
     setTouchable(true);
 }
 

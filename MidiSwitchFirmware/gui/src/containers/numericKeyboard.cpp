@@ -42,8 +42,8 @@ void numericKeyboard::initKeyboard(touchgfx::TextAreaWithOneWildcard* element, s
     wildcardSize = charCnt;
     Unicode::UnicodeChar* wildcard = (Unicode::UnicodeChar*)textWithOneWildcard->getWildcard();
     memset(wildcard, 0, wildcardSize * sizeof(Unicode::UnicodeChar));
-    this->setVisible(true);
-    this->invalidate();
+    setVisible(true);
+    invalidate();
 }
 
 void numericKeyboard::setReturnCallback(touchgfx::GenericCallback<touchgfx::TextAreaWithOneWildcard* >& returnCallback) {

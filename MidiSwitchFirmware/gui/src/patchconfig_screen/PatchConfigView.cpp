@@ -20,9 +20,9 @@ PatchConfigView::PatchConfigView():
     Prev.setAction(prevButtonCb);
     Next.setAction(nextButtonCb);
     Save.setAction(saveButtonCb);
+    numericKeyboard1.setVisible(false);
     numericKeyboard1.setReturnCallback(returnKeyCb);
     numericKeyboard1.setCancelCallback(cancelKeyCb);
-
 
     touchProgNrVal.setReleasedCb(textClickCb);
     touchSwitch1ConNrVal.setReleasedCb(textClickCb);

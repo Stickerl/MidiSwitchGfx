@@ -39,8 +39,18 @@ protected:
     touchgfx::Button Next;
     touchgfx::Button Pev;
     touchgfx::TextArea GlobalCfgHeadline;
-    touchgfx::TextAreaWithOneWildcard MidiChanal;
-    touchgfx::TextAreaWithOneWildcard BankNr;
+    touchgfx::TextAreaWithOneWildcard MidiChannelVal;
+    touchgfx::TextAreaWithOneWildcard BankNrVal;
+    touchgfx::TextArea BankNr;
+    touchgfx::TextArea MidiChannel;
+
+    /*
+     * Wildcard Buffers
+     */
+    static const uint16_t MIDICHANNELVAL_SIZE = 4;
+    touchgfx::Unicode::UnicodeChar MidiChannelValBuffer[MIDICHANNELVAL_SIZE];
+    static const uint16_t BANKNRVAL_SIZE = 4;
+    touchgfx::Unicode::UnicodeChar BankNrValBuffer[BANKNRVAL_SIZE];
 
 private:
 
