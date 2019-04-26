@@ -7,7 +7,8 @@ Model::Model() :
 modelListener(0),
 _queToMidi(GuiQueue::getQueToMidiRef()),
 _queToGui(GuiQueue::getQueToGuiRef()),
-patchCfgData{0}
+patchCfgData{0},
+globalCfgData{0}
 {
 
 }
@@ -113,9 +114,31 @@ void Model::requestSwitchValChange(std::uint8_t switchIndex, std::uint8_t newVal
     _queToMidi.sendElement(txMsg);
 }
 
-patchCfgMsg Model::getPatchCfgData(){
+void Model::requestMidiChannelChange(std::uint8_t newMidiChannel)
+{
+	GuiQueue::GuiMessage_t txMsg;
+	txMsg.name = GuiQueue::MIDI_CHANNEL;
+	midiChanMsg& payload = *(new(txMsg.data) midiChanMsg);
+	payload.midiChannel = newMidiChannel;
+	_queToMidi.sendElement(txMsg);
+}
+
+void Model::requestBankNrChange(std::uint16_t newBankNr)
+{
+	GuiQueue::GuiMessage_t txMsg;
+	txMsg.name = GuiQueue::BANK_NR;
+	bankNrMsg& payload = *(new(txMsg.data) bankNrMsg);
+	payload.bankNr = newBankNr;
+	_queToMidi.sendElement(txMsg);
+}
+
+patchCfgMsg Model::getPatchCfgData()
+{
     return patchCfgData;
 }
 
-
+globalCfgMsg Model::getGlobalCfgData()
+{
+	return globalCfgData;
+}
 

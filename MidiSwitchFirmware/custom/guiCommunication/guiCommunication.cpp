@@ -7,12 +7,15 @@
 
 #include "guiCommunication.hpp"
 #include <string.h>
+#include <new>
 
 GuiCommunication::GuiCommunication(I_ConfigManager& configManager) :
     configChangedCb(this, &GuiCommunication::sendCurrentPatchData),
+	globalConfigChangedCb(this, &GuiCommunication::sendGlobalCfg),
     cfgManager(configManager)
 {
     configManager.setConfigChangedCb(configChangedCb);
+    configManager.setGlobalConfigChangedCb(globalConfigChangedCb);
 }
 
 GuiCommunication::~GuiCommunication() {
@@ -21,7 +24,7 @@ GuiCommunication::~GuiCommunication() {
 
 void GuiCommunication::sendCurrentPatchData(I_ConfigManager& configManager){
     I_ConfigManager::programConfig_t& currentCfg = configManager.getCurrentCfg();
-    patchCfgMsg msgData;
+    patchCfgMsg& msgData = *(new(txMsg.data) patchCfgMsg);
     msgData.programNr = currentCfg.programNr;
     msgData.defaultOut = currentCfg.defaultOut;
     msgData.switch1Name = currentCfg.switches[0].switchName;
@@ -31,14 +34,23 @@ void GuiCommunication::sendCurrentPatchData(I_ConfigManager& configManager){
     msgData.switch2Output = currentCfg.switches[1].output;
     msgData.switch2Value = currentCfg.switches[1].switchOnVal;
     txMsg.name = GuiQueue::UPDATE_PATCH_CFG;
-    memcpy(txMsg.data, &msgData, sizeof(patchCfgMsg));
     queueToGui.sendElement(txMsg);
 }
 
+void GuiCommunication::sendGlobalCfg(I_ConfigManager& configManager)
+{
+	I_ConfigManager::actualGlobalCfg currentCfg = configManager.getGlobalCfg();
+	globalCfgMsg& msgData = *(new(txMsg.data) globalCfgMsg);
+	msgData.midiChanel = currentCfg.midiChannel;
+	msgData.bankNr = currentCfg.bankNr;
+	msgData.initialPatch = currentCfg.initialPatch;
+	txMsg.name = GuiQueue::UPDATE_GLOBAL_CFG;
+	queueToGui.sendElement(txMsg);
+}
 
 void GuiCommunication::run()
 {
-    if(queueToMidi.getElement(rxMsg) == true)
+    if(true == queueToMidi.getElement(rxMsg))
     {
         switch(rxMsg.name)
         {
@@ -62,6 +74,14 @@ void GuiCommunication::run()
             cfgManager.setOutputCfg(((outputCfgMsg*) rxMsg.data)->outputCfgNr,
                                     ((outputCfgMsg*) rxMsg.data)->outputVal);
             break;
+
+        case GuiQueue::MIDI_CHANNEL:
+        	cfgManager.setChanalNr(((midiChanMsg*)rxMsg.data)->midiChannel);
+        	break;
+
+        case GuiQueue::BANK_NR:
+        	cfgManager.setBankNr(((bankNrMsg*)rxMsg.data)->bankNr);
+        	break;
 
         default:
             // message unknown or not implemented

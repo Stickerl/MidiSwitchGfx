@@ -26,6 +26,13 @@ struct patchCfgMsg
     std::uint8_t switch2Output;
 };
 
+// UPDATE_GLOBAL_CFG
+struct globalCfgMsg
+{
+	std::uint8_t midiChanel;
+	std::uint16_t bankNr;
+	std::uint8_t initialPatch;
+};
 
 /*********************************************
  * GUI to Backend message definitions
@@ -36,17 +43,32 @@ struct progNrMsg
     std::uint8_t programNr;
 };
 
+// OUTPUT_CFG
 struct outputCfgMsg
 {
     std::uint8_t outputCfgNr;
     std::uint8_t outputVal;
 };
 
+// SWITCH_SETTING
 struct switchSettingMsg
 {
     std::uint8_t switchIndex;
     std::uint8_t switchNumber;
     std::uint8_t switchValue;
 };
+
+// MIDI_CHANNEL
+struct midiChanMsg
+{
+	std::uint8_t midiChannel;
+};
+
+// BANK_NR
+struct bankNrMsg
+{
+	std::uint16_t bankNr;
+};
+
 
 #endif // GUI_MESSAGE_DEFINITIONS_HPP_

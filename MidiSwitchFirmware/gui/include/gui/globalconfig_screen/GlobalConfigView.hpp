@@ -13,12 +13,18 @@ public:
     virtual ~GlobalConfigView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
+    void setMidiChanal(std::uint8_t midiChanal);
+    void setBankNr(std::uint16_t bankNr);
+    void setInitialPatch(std::uint8_t initialPatchNr);
+
     virtual void textClickActionCb(Drawable& textField, const ClickEvent& evt);
-    virtual void textCancelActionCb(Drawable& textField, const ClickEvent& evt);
+    virtual void textCancelActionCb(touchgfx::TextAreaWithOneWildcard* textField);
     virtual void textReturnActionCb(touchgfx::TextAreaWithOneWildcard* textField);
+
 protected:
     touchgfx::Callback<GlobalConfigView, Drawable&, const ClickEvent& > textClickCb;
-    touchgfx::Callback<GlobalConfigView, Drawable&, const ClickEvent& > textCancelCb;
+    touchgfx::Callback<GlobalConfigView, touchgfx::TextAreaWithOneWildcard* > textCancelCb;
     touchgfx::Callback<GlobalConfigView, touchgfx::TextAreaWithOneWildcard* > textReturnCb;
     touch_event_extension touchMidiChanal;
     touch_event_extension touchBankNr;

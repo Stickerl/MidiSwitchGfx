@@ -17,10 +17,12 @@ public:
     GuiCommunication(I_ConfigManager& configManager);
     virtual ~GuiCommunication();
     void sendCurrentPatchData(I_ConfigManager& configManager);
+    void sendGlobalCfg(I_ConfigManager& configManager);
     void run();
 
 private:
     touchgfx::Callback<GuiCommunication, I_ConfigManager& > configChangedCb;
+    touchgfx::Callback<GuiCommunication, I_ConfigManager& > globalConfigChangedCb;
     // set up the connection to the gui via queues
     GuiQueue& queueToGui = GuiQueue::getQueToGuiRef();
     GuiQueue& queueToMidi = GuiQueue::getQueToMidiRef();

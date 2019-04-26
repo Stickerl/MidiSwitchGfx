@@ -44,6 +44,8 @@ public:
 
     patchCfgMsg getPatchCfgData();
 
+    globalCfgMsg getGlobalCfgData();
+
     /*****************************************************************
      * respond = application updates Gui
      * request = Gui requests new data from the application
@@ -62,12 +64,16 @@ public:
 
     void requestSwitchValChange(std::uint8_t switchNr, std::uint8_t newVal);
 
+    void requestMidiChannelChange(std::uint8_t newMidiChannel);
+
+    void requestBankNrChange(std::uint16_t newBankNr);
+
 protected:
     /**
      * Pointer to the currently active presenter.
      */
     ModelListener* modelListener;
-
+    globalCfgMsg globalCfgData;
     patchCfgMsg patchCfgData;
     GuiQueue& _queToMidi;
     GuiQueue& _queToGui;

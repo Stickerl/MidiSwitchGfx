@@ -107,18 +107,29 @@ I_ConfigManager::programConfig_t& ConfigManager::getCurrentCfg()
 I_ConfigManager::programConfig_t& ConfigManager::switchCfg(std::uint8_t programNr)
 {
     currentCfg = &ramCfgList[programNr];
-    configChangedCb->execute(*this);
+    if(NULL != configChangedCb)
+    {
+    	configChangedCb->execute(*this);
+    }
     return *currentCfg;
 }
 
 void ConfigManager::setChanalNr(std::uint8_t chanalNr)
 {
     _chanalNr = chanalNr;
+    if(NULL != globalConfigChangedCb)
+	{
+		globalConfigChangedCb->execute(*this);
+	}
 }
 
 void ConfigManager::setBankNr(std::uint16_t bankNr)
 {
     _bankNr = bankNr;
+    if(NULL != globalConfigChangedCb)
+	{
+    	globalConfigChangedCb->execute(*this);
+	}
 }
 
 void ConfigManager::readCfg(std::uint8_t index)
@@ -183,7 +194,20 @@ void ConfigManager::setSwitchCfg(std::uint8_t index, std::uint8_t switchName, st
     // TODO in case of invalid data ignore the change request
     currentCfg->switches[index].switchName = switchName;
     currentCfg->switches[index].switchOnVal = switchOnVal;
-    configChangedCb->execute(*this);
+    if(NULL != configChangedCb)
+    {
+    	configChangedCb->execute(*this);
+    }
+}
+
+ConfigManager::actualGlobalCfg ConfigManager::getGlobalCfg()
+{
+	actualGlobalCfg globalCfg;
+	globalCfg.midiChannel = _chanalNr;
+    globalCfg.initialPatch = _startupProgNr;
+    globalCfg.bankNr = _bankNr;
+
+	return globalCfg;
 }
 
 

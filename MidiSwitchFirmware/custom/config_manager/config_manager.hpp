@@ -28,6 +28,7 @@ public:
     void program_change_cb(midi_data currentData);          // implements the callback interface for the program change signal
     void control_change_cb(midi_data currentData);          // implements the callback interface for the conrol change signal
     programConfig_t& getCurrentCfg();                       // getter for the reference to the currently active configuration
+    actualGlobalCfg getGlobalCfg();
     programConfig_t& switchCfg(std::uint8_t programNr);          // interface to set a specific configuration active. returns the reference to the configuration
     void setChanalNr(std::uint8_t chanalNr);                     // setter for the chanal number
     void setBankNr(std::uint16_t bankNr);                        // setter for the bank number

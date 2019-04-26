@@ -26,6 +26,9 @@ public:
     virtual void deactivate();
 
     virtual ~GlobalConfigPresenter() {};
+    virtual void restoreGlobalConfig();
+    virtual void midiChannelChanged(std::uint8_t newValue);
+    virtual void bankNrChanged(std::uint16_t newValue);
 
 private:
     GlobalConfigPresenter();

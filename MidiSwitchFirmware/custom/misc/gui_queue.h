@@ -23,14 +23,17 @@ public:
     // Message names
     typedef enum
     {
-        NONE             = 0,
-        PROG_NR          = 1,
-        SWITCH_SETTING   = 2,
-        OUTPUT_CFG       = 3,
-        TEACH_BUTTON     = 4,
-        SAVE_BUTTON      = 5,
-        OPTIONS_BUTON    = 6,
-        UPDATE_PATCH_CFG = 7,
+        NONE              = 0,
+        PROG_NR           = 1,
+        SWITCH_SETTING    = 2,
+        OUTPUT_CFG        = 3,
+        TEACH_BUTTON      = 4,
+        SAVE_BUTTON       = 5,
+        OPTIONS_BUTON     = 6,
+        UPDATE_PATCH_CFG  = 7,
+		MIDI_CHANNEL	  = 8,
+		BANK_NR			  = 9,
+		UPDATE_GLOBAL_CFG = 10
     }GuiControls;
 
     typedef struct GuiMessage
