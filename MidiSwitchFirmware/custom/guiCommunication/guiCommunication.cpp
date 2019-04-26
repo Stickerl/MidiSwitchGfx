@@ -83,6 +83,10 @@ void GuiCommunication::run()
         	cfgManager.setBankNr(((bankNrMsg*)rxMsg.data)->bankNr);
         	break;
 
+        case GuiQueue::INITIAL_PATCH:
+            cfgManager.setInitialPatch(((initalPatchNrMsg*)rxMsg.data)->initialPatchNr);
+            break;
+
         default:
             // message unknown or not implemented
             break;

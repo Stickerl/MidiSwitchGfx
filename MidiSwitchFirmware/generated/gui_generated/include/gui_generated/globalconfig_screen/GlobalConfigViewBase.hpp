@@ -35,6 +35,7 @@ protected:
     touchgfx::Box HeadlineBox;
     touchgfx::Box MidiChanalBox;
     touchgfx::Box BankNrBox;
+    touchgfx::Box InitialPatchBox;
 
     touchgfx::Button Next;
     touchgfx::Button Pev;
@@ -43,14 +44,18 @@ protected:
     touchgfx::TextAreaWithOneWildcard BankNrVal;
     touchgfx::TextArea BankNr;
     touchgfx::TextArea MidiChannel;
+    touchgfx::TextArea InitialPatch;
+    touchgfx::TextAreaWithOneWildcard InitialPatchVal;
 
     /*
      * Wildcard Buffers
      */
     static const uint16_t MIDICHANNELVAL_SIZE = 4;
     touchgfx::Unicode::UnicodeChar MidiChannelValBuffer[MIDICHANNELVAL_SIZE];
-    static const uint16_t BANKNRVAL_SIZE = 4;
+    static const uint16_t BANKNRVAL_SIZE = 6;
     touchgfx::Unicode::UnicodeChar BankNrValBuffer[BANKNRVAL_SIZE];
+    static const uint16_t INITIALPATCHVAL_SIZE = 4;
+    touchgfx::Unicode::UnicodeChar InitialPatchValBuffer[INITIALPATCHVAL_SIZE];
 
 private:
 

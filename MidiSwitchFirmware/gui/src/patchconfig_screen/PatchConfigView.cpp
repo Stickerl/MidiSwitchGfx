@@ -8,7 +8,7 @@ PatchConfigView::PatchConfigView():
     returnKeyCb(this, &PatchConfigView::keyboardReturnActionCb),
     cancelKeyCb(this, &PatchConfigView::keyboardCancleActionCb),
     textClickCb(this, &PatchConfigView::textClickActionCb),
-    defaultOutputCfgCb(this, &PatchConfigView::defaultOutputCfgActionCb),
+    outputCfgCb(this, &PatchConfigView::outputCfgActionCb),
     touchProgNrVal(progNrVal),
     touchSwitch1ConNrVal(switch1ConNrVal),
     touchSwitch1ConValueVal(switch1ConValueVal),
@@ -35,7 +35,9 @@ PatchConfigView::PatchConfigView():
     add(touchSwitch2ConNrVal);
     add(touchSwitch2ConValueVal);
 
-    outputCfg_0.setAction(defaultOutputCfgCb);
+    outputCfg_0.setAction(outputCfgCb);
+    outputCfg_1.setAction(outputCfgCb);
+    outputCfg_2.setAction(outputCfgCb);
 }
 
 void PatchConfigView::handleTickEvent()
@@ -129,11 +131,20 @@ void PatchConfigView::saveButtonActionCb(const AbstractButton& button)
     SaveingPopUp.invalidate();
 }
 
-// TODO implement a more generic way just like the textClickActionCb implementation
-void PatchConfigView::defaultOutputCfgActionCb(const OutputCfg& outputCfg)
+void PatchConfigView::outputCfgActionCb(const OutputCfg& outputCfg)
 {
-    std::uint8_t tmp = outputCfg.getValue();
-    presenter->defaultOutputChanged(tmp);
+    std::uint8_t outPutRowNr;
+    if(&outputCfg == &outputCfg_0){
+        outPutRowNr = 0;
+    }
+    else if(&outputCfg == &outputCfg_1){
+        outPutRowNr = 1;
+    }
+    else if(&outputCfg == &outputCfg_2){
+        outPutRowNr = 2;
+    }
+
+    presenter->outputChanged(outPutRowNr, outputCfg.getValue());
 }
 
 void PatchConfigView::textClickActionCb(Drawable& objRev, const ClickEvent& evt)

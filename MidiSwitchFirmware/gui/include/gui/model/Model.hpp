@@ -54,7 +54,7 @@ public:
 
     void requestProgramNrIncrement();
 
-    void requestDefaultOutputChange(std::uint8_t newVal);
+    void requestOutputChange(std::uint8_t rowNr, std::uint8_t newVal);
 
     void requestGeneralSave();
 
@@ -67,6 +67,8 @@ public:
     void requestMidiChannelChange(std::uint8_t newMidiChannel);
 
     void requestBankNrChange(std::uint16_t newBankNr);
+
+    void requestInitialPatchChange(std::uint8_t newInitalPatchNr);
 
 protected:
     /**

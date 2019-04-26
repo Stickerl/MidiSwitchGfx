@@ -28,6 +28,7 @@ protected:
     touchgfx::Callback<GlobalConfigView, touchgfx::TextAreaWithOneWildcard* > textReturnCb;
     touch_event_extension touchMidiChanal;
     touch_event_extension touchBankNr;
+    touch_event_extension touchInitialPatch;
     numericKeyboard numericKeyboard1;
 
 };

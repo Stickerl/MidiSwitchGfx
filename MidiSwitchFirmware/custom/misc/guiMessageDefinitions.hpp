@@ -70,5 +70,10 @@ struct bankNrMsg
 	std::uint16_t bankNr;
 };
 
+// INITAL_PATCH
+struct initalPatchNrMsg
+{
+    std::uint8_t initialPatchNr;
+};
 
 #endif // GUI_MESSAGE_DEFINITIONS_HPP_

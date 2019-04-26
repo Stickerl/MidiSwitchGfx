@@ -4,6 +4,7 @@
 GlobalConfigView::GlobalConfigView():
     touchMidiChanal(MidiChannelVal),
     touchBankNr(BankNrVal),
+    touchInitialPatch(InitialPatchVal),
     numericKeyboard1(),
     textClickCb(this, &GlobalConfigView::textClickActionCb),
     textCancelCb(this, &GlobalConfigView::textCancelActionCb),
@@ -11,8 +12,10 @@ GlobalConfigView::GlobalConfigView():
 {
     touchMidiChanal.setReleasedCb(textClickCb);
     touchBankNr.setReleasedCb(textClickCb);
+    touchInitialPatch.setReleasedCb(textClickCb);
     add(touchMidiChanal);
     add(touchBankNr);
+    add(touchInitialPatch);
     add(numericKeyboard1);
     numericKeyboard1.setXY(250, 329);
     numericKeyboard1.setVisible(false);
@@ -44,7 +47,8 @@ void GlobalConfigView::setBankNr(std::uint16_t bankNr)
 
 void GlobalConfigView::setInitialPatch(std::uint8_t initialPatchNr)
 {
-	// TODO add this widget useing touchgfx designer!
+    Unicode::snprintf((Unicode::UnicodeChar*) InitialPatchVal.getWildcard(), INITIALPATCHVAL_SIZE, "%i", initialPatchNr);
+    InitialPatchVal.invalidate();
 }
 
 void GlobalConfigView::textClickActionCb(Drawable& textField, const ClickEvent& evt)
@@ -58,6 +62,10 @@ void GlobalConfigView::textClickActionCb(Drawable& textField, const ClickEvent& 
     if(&textField == &BankNrVal)
     {
         numDigits = BANKNRVAL_SIZE;
+    }
+    if(&textField == &InitialPatchVal)
+    {
+        numDigits = INITIALPATCHVAL_SIZE;
     }
     numericKeyboard1.initKeyboard(reinterpret_cast <TextAreaWithOneWildcard*> (&textField), numDigits);
 }
@@ -75,5 +83,8 @@ void GlobalConfigView::textReturnActionCb(TextAreaWithOneWildcard* textField)
 	    }
 	    else if(textField == &BankNrVal) {
 	        presenter->bankNrChanged(inputVal);
+	    }
+	    else if(textField == &InitialPatchVal){
+	        presenter->initalPatchChanged(static_cast<std::uint8_t>(inputVal));
 	    }
 }

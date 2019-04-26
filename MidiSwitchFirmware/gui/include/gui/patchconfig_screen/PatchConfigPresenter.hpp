@@ -38,7 +38,7 @@ public:
 
     virtual void restorePatchConfig();
 
-    virtual void defaultOutputChanged(std::uint8_t newVal);
+    virtual void outputChanged(std::uint8_t rowNr, std::uint8_t newVal);
 
     virtual void progNrChanged(std::uint8_t newVal);
 

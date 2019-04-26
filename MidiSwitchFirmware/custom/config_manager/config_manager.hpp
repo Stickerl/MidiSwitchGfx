@@ -32,17 +32,14 @@ public:
     programConfig_t& switchCfg(std::uint8_t programNr);          // interface to set a specific configuration active. returns the reference to the configuration
     void setChanalNr(std::uint8_t chanalNr);                     // setter for the chanal number
     void setBankNr(std::uint16_t bankNr);                        // setter for the bank number
+    void setInitialPatch(std::uint8_t patchNr);                  // setter for initial patch number
     void setOutputCfg(std::uint8_t cfgNum, std::uint8_t value);
     void setSwitchCfg(std::uint8_t index, std::uint8_t switchName, std::uint8_t switchOnVal);
 
 private:
-    std::uint8_t _chanalNr;
-    std::uint8_t _startupProgNr;
-    std::uint16_t _bankNr;
-    static const std::uint32_t BANK_NR_STORE_ADDR = 0;
-    static const std::uint32_t CHANAL_NR_STORE_ADDR = BANK_NR_STORE_ADDR + sizeof(_bankNr);
-    static const std::uint32_t STARTUP_PROG_NR = CHANAL_NR_STORE_ADDR + sizeof(_chanalNr);
-    static const std::uint32_t CFG_STORAGE_ADDR = STARTUP_PROG_NR + sizeof(_startupProgNr);
+    actualGlobalCfg globalCfg;
+    static const std::uint32_t GLOBAL_CFG_ADDR = 0;
+    static const std::uint32_t CFG_STORAGE_ADDR = GLOBAL_CFG_ADDR + sizeof(globalCfg);
     const std::uint16_t _flashUserId;
 
     programConfig_t ramCfgList[NUMBER_OF_PROGRAMS];

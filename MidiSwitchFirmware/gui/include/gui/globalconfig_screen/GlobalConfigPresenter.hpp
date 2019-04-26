@@ -29,6 +29,8 @@ public:
     virtual void restoreGlobalConfig();
     virtual void midiChannelChanged(std::uint8_t newValue);
     virtual void bankNrChanged(std::uint16_t newValue);
+    virtual void initalPatchChanged(std::uint8_t newValue);
+    virtual void globalConfigChanged();
 
 private:
     GlobalConfigPresenter();

@@ -25,6 +25,11 @@ void Model::tick()
             modelListener->patchConfigChanged();
             break;
 
+        case GuiQueue::UPDATE_GLOBAL_CFG:
+            memcpy(&globalCfgData, rxMsg.data, sizeof(globalCfgData));
+            modelListener->globalConfigChanged();
+            break;
+
         default:
             // message unknown or not implemented
             break;
@@ -65,14 +70,13 @@ void Model::requestProgramNrIncrement()
     _queToMidi.sendElement(txMsg);
 }
 
-void Model::requestDefaultOutputChange(std::uint8_t newVal)
+void Model::requestOutputChange(std::uint8_t rowNr, std::uint8_t newVal)
 {
     GuiQueue::GuiMessage_t txMsg;
-    outputCfgMsg payload;
-    payload.outputCfgNr = 0;
+    outputCfgMsg& payload = *(new(txMsg.data) outputCfgMsg);
+    payload.outputCfgNr = rowNr;
     payload.outputVal = newVal;
     txMsg.name = GuiQueue::OUTPUT_CFG;
-    memcpy(txMsg.data, &payload, sizeof(payload));
     _queToMidi.sendElement(txMsg);
 }
 
@@ -130,6 +134,15 @@ void Model::requestBankNrChange(std::uint16_t newBankNr)
 	bankNrMsg& payload = *(new(txMsg.data) bankNrMsg);
 	payload.bankNr = newBankNr;
 	_queToMidi.sendElement(txMsg);
+}
+
+void Model::requestInitialPatchChange(std::uint8_t newInitalPatchNr)
+{
+    GuiQueue::GuiMessage_t txMsg;
+    txMsg.name = GuiQueue::INITIAL_PATCH;
+    initalPatchNrMsg& payload = *(new(txMsg.data) initalPatchNrMsg);
+    payload.initialPatchNr = newInitalPatchNr;
+    _queToMidi.sendElement(txMsg);
 }
 
 patchCfgMsg Model::getPatchCfgData()

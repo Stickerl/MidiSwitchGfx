@@ -11,10 +11,8 @@
 ConfigManager::ConfigManager(I_Flash& flashManager, std::uint16_t flashUserId):
     _flashManager(flashManager),
     currentCfg(0),
-    _bankNr(0),
-    _chanalNr(0),
-    _flashUserId(flashUserId),
-    _startupProgNr(0)
+    globalCfg{0},
+    _flashUserId(flashUserId)
 {
 
 }
@@ -28,9 +26,9 @@ void ConfigManager::init()
 {
     if((false == readGlobalSettings()) || (false == readCfgList())){
         // no config found => write a default config
-        _chanalNr = 0;
-        _bankNr = 0;
-        _startupProgNr = 42;
+        globalCfg.midiChannel = 0;
+        globalCfg.bankNr = 0;
+        globalCfg.initialPatch = 0;
         for(std::uint8_t i = 0U; i < (sizeof(ramCfgList)/sizeof(ramCfgList[0])); i++){
             ramCfgList[i].programNr = i;
             ramCfgList[i].defaultOut = 0;
@@ -43,7 +41,11 @@ void ConfigManager::init()
         }
         store();
     }
-    switchCfg(_startupProgNr);
+    switchCfg(globalCfg.initialPatch);
+    if(NULL != globalConfigChangedCb)
+    {
+        globalConfigChangedCb->execute(*this);
+    }
 }
 
 void ConfigManager::store()
@@ -54,7 +56,7 @@ void ConfigManager::store()
 
 void ConfigManager::program_change_cb(midi_data currentData)
 {
-    if ((currentData.chanalNr == _chanalNr) && (currentData.bankSelect == _bankNr))
+    if ((currentData.chanalNr == globalCfg.midiChannel) && (currentData.bankSelect == globalCfg.bankNr))
     {
         bool found = false;
         for (std::uint8_t i = 0; i < NUMBER_OF_PROGRAMS; i++)
@@ -75,7 +77,7 @@ void ConfigManager::program_change_cb(midi_data currentData)
 void ConfigManager::control_change_cb(midi_data currentData)
 {
     std::uint8_t newOutState = 0;
-    if ((currentData.chanalNr == _chanalNr) && (currentData.bankSelect == _bankNr))
+    if ((currentData.chanalNr == globalCfg.midiChannel) && (currentData.bankSelect == globalCfg.bankNr))
     {
         for(std::uint8_t index = 0; index < SWITCHES_PER_PROGRAM; index++)
         {
@@ -94,7 +96,7 @@ void ConfigManager::control_change_cb(midi_data currentData)
             }
         }
         setOutput(newOutState);
-        //configChangedCb->execute(*this); not clear whether GUI need to be updated
+        //configChangedCb->execute(*this); not clear whether GUI needs to be updated
         // TODO Teach function is missing!
     }
 }
@@ -116,7 +118,7 @@ I_ConfigManager::programConfig_t& ConfigManager::switchCfg(std::uint8_t programN
 
 void ConfigManager::setChanalNr(std::uint8_t chanalNr)
 {
-    _chanalNr = chanalNr;
+    globalCfg.midiChannel = chanalNr;
     if(NULL != globalConfigChangedCb)
 	{
 		globalConfigChangedCb->execute(*this);
@@ -125,11 +127,20 @@ void ConfigManager::setChanalNr(std::uint8_t chanalNr)
 
 void ConfigManager::setBankNr(std::uint16_t bankNr)
 {
-    _bankNr = bankNr;
+    globalCfg.bankNr = bankNr;
     if(NULL != globalConfigChangedCb)
 	{
     	globalConfigChangedCb->execute(*this);
 	}
+}
+
+void ConfigManager::setInitialPatch(std::uint8_t patchNr)
+{
+    globalCfg.initialPatch = patchNr;
+    if(NULL != globalConfigChangedCb)
+    {
+        globalConfigChangedCb->execute(*this);
+    }
 }
 
 void ConfigManager::readCfg(std::uint8_t index)
@@ -158,18 +169,12 @@ void ConfigManager::storeCfgList()
 
 void ConfigManager::storeGlobalSettings()
 {
-    // TODO use one store statement (each statement writes one container to the flash!)
-    _flashManager.store(_flashUserId, (std::uint8_t*)&_bankNr, sizeof(_bankNr), BANK_NR_STORE_ADDR);
-    _flashManager.store(_flashUserId, (std::uint8_t*)&_chanalNr, sizeof(_chanalNr), CHANAL_NR_STORE_ADDR);
-    _flashManager.store(_flashUserId, (std::uint8_t*)&_startupProgNr, sizeof(_startupProgNr), STARTUP_PROG_NR);
+    _flashManager.store(_flashUserId, (std::uint8_t*)&globalCfg, sizeof(globalCfg), GLOBAL_CFG_ADDR);
 }
 
 bool ConfigManager::readGlobalSettings()
 {
-    bool ret = _flashManager.read(_flashUserId, (std::uint8_t*)&_bankNr, sizeof(_bankNr), BANK_NR_STORE_ADDR);
-    _flashManager.read(_flashUserId, (std::uint8_t*)&_chanalNr, sizeof(_chanalNr), CHANAL_NR_STORE_ADDR);
-    _flashManager.read(_flashUserId, (std::uint8_t*)&_startupProgNr, sizeof(_startupProgNr), STARTUP_PROG_NR);
-    return ret;
+    return _flashManager.read(_flashUserId, (std::uint8_t*)&globalCfg, sizeof(globalCfg), GLOBAL_CFG_ADDR);
 }
 
 void ConfigManager::setOutput(std::uint8_t out)
@@ -187,6 +192,10 @@ void ConfigManager::setOutputCfg(std::uint8_t cfgNum, std::uint8_t value)
     {
         currentCfg->switches[cfgNum - 1].output = value;
     }
+    if(NULL != configChangedCb)
+    {
+        configChangedCb->execute(*this);
+    }
 }
 
 void ConfigManager::setSwitchCfg(std::uint8_t index, std::uint8_t switchName, std::uint8_t switchOnVal)
@@ -202,11 +211,6 @@ void ConfigManager::setSwitchCfg(std::uint8_t index, std::uint8_t switchName, st
 
 ConfigManager::actualGlobalCfg ConfigManager::getGlobalCfg()
 {
-	actualGlobalCfg globalCfg;
-	globalCfg.midiChannel = _chanalNr;
-    globalCfg.initialPatch = _startupProgNr;
-    globalCfg.bankNr = _bankNr;
-
 	return globalCfg;
 }
 

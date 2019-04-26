@@ -29,6 +29,11 @@ GlobalConfigViewBase::GlobalConfigViewBase() :
     BankNrBox.setAlpha(130);
     ContrastBoxes.add(BankNrBox);
 
+    InitialPatchBox.setPosition(0, 197, 300, 40);
+    InitialPatchBox.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    InitialPatchBox.setAlpha(130);
+    ContrastBoxes.add(InitialPatchBox);
+
     Next.setXY(750, 434);
     Next.setBitmaps(Bitmap(BITMAP_DARK_ICONS_GO_NEXT_32_ID), Bitmap(BITMAP_DARK_ICONS_GO_NEXT_32_ID));
     Next.setAlpha(200);
@@ -50,7 +55,7 @@ GlobalConfigViewBase::GlobalConfigViewBase() :
     MidiChannelVal.setWildcard(MidiChannelValBuffer);
     MidiChannelVal.setTypedText(TypedText(T_SINGLEUSEID10));
 
-    BankNrVal.setPosition(225, 152, 70, 31);
+    BankNrVal.setPosition(205, 151, 90, 31);
     BankNrVal.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
     BankNrVal.setLinespacing(0);
     BankNrValBuffer[0] = 0;
@@ -67,6 +72,18 @@ GlobalConfigViewBase::GlobalConfigViewBase() :
     MidiChannel.setLinespacing(0);
     MidiChannel.setTypedText(TypedText(T_SINGLEUSEID31));
 
+    InitialPatch.setPosition(15, 202, 161, 31);
+    InitialPatch.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
+    InitialPatch.setLinespacing(0);
+    InitialPatch.setTypedText(TypedText(T_SINGLEUSEID32));
+
+    InitialPatchVal.setPosition(225, 202, 70, 31);
+    InitialPatchVal.setColor(touchgfx::Color::getColorFrom24BitRGB(135, 135, 135));
+    InitialPatchVal.setLinespacing(0);
+    InitialPatchValBuffer[0] = 0;
+    InitialPatchVal.setWildcard(InitialPatchValBuffer);
+    InitialPatchVal.setTypedText(TypedText(T_SINGLEUSEID33));
+
     add(ClobalCfgBG);
     add(ContrastBoxes);
     add(Next);
@@ -76,6 +93,8 @@ GlobalConfigViewBase::GlobalConfigViewBase() :
     add(BankNrVal);
     add(BankNr);
     add(MidiChannel);
+    add(InitialPatch);
+    add(InitialPatchVal);
 }
 
 void GlobalConfigViewBase::setupScreen()

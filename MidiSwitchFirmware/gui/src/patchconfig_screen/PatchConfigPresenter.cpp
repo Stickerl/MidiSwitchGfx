@@ -8,7 +8,7 @@ PatchConfigPresenter::PatchConfigPresenter(PatchConfigView& v)
 
 void PatchConfigPresenter::activate()
 {
-
+    restorePatchConfig();
 }
 
 void PatchConfigPresenter::deactivate()
@@ -44,9 +44,9 @@ void PatchConfigPresenter::restorePatchConfig()
     patchConfigChanged();
 }
 
-void PatchConfigPresenter::defaultOutputChanged(std::uint8_t newVal)
+void PatchConfigPresenter::outputChanged(std::uint8_t rowNr, std::uint8_t newVal)
 {
-    model->requestDefaultOutputChange(newVal);
+    model->requestOutputChange(rowNr, newVal);
 }
 
 void PatchConfigPresenter::progNrChanged(std::uint8_t newVal)

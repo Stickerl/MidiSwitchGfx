@@ -2,7 +2,8 @@
 
 OutputCfg::OutputCfg():
     value(0),
-    readValueCb(this, &OutputCfg::readValueCallback)
+    readValueCb(this, &OutputCfg::readValueCallback),
+    listenerCb(NULL)
 {
     Out_0.setAction(readValueCb);
     Out_1.setAction(readValueCb);

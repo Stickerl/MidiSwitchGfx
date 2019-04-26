@@ -34,6 +34,8 @@ public:
 
 	virtual void patchConfigChanged(){};
 
+	virtual void globalConfigChanged(){};
+
 protected:
     Model* model;
 };

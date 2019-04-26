@@ -38,7 +38,7 @@ public:
 
     void saveButtonActionCb(const AbstractButton& button);
 
-    void defaultOutputCfgActionCb(const OutputCfg& outputCfg);
+    void outputCfgActionCb(const OutputCfg& outputCfg);
 
     // keyboard realated callbacks
     void textClickActionCb(Drawable& objRev, const ClickEvent& evt);
@@ -54,7 +54,7 @@ protected:
     touchgfx::Callback<PatchConfigView, touchgfx::TextAreaWithOneWildcard* > returnKeyCb;
     touchgfx::Callback<PatchConfigView, touchgfx::TextAreaWithOneWildcard* > cancelKeyCb;
     touchgfx::Callback<PatchConfigView, Drawable&, const ClickEvent& > textClickCb;
-    touchgfx::Callback<PatchConfigView,const OutputCfg& > defaultOutputCfgCb;
+    touchgfx::Callback<PatchConfigView, const OutputCfg& > outputCfgCb;
 
     touch_event_extension touchProgNrVal;
     touch_event_extension touchSwitch1ConNrVal;

@@ -33,7 +33,8 @@ public:
         UPDATE_PATCH_CFG  = 7,
 		MIDI_CHANNEL	  = 8,
 		BANK_NR			  = 9,
-		UPDATE_GLOBAL_CFG = 10
+		INITIAL_PATCH     = 10,
+		UPDATE_GLOBAL_CFG = 11
     }GuiControls;
 
     typedef struct GuiMessage
