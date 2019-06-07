@@ -78,13 +78,13 @@ void ConfigManager::program_change_cb(midi_data currentData)
 
 void ConfigManager::control_change_cb(midi_data currentData)
 {
-    std::uint8_t newOutState = 0;
     if ((currentData.chanalNr == globalCfg.midiChannel) && (currentData.bankSelect == globalCfg.bankNr) && (true == bankNrInitialized))
     {
         for(std::uint8_t index = 0; index < SWITCHES_PER_PROGRAM; index++)
         {
             if(currentData.controllerNr == currentCfg->switches[index].switchName)
             {
+                std::uint8_t newOutState = 0;
                 if(currentData.controllerVal == currentCfg->switches[index].switchOnVal)
                 {
                     // set the output to the value configured for this switch
@@ -95,11 +95,11 @@ void ConfigManager::control_change_cb(midi_data currentData)
                     // reset the output to default
                     newOutState = currentCfg->defaultOut;
                 }
+                setOutput(newOutState);
+                //configChangedCb->execute(*this); not clear whether GUI needs to be updated
+                // TODO Teach function is missing!
             }
         }
-        setOutput(newOutState);
-        //configChangedCb->execute(*this); not clear whether GUI needs to be updated
-        // TODO Teach function is missing!
     }
 }
 
