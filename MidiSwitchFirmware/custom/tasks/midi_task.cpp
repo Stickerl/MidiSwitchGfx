@@ -9,6 +9,7 @@
 #include "midi_task.h"
 #include "gui_queue.h"
 #include "guiCommunication.hpp"
+#include "DigitalOutput.h"
 
 
 #define configMidi_TASK_PRIORITY                (3)
@@ -51,6 +52,26 @@ void midi_task_run(void* params)
     Flash::sector_t sec2(FLASH_SECTOR_23, (uint8_t*) 0x081E0000, 0x20000); // Sector 23 size 128k
     Flash flash(sec1, sec2);
     ConfigManager cfgManager(flash, CONFIG_MANAGER_FLASH_ID);
+
+    // initialize the output pins
+    DigitalOutput outputPin0(GPIOG, GPIO_PIN_9);    // D0
+    DigitalOutput outputPin1(GPIOG, GPIO_PIN_14);   // D1
+    DigitalOutput outputPin2(GPIOG, GPIO_PIN_13);   // D2
+    DigitalOutput outputPin3(GPIOG, GPIO_PIN_12);   // D4
+    DigitalOutput outputPin4(GPIOA, GPIO_PIN_6);    // D6
+    DigitalOutput outputPin5(GPIOG, GPIO_PIN_11);   // D7
+    DigitalOutput outputPin6(GPIOG, GPIO_PIN_10);   // D8
+    DigitalOutput outputPin7(GPIOA, GPIO_PIN_7);    // D9
+
+    // register the output pins at the config manager
+    cfgManager.registerOutputPin(0, outputPin0);
+    cfgManager.registerOutputPin(1, outputPin1);
+    cfgManager.registerOutputPin(2, outputPin2);
+    cfgManager.registerOutputPin(3, outputPin3);
+    cfgManager.registerOutputPin(4, outputPin4);
+    cfgManager.registerOutputPin(5, outputPin5);
+    cfgManager.registerOutputPin(6, outputPin6);
+    cfgManager.registerOutputPin(7, outputPin7);
 
     GuiCommunication guiCom(cfgManager);
     // GuiCommunication has to register in the cfgManager

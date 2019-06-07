@@ -12,7 +12,8 @@ ConfigManager::ConfigManager(I_Flash& flashManager, std::uint16_t flashUserId):
     _flashManager(flashManager),
     currentCfg(0),
     globalCfg{0},
-    _flashUserId(flashUserId)
+    _flashUserId(flashUserId),
+    bankNrInitialized(false)
 {
 
 }
@@ -58,6 +59,7 @@ void ConfigManager::program_change_cb(midi_data currentData)
 {
     if ((currentData.chanalNr == globalCfg.midiChannel) && (currentData.bankSelect == globalCfg.bankNr))
     {
+        bankNrInitialized = true;
         bool found = false;
         for (std::uint8_t i = 0; i < NUMBER_OF_PROGRAMS; i++)
         {
@@ -77,7 +79,7 @@ void ConfigManager::program_change_cb(midi_data currentData)
 void ConfigManager::control_change_cb(midi_data currentData)
 {
     std::uint8_t newOutState = 0;
-    if ((currentData.chanalNr == globalCfg.midiChannel) && (currentData.bankSelect == globalCfg.bankNr))
+    if ((currentData.chanalNr == globalCfg.midiChannel) && (currentData.bankSelect == globalCfg.bankNr) && (true == bankNrInitialized))
     {
         for(std::uint8_t index = 0; index < SWITCHES_PER_PROGRAM; index++)
         {
@@ -111,7 +113,7 @@ I_ConfigManager::programConfig_t& ConfigManager::switchCfg(std::uint8_t programN
     currentCfg = &ramCfgList[programNr];
     if(NULL != configChangedCb)
     {
-    	configChangedCb->execute(*this);
+        configChangedCb->execute(*this);
     }
     return *currentCfg;
 }
@@ -120,9 +122,9 @@ void ConfigManager::setChanalNr(std::uint8_t chanalNr)
 {
     globalCfg.midiChannel = chanalNr;
     if(NULL != globalConfigChangedCb)
-	{
-		globalConfigChangedCb->execute(*this);
-	}
+    {
+        globalConfigChangedCb->execute(*this);
+    }
 }
 
 void ConfigManager::setBankNr(std::uint16_t bankNr)
@@ -179,7 +181,25 @@ bool ConfigManager::readGlobalSettings()
 
 void ConfigManager::setOutput(std::uint8_t out)
 {
+    for(std::uint8_t i = 0; i < 8U; i++)
+    {
+        if(NULL != outputPins[i])
+        {
+            if((out >> i) & 0x01)
+            {
+                outputPins[i]->set();
+            }
+            else
+            {
+                outputPins[i]->clear();
+            }
+        }
+    }
+}
 
+void ConfigManager::registerOutputPin(std::uint8_t index, I_DigitalOutput& pin)
+{
+    outputPins[index] = &pin;
 }
 
 void ConfigManager::setOutputCfg(std::uint8_t cfgNum, std::uint8_t value)

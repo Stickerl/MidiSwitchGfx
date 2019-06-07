@@ -1,0 +1,32 @@
+<HtermSequenceFile>
+    <ItemList>
+        <SequenceItem name="control_change_4B_on">
+            <description></description>
+            <sequence value="h[B0] h[4B] h[7F]" />
+        </SequenceItem>
+        <SequenceItem name="control_change_4B_off">
+            <description></description>
+            <sequence value="h[B0] h[4B] h[00]" />
+        </SequenceItem>
+        <SequenceItem name="control_change_46_on">
+            <description></description>
+            <sequence value="h[B0] h[46] h[7F]" />
+        </SequenceItem>
+        <SequenceItem name="control_change_46_off">
+            <description></description>
+            <sequence value="h[B0] h[46] h[00]" />
+        </SequenceItem>
+        <SequenceItem name="patch_11">
+            <description></description>
+            <sequence value="h[B0] h[00] h[00] h[B0] h[20] h[00] h[C0] h[0B]" />
+        </SequenceItem>
+        <SequenceItem name="patch_10">
+            <description></description>
+            <sequence value="h[B0] h[00] h[00] h[B0] h[20] h[00] h[C0] h[0A]" />
+        </SequenceItem>
+        <SequenceItem name="patch_05">
+            <description></description>
+            <sequence value="h[B0] h[00] h[00] h[B0] h[20] h[00] h[C0] h[0] a[5]" />
+        </SequenceItem>
+    </ItemList>
+</HtermSequenceFile>
