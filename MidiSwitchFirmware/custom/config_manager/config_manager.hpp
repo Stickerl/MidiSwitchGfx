@@ -11,6 +11,7 @@
 
 #include "I_config_manager.hpp"
 #include "I_flash.hpp"
+#include "I_DigitalOutput.h"
 #include "global_defines.hpp"
 #include <cstdint>
 
@@ -35,6 +36,7 @@ public:
     void setInitialPatch(std::uint8_t patchNr);                  // setter for initial patch number
     void setOutputCfg(std::uint8_t cfgNum, std::uint8_t value);
     void setSwitchCfg(std::uint8_t index, std::uint8_t switchName, std::uint8_t switchOnVal);
+    void registerOutputPin(std::uint8_t index, I_DigitalOutput& pin);
 
 private:
     actualGlobalCfg globalCfg;
@@ -46,6 +48,8 @@ private:
     static const std::uint32_t CFG_SIZE = sizeof(programConfig_t);
     I_Flash& _flashManager;
     programConfig_t* currentCfg;
+    bool bankNrInitialized;
+    I_DigitalOutput* outputPins[8U];
 
 
     void readCfg(std::uint8_t index);                    // reads a specific configuration from flash to the ramCfgList
