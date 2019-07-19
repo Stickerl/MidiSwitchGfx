@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="mm" altunit="mm"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -17445,10 +17445,10 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/74LVC2G04GW,1
 <part name="SUPPLY15" library="supply2" deviceset="GND" device=""/>
 <part name="C4" library="rcl" deviceset="C-EU" device="C0603" value="22µF"/>
 <part name="SUPPLY16" library="supply2" deviceset="GND" device=""/>
-<part name="C5" library="rcl" deviceset="C-EU" device="C0603" value="100nF"/>
-<part name="C6" library="rcl" deviceset="C-EU" device="C0603" value="100nF"/>
+<part name="C5" library="rcl" deviceset="C-EU" device="C1206" value="100nF"/>
+<part name="C6" library="rcl" deviceset="C-EU" device="C1206" value="100nF"/>
 <part name="L1" library="rcl" deviceset="L-EU" device="WE-TPC" value="4.7µH"/>
-<part name="C7" library="rcl" deviceset="C-EU" device="C0603" value="10µF 40V"/>
+<part name="C7" library="rcl" deviceset="CPOL-EU" device="153CLV-0605" value="10µF 40V"/>
 <part name="SUPPLY17" library="supply2" deviceset="GND" device=""/>
 <part name="P+12" library="supply1" deviceset="VCC" device="" value="VCC_6-8"/>
 <part name="SUPPLY18" library="supply2" deviceset="GND" device=""/>
@@ -17777,7 +17777,7 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/74LVC2G04GW,1
 <wire x1="312.33" y1="68.6" x2="312.33" y2="67.29" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="C7" gate="G$1" pin="2"/>
+<pinref part="C7" gate="G$1" pin="-"/>
 <pinref part="SUPPLY17" gate="GND" pin="GND"/>
 <wire x1="328.84" y1="30.24" x2="328.84" y2="33.57" width="0.1524" layer="91"/>
 </segment>
@@ -18306,7 +18306,7 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/74LVC2G04GW,1
 <pinref part="PS1" gate="G$1" pin="VINP"/>
 <wire x1="355.6" y1="60.96" x2="354.18" y2="60.96" width="0.1524" layer="91"/>
 <wire x1="354.18" y1="58.42" x2="328.84" y2="58.4" width="0.1524" layer="91"/>
-<pinref part="C7" gate="G$1" pin="1"/>
+<pinref part="C7" gate="G$1" pin="+"/>
 <wire x1="328.84" y1="58.4" x2="328.84" y2="47.34" width="0.1524" layer="91"/>
 <wire x1="328.84" y1="47.34" x2="328.84" y2="41.19" width="0.1524" layer="91"/>
 <wire x1="354.18" y1="60.96" x2="354.18" y2="58.42" width="0.1524" layer="91"/>
