@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="mm" altunit="mm"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -15886,7 +15886,14 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/NRS8030T4R7MJ
 <variantdefs>
 </variantdefs>
 <classes>
-<class number="0" name="default" width="0" drill="0">
+<class number="0" name="default" width="0.4064" drill="1.016">
+<clearance class="0" value="0.4064"/>
+</class>
+<class number="1" name="Power" width="1.016" drill="1.016">
+<clearance class="1" value="0.4064"/>
+</class>
+<class number="2" name="Signal" width="0.4064" drill="0.6096">
+<clearance class="2" value="0.4064"/>
 </class>
 </classes>
 <parts>
@@ -16210,7 +16217,7 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/NRS8030T4R7MJ
 <wire x1="103.89" y1="83.58" x2="103.94" y2="93.07" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="2">
 <segment>
 <wire x1="72.64" y1="78.46" x2="72.64" y2="75.21" width="0.1524" layer="91"/>
 <pinref part="R2" gate="G$1" pin="1"/>
@@ -16781,7 +16788,7 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/NRS8030T4R7MJ
 <wire x1="413.93" y1="30.48" x2="403.86" y2="30.48" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$51" class="0">
+<net name="N$51" class="1">
 <segment>
 <pinref part="PS1" gate="G$1" pin="L2"/>
 <wire x1="403.86" y1="43.18" x2="406.5" y2="43.18" width="0.1524" layer="91"/>
@@ -16804,7 +16811,7 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/NRS8030T4R7MJ
 <wire x1="406.56" y1="38.1" x2="415.12" y2="38.1" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$55" class="0">
+<net name="N$55" class="1">
 <segment>
 <pinref part="L1" gate="G$1" pin="1"/>
 <wire x1="362.03" y1="51.74" x2="375.34" y2="51.7" width="0.1524" layer="91"/>
@@ -16865,8 +16872,14 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/NRS8030T4R7MJ
 <wire x1="49.48" y1="56.42" x2="39.47" y2="56.42" width="0.1524" layer="91"/>
 <junction x="39.46" y="56.42"/>
 </segment>
+<segment>
+<pinref part="CN6" gate="A" pin="4"/>
+<pinref part="VCC_3_1" gate="VCC" pin="VCC"/>
+<wire x1="353.31" y1="90.03" x2="343.42" y2="90.03" width="0.1524" layer="91"/>
+<wire x1="343.42" y1="90.03" x2="343.42" y2="91.26" width="0.1524" layer="91"/>
+</segment>
 </net>
-<net name="VCC_6-8" class="0">
+<net name="VCC_6-8" class="1">
 <segment>
 <pinref part="PS1" gate="G$1" pin="VOUT_SENSE"/>
 <wire x1="403.86" y1="33.02" x2="408.68" y2="33.01" width="0.1524" layer="91"/>
@@ -16984,25 +16997,6 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/NRS8030T4R7MJ
 <wire x1="228.62" y1="-77.54" x2="228.6" y2="-75.1" width="0.1524" layer="91"/>
 <junction x="228.6" y="-75.1"/>
 </segment>
-</net>
-<net name="N$1" class="0">
-<segment>
-<pinref part="IC3" gate="G$1" pin="2Y"/>
-<wire x1="54.1" y1="53.64" x2="53.19" y2="53.64" width="0.1524" layer="91"/>
-<wire x1="53.19" y1="53.64" x2="53.19" y2="58.38" width="0.1524" layer="91"/>
-<wire x1="53.19" y1="58.38" x2="85.02" y2="58.38" width="0.1524" layer="91"/>
-<wire x1="85.02" y1="58.38" x2="85.02" y2="48.56" width="0.1524" layer="91"/>
-<pinref part="IC3" gate="G$1" pin="1A"/>
-<wire x1="85.02" y1="48.56" x2="79.5" y2="48.56" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="VCC" class="0">
-<segment>
-<pinref part="CN6" gate="A" pin="4"/>
-<pinref part="VCC_3_1" gate="VCC" pin="VCC"/>
-<wire x1="353.31" y1="90.03" x2="343.42" y2="90.03" width="0.1524" layer="91"/>
-<wire x1="343.42" y1="90.03" x2="343.42" y2="91.26" width="0.1524" layer="91"/>
-</segment>
 <segment>
 <pinref part="P+11" gate="VCC" pin="VCC"/>
 <wire x1="311.09" y1="78.03" x2="311.09" y2="79.87" width="0.1524" layer="91"/>
@@ -17015,6 +17009,17 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/NRS8030T4R7MJ
 <wire x1="318.45" y1="78.55" x2="318.45" y2="79.87" width="0.1524" layer="91"/>
 <pinref part="CN6" gate="A" pin="8"/>
 <wire x1="318.45" y1="79.87" x2="353.31" y2="79.87" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$1" class="0">
+<segment>
+<pinref part="IC3" gate="G$1" pin="2Y"/>
+<wire x1="54.1" y1="53.64" x2="53.19" y2="53.64" width="0.1524" layer="91"/>
+<wire x1="53.19" y1="53.64" x2="53.19" y2="58.38" width="0.1524" layer="91"/>
+<wire x1="53.19" y1="58.38" x2="85.02" y2="58.38" width="0.1524" layer="91"/>
+<wire x1="85.02" y1="58.38" x2="85.02" y2="48.56" width="0.1524" layer="91"/>
+<pinref part="IC3" gate="G$1" pin="1A"/>
+<wire x1="85.02" y1="48.56" x2="79.5" y2="48.56" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$58" class="0">
@@ -17072,7 +17077,7 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/NRS8030T4R7MJ
 <pinref part="U$9" gate="G$1" pin="1"/>
 </segment>
 </net>
-<net name="N$67" class="0">
+<net name="VIN_FUSED" class="1">
 <segment>
 <pinref part="PS1" gate="G$1" pin="VINP"/>
 <wire x1="363.22" y1="35.56" x2="361.8" y2="35.56" width="0.1524" layer="91"/>
@@ -17116,7 +17121,7 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/NRS8030T4R7MJ
 <wire x1="228.61" y1="-88.27" x2="228.59" y2="-89.11" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$50" class="0">
+<net name="VIN" class="1">
 <segment>
 <wire x1="316.42" y1="22.86" x2="313.89" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="316.42" y1="27.94" x2="316.42" y2="22.86" width="0.1524" layer="91"/>
