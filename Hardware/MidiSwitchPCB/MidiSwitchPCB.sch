@@ -6,36 +6,36 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="10" display="no" altdistance="0.01" altunitdist="mm" altunit="mm"/>
+<grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="10" display="yes" altdistance="0.01" altunitdist="mm" altunit="mm"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
-<layer number="2" name="Route2" color="1" fill="3" visible="yes" active="no"/>
-<layer number="3" name="Route3" color="4" fill="3" visible="yes" active="no"/>
-<layer number="4" name="Route4" color="1" fill="4" visible="yes" active="no"/>
-<layer number="5" name="Route5" color="4" fill="4" visible="yes" active="no"/>
-<layer number="6" name="Route6" color="1" fill="8" visible="yes" active="no"/>
-<layer number="7" name="Route7" color="4" fill="8" visible="yes" active="no"/>
-<layer number="8" name="Route8" color="1" fill="2" visible="yes" active="no"/>
-<layer number="9" name="Route9" color="4" fill="2" visible="yes" active="no"/>
-<layer number="10" name="Route10" color="1" fill="7" visible="yes" active="no"/>
-<layer number="11" name="Route11" color="4" fill="7" visible="yes" active="no"/>
-<layer number="12" name="Route12" color="1" fill="5" visible="yes" active="no"/>
-<layer number="13" name="Route13" color="4" fill="5" visible="yes" active="no"/>
-<layer number="14" name="Route14" color="1" fill="6" visible="yes" active="no"/>
-<layer number="15" name="Route15" color="4" fill="6" visible="yes" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="no"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -44,8 +44,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -53,12 +53,12 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
 <layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
@@ -15826,6 +15826,99 @@ Source: &lt;a href="http://www.neutrik.de/zoolu-website/media/download/2890/Stri
 </deviceset>
 </devicesets>
 </library>
+<library name="rectifier">
+<description>&lt;b&gt;Rectifiers&lt;/b&gt;&lt;p&gt;
+General Instrument, Semikron, Diotec, Fagor&lt;p&gt;
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="SOIC-4">
+<description>&lt;b&gt;SOIC-4 Package&lt;/b&gt;&lt;p&gt;
+Source: http://www.fairchildsemi.com/products/discrete/pdf/soic4_dim.pdf</description>
+<wire x1="-2.35" y1="2" x2="2.35" y2="2" width="0.2032" layer="21"/>
+<wire x1="2.35" y1="2" x2="2.35" y2="-2" width="0.2032" layer="21"/>
+<wire x1="2.35" y1="-2" x2="-2.35" y2="-2" width="0.2032" layer="21"/>
+<wire x1="-2.35" y1="-2" x2="-2.35" y2="2" width="0.2032" layer="21"/>
+<wire x1="-1.905" y1="0.97" x2="-1.27" y2="0.97" width="0.1016" layer="21"/>
+<wire x1="1.27" y1="1.27" x2="1.27" y2="0.635" width="0.1016" layer="21"/>
+<wire x1="0.955" y1="0.945" x2="1.59" y2="0.945" width="0.1016" layer="21"/>
+<wire x1="-1.9" y1="-1.275" x2="-1.6" y2="-1.275" width="0.1016" layer="21" curve="-99.939481"/>
+<wire x1="-1.3" y1="-1.275" x2="-1.6" y2="-1.275" width="0.1016" layer="21" curve="-99.939481"/>
+<wire x1="1.275" y1="-1.275" x2="1.575" y2="-1.275" width="0.1016" layer="21" curve="-99.939481"/>
+<wire x1="1.875" y1="-1.275" x2="1.575" y2="-1.275" width="0.1016" layer="21" curve="-99.939481"/>
+<smd name="-" x="-1.3" y="3.05" dx="1.2" dy="1.2" layer="1"/>
+<smd name="+" x="1.3" y="3.05" dx="1.2" dy="1.2" layer="1"/>
+<smd name="~2" x="1.3" y="-3.05" dx="1.2" dy="1.2" layer="1" rot="R180"/>
+<smd name="~1" x="-1.3" y="-3.05" dx="1.2" dy="1.2" layer="1" rot="R180"/>
+<text x="-2.54" y="-1.905" size="1.27" layer="25" rot="R90">&gt;NAME</text>
+<text x="3.81" y="-1.905" size="1.27" layer="27" rot="R90">&gt;VALUE</text>
+<rectangle x1="-1.75" y1="2.05" x2="-0.95" y2="3.45" layer="51"/>
+<rectangle x1="0.95" y1="2.05" x2="1.75" y2="3.45" layer="51"/>
+<rectangle x1="0.95" y1="-3.45" x2="1.75" y2="-2.05" layer="51" rot="R180"/>
+<rectangle x1="-1.75" y1="-3.45" x2="-0.95" y2="-2.05" layer="51" rot="R180"/>
+<rectangle x1="-2.05" y1="1.5" x2="2.05" y2="1.8" layer="21"/>
+</package>
+</packages>
+<symbols>
+<symbol name="DB">
+<wire x1="-1.905" y1="-3.175" x2="-4.064" y2="-2.794" width="0.254" layer="94"/>
+<wire x1="-1.905" y1="-3.175" x2="-2.286" y2="-1.016" width="0.254" layer="94"/>
+<wire x1="-2.7178" y1="-4.0386" x2="-0.9398" y2="-2.2606" width="0.254" layer="94"/>
+<wire x1="-1.905" y1="3.175" x2="-4.064" y2="2.794" width="0.254" layer="94"/>
+<wire x1="-1.905" y1="3.175" x2="-2.286" y2="1.016" width="0.254" layer="94"/>
+<wire x1="-2.7178" y1="4.0386" x2="-1.0668" y2="2.3876" width="0.254" layer="94"/>
+<wire x1="3.175" y1="1.905" x2="2.794" y2="4.064" width="0.254" layer="94"/>
+<wire x1="3.175" y1="1.905" x2="1.016" y2="2.286" width="0.254" layer="94"/>
+<wire x1="2.3622" y1="1.016" x2="4.1402" y2="2.794" width="0.254" layer="94"/>
+<wire x1="3.175" y1="-1.905" x2="2.794" y2="-4.064" width="0.254" layer="94"/>
+<wire x1="3.175" y1="-1.905" x2="1.016" y2="-2.286" width="0.254" layer="94"/>
+<wire x1="2.3622" y1="-1.0668" x2="4.1402" y2="-2.8448" width="0.254" layer="94"/>
+<wire x1="5.08" y1="0" x2="3.175" y2="-1.905" width="0.1524" layer="94"/>
+<wire x1="0" y1="-5.08" x2="-1.905" y2="-3.175" width="0.1524" layer="94"/>
+<wire x1="-3.2766" y1="-1.8034" x2="-5.08" y2="0" width="0.1524" layer="94"/>
+<wire x1="-4.064" y1="-2.794" x2="-2.286" y2="-1.016" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="0" x2="-3.2766" y2="1.8034" width="0.1524" layer="94"/>
+<wire x1="-4.064" y1="2.794" x2="-2.286" y2="1.016" width="0.254" layer="94"/>
+<wire x1="-1.905" y1="3.175" x2="0" y2="5.08" width="0.1524" layer="94"/>
+<wire x1="0" y1="5.08" x2="1.8034" y2="3.2766" width="0.1524" layer="94"/>
+<wire x1="1.016" y1="2.286" x2="2.794" y2="4.064" width="0.254" layer="94"/>
+<wire x1="3.175" y1="1.905" x2="5.08" y2="0" width="0.1524" layer="94"/>
+<wire x1="0" y1="-5.08" x2="1.8034" y2="-3.2766" width="0.1524" layer="94"/>
+<wire x1="1.016" y1="-2.286" x2="2.794" y2="-4.064" width="0.254" layer="94"/>
+<text x="5.08" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
+<text x="5.08" y="2.54" size="1.778" layer="95">&gt;NAME</text>
+<pin name="AC1" x="0" y="5.08" visible="off" length="point" direction="pas" rot="R270"/>
+<pin name="+" x="5.08" y="0" visible="off" length="point" direction="pas" rot="R180"/>
+<pin name="AC2" x="0" y="-5.08" visible="off" length="point" direction="pas" rot="R90"/>
+<pin name="-" x="-5.08" y="0" visible="off" length="point" direction="pas"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="MB*S" prefix="B">
+<description>&lt;b&gt;Bridge Rectifier&lt;/b&gt;&lt;p&gt;
+Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
+<gates>
+<gate name="G$1" symbol="DB" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOIC-4">
+<connects>
+<connect gate="G$1" pin="+" pad="+"/>
+<connect gate="G$1" pin="-" pad="-"/>
+<connect gate="G$1" pin="AC1" pad="~1"/>
+<connect gate="G$1" pin="AC2" pad="~2"/>
+</connects>
+<technologies>
+<technology name="1"/>
+<technology name="2"/>
+<technology name="4"/>
+<technology name="6"/>
+<technology name="8"/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -15833,16 +15926,19 @@ Source: &lt;a href="http://www.neutrik.de/zoolu-website/media/download/2890/Stri
 </variantdefs>
 <classes>
 <class number="0" name="default" width="0.4064" drill="1.016">
-<clearance class="0" value="0.4064"/>
+<clearance class="0" value="0.1524"/>
 </class>
 <class number="1" name="Power" width="1.016" drill="1.016">
-<clearance class="1" value="0.8128"/>
+<clearance class="1" value="0.4064"/>
 </class>
-<class number="2" name="Signal" width="0.4064" drill="0.6096">
-<clearance class="2" value="0.4064"/>
+<class number="2" name="Signal" width="0.1524" drill="0.6096">
+<clearance class="2" value="0.1524"/>
 </class>
 <class number="3" name="WideIsolation" width="0.4064" drill="1.016">
 <clearance class="3" value="2.032"/>
+</class>
+<class number="4" name="ESD_Critical" width="0.4064" drill="1.016">
+<clearance class="4" value="0.6096"/>
 </class>
 </classes>
 <parts>
@@ -15964,7 +16060,7 @@ Source: &lt;a href="http://www.neutrik.de/zoolu-website/media/download/2890/Stri
 <part name="SUPPLY26" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY27" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY28" library="supply2" deviceset="GND" device=""/>
-<part name="D11" library="diode" deviceset="DIODE-" device="DO-214AC"/>
+<part name="B1" library="rectifier" deviceset="MB*S" device="" technology="1"/>
 </parts>
 <sheets>
 <sheet>
@@ -16046,17 +16142,17 @@ Source: &lt;a href="http://www.neutrik.de/zoolu-website/media/download/2890/Stri
 <instance part="C_BST2" gate="G$1" x="415.12" y="43.18"/>
 <instance part="C_BST1" gate="G$1" x="326.65" y="37.76"/>
 <instance part="L1" gate="G$1" x="375.34" y="51.7"/>
-<instance part="C_IN" gate="G$1" x="336.46" y="13.25" rot="MR0"/>
-<instance part="SUPPLY17" gate="GND" x="336.46" y="2.3" rot="MR0"/>
+<instance part="C_IN" gate="G$1" x="326.79" y="11.16" rot="MR0"/>
+<instance part="SUPPLY17" gate="GND" x="326.79" y="0.16" rot="MR0"/>
 <instance part="P+12" gate="VCC" x="448.35" y="48.99" rot="MR0"/>
 <instance part="SUPPLY18" gate="GND" x="383.54" y="-8.67" rot="MR0"/>
-<instance part="SUPPLY19" gate="GND" x="344.48" y="28.61" rot="MR0"/>
+<instance part="SUPPLY19" gate="GND" x="347.02" y="26.07" rot="MR0"/>
 <instance part="C_REG" gate="G$1" x="404.75" y="16.69"/>
 <instance part="IC3" gate="G$1" x="79.5" y="48.56" rot="R180"/>
 <instance part="VCC_3_3" gate="VCC" x="70.52" y="100.53"/>
 <instance part="SUPPLY20" gate="GND" x="88.62" y="46.92"/>
 <instance part="VCC_3_1" gate="VCC" x="343.42" y="93.8"/>
-<instance part="R_PWRL_UP" gate="G$1" x="342.98" y="21.94" rot="MR180"/>
+<instance part="R_PWRL_UP" gate="G$1" x="332.79" y="20.16" rot="MR180"/>
 <instance part="R_PWRL_DOWN" gate="G$1" x="350.78" y="13.46" rot="MR270"/>
 <instance part="R20" gate="G$1" x="176.27" y="87.45" rot="R90"/>
 <instance part="R21" gate="G$1" x="176.48" y="31.7" rot="R90"/>
@@ -16066,7 +16162,7 @@ Source: &lt;a href="http://www.neutrik.de/zoolu-website/media/download/2890/Stri
 <instance part="R25" gate="G$1" x="228.41" y="-26.06" rot="R90"/>
 <instance part="R26" gate="G$1" x="177.08" y="-82.09" rot="R90"/>
 <instance part="R27" gate="G$1" x="228.62" y="-82.62" rot="R90"/>
-<instance part="J1" gate="G$1" x="288.48" y="22.86"/>
+<instance part="J1" gate="G$1" x="285.79" y="-17.84" rot="R90"/>
 <instance part="U$3" gate="G$1" x="176.25" y="74.63"/>
 <instance part="U$3" gate="G$2" x="190.36" y="74.11" rot="R270"/>
 <instance part="U$4" gate="G$1" x="227.76" y="73.85"/>
@@ -16086,8 +16182,8 @@ Source: &lt;a href="http://www.neutrik.de/zoolu-website/media/download/2890/Stri
 <attribute name="PART" x="229.86" y="-89.11" size="1.778" layer="95"/>
 </instance>
 <instance part="U$10" gate="G$2" x="211.51" y="-95.25" rot="MR270"/>
-<instance part="F1" gate="G$1" x="322.67" y="27.94"/>
-<instance part="D10" gate="G$1" x="319.95" y="13.59" rot="R90"/>
+<instance part="F1" gate="G$1" x="288.79" y="12.16"/>
+<instance part="D10" gate="G$1" x="296.79" y="2.16" rot="R270"/>
 <instance part="J2" gate="G$1" x="188.02" y="90.35"/>
 <instance part="SUPPLY21" gate="GND" x="182.94" y="84.57"/>
 <instance part="SUPPLY22" gate="GND" x="215.6" y="86.02"/>
@@ -16100,7 +16196,7 @@ Source: &lt;a href="http://www.neutrik.de/zoolu-website/media/download/2890/Stri
 <instance part="SUPPLY26" gate="GND" x="221.22" y="-22.05"/>
 <instance part="SUPPLY27" gate="GND" x="183.69" y="-79.01"/>
 <instance part="SUPPLY28" gate="GND" x="218.94" y="-79.46"/>
-<instance part="D11" gate="G$1" x="332.27" y="27.94" rot="MR180"/>
+<instance part="B1" gate="G$1" x="310.01" y="12.16" rot="MR90"/>
 </instances>
 <busses>
 </busses>
@@ -16291,18 +16387,12 @@ Source: &lt;a href="http://www.neutrik.de/zoolu-website/media/download/2890/Stri
 <segment>
 <pinref part="C_IN" gate="G$1" pin="-"/>
 <pinref part="SUPPLY17" gate="GND" pin="GND"/>
-<wire x1="336.46" y1="4.84" x2="336.46" y2="6.3" width="0.1524" layer="91"/>
-<pinref part="J1" gate="G$1" pin="2"/>
-<wire x1="336.46" y1="6.3" x2="336.46" y2="6.31" width="0.1524" layer="91"/>
-<wire x1="336.46" y1="6.31" x2="336.46" y2="8.17" width="0.1524" layer="91"/>
-<wire x1="288.48" y1="20.32" x2="288.58" y2="6.31" width="0.1524" layer="91"/>
-<wire x1="288.58" y1="6.31" x2="319.95" y2="6.27" width="0.1524" layer="91"/>
-<junction x="336.46" y="6.3"/>
-<pinref part="D10" gate="G$1" pin="K1"/>
-<wire x1="319.95" y1="6.27" x2="319.96" y2="6.27" width="0.1524" layer="91"/>
-<wire x1="319.96" y1="6.27" x2="336.46" y2="6.31" width="0.1524" layer="91"/>
-<wire x1="319.95" y1="8.51" x2="319.95" y2="6.27" width="0.1524" layer="91"/>
-<junction x="319.96" y="6.27"/>
+<wire x1="326.79" y1="2.7" x2="326.79" y2="4.46" width="0.1524" layer="91"/>
+<pinref part="B1" gate="G$1" pin="-"/>
+<wire x1="326.79" y1="4.46" x2="326.79" y2="6.08" width="0.1524" layer="91"/>
+<wire x1="310.01" y1="7.08" x2="310.01" y2="4.46" width="0.1524" layer="91"/>
+<wire x1="310.01" y1="4.46" x2="326.79" y2="4.46" width="0.1524" layer="91"/>
+<junction x="326.79" y="4.46"/>
 </segment>
 <segment>
 <pinref part="PS1" gate="G$1" pin="THERMAL_PAD"/>
@@ -16312,8 +16402,8 @@ Source: &lt;a href="http://www.neutrik.de/zoolu-website/media/download/2890/Stri
 <segment>
 <pinref part="PS1" gate="G$1" pin="PS"/>
 <wire x1="363.22" y1="27.94" x2="358.83" y2="27.94" width="0.1524" layer="91"/>
-<wire x1="358.83" y1="27.94" x2="358.83" y2="31.15" width="0.1524" layer="91"/>
-<wire x1="358.83" y1="31.15" x2="344.48" y2="31.15" width="0.1524" layer="91"/>
+<wire x1="358.83" y1="27.94" x2="358.83" y2="28.61" width="0.1524" layer="91"/>
+<wire x1="358.83" y1="28.61" x2="347.02" y2="28.61" width="0.1524" layer="91"/>
 <pinref part="SUPPLY19" gate="GND" pin="GND"/>
 </segment>
 <segment>
@@ -16901,15 +16991,15 @@ Source: &lt;a href="http://www.neutrik.de/zoolu-website/media/download/2890/Stri
 </net>
 <net name="N$58" class="0">
 <segment>
-<pinref part="R_PWRL_UP" gate="G$1" pin="2"/>
 <pinref part="R_PWRL_DOWN" gate="G$1" pin="1"/>
-<wire x1="348.06" y1="21.94" x2="350.78" y2="21.94" width="0.1524" layer="91"/>
-<wire x1="350.78" y1="21.94" x2="350.78" y2="18.54" width="0.1524" layer="91"/>
 <pinref part="PS1" gate="G$1" pin="IGN_PWRL"/>
+<wire x1="350.78" y1="20.16" x2="350.78" y2="20.15" width="0.1524" layer="91"/>
+<wire x1="350.78" y1="20.15" x2="350.78" y2="18.54" width="0.1524" layer="91"/>
 <wire x1="363.22" y1="25.4" x2="350.78" y2="25.4" width="0.1524" layer="91"/>
-<wire x1="350.78" y1="25.4" x2="350.78" y2="21.95" width="0.1524" layer="91"/>
-<junction x="350.78" y="21.95"/>
-<wire x1="350.78" y1="21.95" x2="350.78" y2="21.94" width="0.1524" layer="91"/>
+<wire x1="350.78" y1="25.4" x2="350.78" y2="20.16" width="0.1524" layer="91"/>
+<pinref part="R_PWRL_UP" gate="G$1" pin="2"/>
+<wire x1="337.87" y1="20.16" x2="350.78" y2="20.16" width="0.1524" layer="91"/>
+<junction x="350.78" y="20.15"/>
 </segment>
 </net>
 <net name="N$59" class="0">
@@ -16954,34 +17044,6 @@ Source: &lt;a href="http://www.neutrik.de/zoolu-website/media/download/2890/Stri
 <pinref part="U$9" gate="G$1" pin="1"/>
 </segment>
 </net>
-<net name="VIN_FUSED" class="1">
-<segment>
-<pinref part="PS1" gate="G$1" pin="VINP"/>
-<wire x1="363.22" y1="35.56" x2="361.8" y2="35.56" width="0.1524" layer="91"/>
-<wire x1="361.8" y1="33.02" x2="336.46" y2="33" width="0.1524" layer="91"/>
-<pinref part="C_IN" gate="G$1" pin="+"/>
-<wire x1="336.46" y1="33" x2="336.46" y2="27.94" width="0.1524" layer="91"/>
-<wire x1="336.46" y1="27.94" x2="336.46" y2="21.94" width="0.1524" layer="91"/>
-<wire x1="336.46" y1="21.94" x2="336.46" y2="15.79" width="0.1524" layer="91"/>
-<wire x1="361.8" y1="35.56" x2="361.8" y2="33.02" width="0.1524" layer="91"/>
-<pinref part="PS1" gate="G$1" pin="IGN"/>
-<wire x1="361.8" y1="33.02" x2="361.8" y2="30.48" width="0.1524" layer="91"/>
-<wire x1="361.8" y1="30.48" x2="363.22" y2="30.48" width="0.1524" layer="91"/>
-<pinref part="PS1" gate="G$1" pin="VINL"/>
-<wire x1="363.22" y1="33.02" x2="361.8" y2="33.02" width="0.1524" layer="91"/>
-<junction x="361.8" y="33.02"/>
-<pinref part="R_PWRL_UP" gate="G$1" pin="1"/>
-<wire x1="337.9" y1="21.94" x2="336.46" y2="21.94" width="0.1524" layer="91"/>
-<pinref part="D10" gate="G$1" pin="K2"/>
-<wire x1="319.95" y1="18.67" x2="319.95" y2="21.94" width="0.1524" layer="91"/>
-<wire x1="319.95" y1="21.94" x2="336.46" y2="21.94" width="0.1524" layer="91"/>
-<junction x="336.46" y="21.94"/>
-<wire x1="334.81" y1="27.94" x2="336.45" y2="27.94" width="0.1524" layer="91"/>
-<junction x="336.45" y="27.94"/>
-<wire x1="336.45" y1="27.94" x2="336.46" y2="27.94" width="0.1524" layer="91"/>
-<pinref part="D11" gate="G$1" pin="C"/>
-</segment>
-</net>
 <net name="N$53" class="0">
 <segment>
 <pinref part="R23" gate="G$1" pin="1"/>
@@ -16996,26 +17058,6 @@ Source: &lt;a href="http://www.neutrik.de/zoolu-website/media/download/2890/Stri
 <pinref part="U$10" gate="G$1" pin="1"/>
 <wire x1="228.62" y1="-87.7" x2="228.61" y2="-88.27" width="0.1524" layer="91"/>
 <wire x1="228.61" y1="-88.27" x2="228.59" y2="-89.11" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="VIN" class="1">
-<segment>
-<wire x1="316.42" y1="22.86" x2="313.89" y2="22.86" width="0.1524" layer="91"/>
-<wire x1="316.42" y1="27.94" x2="316.42" y2="22.86" width="0.1524" layer="91"/>
-<wire x1="316.42" y1="27.94" x2="317.59" y2="27.94" width="0.1524" layer="91"/>
-<wire x1="288.48" y1="27.94" x2="316.41" y2="27.94" width="0.1524" layer="91"/>
-<pinref part="J1" gate="G$1" pin="1_1"/>
-<wire x1="316.41" y1="27.94" x2="316.42" y2="27.94" width="0.1524" layer="91"/>
-<wire x1="288.48" y1="22.86" x2="288.48" y2="27.94" width="0.1524" layer="91"/>
-<pinref part="F1" gate="G$1" pin="1"/>
-<junction x="316.41" y="27.94"/>
-</segment>
-</net>
-<net name="N$66" class="1">
-<segment>
-<pinref part="F1" gate="G$1" pin="2"/>
-<wire x1="329.73" y1="27.94" x2="327.75" y2="27.94" width="0.1524" layer="91"/>
-<pinref part="D11" gate="G$1" pin="A"/>
 </segment>
 </net>
 <net name="CN7-8" class="0">
@@ -17184,6 +17226,73 @@ Source: &lt;a href="http://www.neutrik.de/zoolu-website/media/download/2890/Stri
 <wire x1="203.89" y1="-85.69" x2="190.05" y2="-85.69" width="0.1524" layer="91"/>
 <pinref part="J5" gate="G$1" pin="R"/>
 <wire x1="190.05" y1="-85.69" x2="190.05" y2="-79.41" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$40" class="4">
+<segment>
+<pinref part="J1" gate="G$1" pin="1_1"/>
+<wire x1="285.79" y1="-17.84" x2="280.48" y2="-17.84" width="0.1524" layer="91"/>
+<wire x1="280.48" y1="-17.84" x2="280.48" y2="7.56" width="0.1524" layer="91"/>
+<pinref part="J1" gate="G$1" pin="1_2"/>
+<wire x1="280.48" y1="7.56" x2="280.48" y2="12.16" width="0.1524" layer="91"/>
+<wire x1="285.79" y1="7.56" x2="280.49" y2="7.56" width="0.1524" layer="91"/>
+<wire x1="280.49" y1="7.56" x2="280.48" y2="7.56" width="0.1524" layer="91"/>
+<junction x="280.49" y="7.56"/>
+<pinref part="F1" gate="G$1" pin="1"/>
+<wire x1="283.71" y1="12.16" x2="280.48" y2="12.16" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$36" class="4">
+<segment>
+<pinref part="F1" gate="G$1" pin="2"/>
+<pinref part="D10" gate="G$1" pin="K1"/>
+<wire x1="293.87" y1="12.16" x2="296.79" y2="12.16" width="0.1524" layer="91"/>
+<wire x1="296.79" y1="12.16" x2="296.79" y2="7.24" width="0.1524" layer="91"/>
+<pinref part="B1" gate="G$1" pin="AC2"/>
+<wire x1="296.79" y1="12.16" x2="304.93" y2="12.16" width="0.1524" layer="91"/>
+<junction x="296.79" y="12.16"/>
+</segment>
+</net>
+<net name="N$37" class="4">
+<segment>
+<pinref part="J1" gate="G$1" pin="2"/>
+<pinref part="D10" gate="G$1" pin="K2"/>
+<wire x1="288.33" y1="-17.84" x2="296.79" y2="-17.84" width="0.1524" layer="91"/>
+<wire x1="296.79" y1="-17.84" x2="296.79" y2="-2.92" width="0.1524" layer="91"/>
+<wire x1="317.28" y1="12.15" x2="317.28" y2="-17.53" width="0.1524" layer="91"/>
+<wire x1="317.28" y1="-17.53" x2="316.97" y2="-17.84" width="0.1524" layer="91"/>
+<wire x1="316.97" y1="-17.84" x2="296.8" y2="-17.84" width="0.1524" layer="91"/>
+<junction x="296.8" y="-17.84"/>
+<wire x1="296.8" y1="-17.84" x2="296.79" y2="-17.84" width="0.1524" layer="91"/>
+<pinref part="B1" gate="G$1" pin="AC1"/>
+<wire x1="315.09" y1="12.16" x2="317.28" y2="12.16" width="0.1524" layer="91"/>
+<wire x1="317.28" y1="12.16" x2="317.28" y2="12.15" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$41" class="1">
+<segment>
+<pinref part="PS1" gate="G$1" pin="IGN"/>
+<wire x1="361.8" y1="30.48" x2="363.22" y2="30.48" width="0.1524" layer="91"/>
+<wire x1="361.8" y1="30.48" x2="361.8" y2="33.01" width="0.1524" layer="91"/>
+<pinref part="PS1" gate="G$1" pin="VINL"/>
+<wire x1="361.8" y1="33.01" x2="361.8" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="363.22" y1="33.02" x2="361.8" y2="33.02" width="0.1524" layer="91"/>
+<pinref part="PS1" gate="G$1" pin="VINP"/>
+<wire x1="363.22" y1="35.56" x2="361.8" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="361.8" y1="35.56" x2="361.8" y2="33.02" width="0.1524" layer="91"/>
+<pinref part="B1" gate="G$1" pin="+"/>
+<pinref part="R_PWRL_UP" gate="G$1" pin="1"/>
+<wire x1="310.01" y1="17.24" x2="310.01" y2="20.16" width="0.1524" layer="91"/>
+<wire x1="310.01" y1="20.16" x2="326.79" y2="20.16" width="0.1524" layer="91"/>
+<wire x1="326.79" y1="20.16" x2="327.71" y2="20.16" width="0.1524" layer="91"/>
+<wire x1="326.79" y1="20.16" x2="326.79" y2="29.36" width="0.1524" layer="91"/>
+<wire x1="326.79" y1="29.36" x2="338.2" y2="29.36" width="0.1524" layer="91"/>
+<wire x1="338.2" y1="29.36" x2="338.2" y2="33.02" width="0.1524" layer="91"/>
+<pinref part="C_IN" gate="G$1" pin="+"/>
+<wire x1="326.79" y1="13.7" x2="326.79" y2="20.16" width="0.1524" layer="91"/>
+<junction x="326.79" y="20.16"/>
+<wire x1="361.8" y1="33.02" x2="338.2" y2="33.02" width="0.1524" layer="91"/>
+<junction x="361.8" y="33.01"/>
 </segment>
 </net>
 </nets>
