@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="10" display="yes" altdistance="0.01" altunitdist="mm" altunit="mm"/>
+<grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="10" display="no" altdistance="0.01" altunitdist="mm" altunit="mm"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -15925,19 +15925,19 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <variantdefs>
 </variantdefs>
 <classes>
-<class number="0" name="default" width="0.4064" drill="1.016">
+<class number="0" name="default" width="0.1524" drill="0.3556">
 <clearance class="0" value="0.1524"/>
 </class>
-<class number="1" name="Power" width="1.016" drill="1.016">
+<class number="1" name="Power" width="1.016" drill="0.3556">
 <clearance class="1" value="0.4064"/>
 </class>
-<class number="2" name="Signal" width="0.1524" drill="0.6096">
+<class number="2" name="Signal" width="0.1524" drill="0.3556">
 <clearance class="2" value="0.1524"/>
 </class>
-<class number="3" name="WideIsolation" width="0.4064" drill="1.016">
+<class number="3" name="WideIsolation" width="0.1524" drill="0.3556">
 <clearance class="3" value="2.032"/>
 </class>
-<class number="4" name="ESD_Critical" width="0.4064" drill="1.016">
+<class number="4" name="ESD_Critical" width="0.1524" drill="0.3556">
 <clearance class="4" value="0.6096"/>
 </class>
 </classes>
@@ -16002,7 +16002,7 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <part name="C1" library="rcl" deviceset="C-EU" device="C0603"/>
 <part name="SUPPLY11" library="supply2" deviceset="GND" device=""/>
 <part name="C2" library="rcl" deviceset="CPOL-EU" device="153CLV-1012"/>
-<part name="PS1" library="TPS55160QPWPTQ1" deviceset="TPS55160QPWPTQ1" device=""/>
+<part name="PS1" library="TPS55160QPWPTQ1" deviceset="TPS55160QPWPTQ1" device="" value="TPS55160"/>
 <part name="R_PG" library="rcl" deviceset="R-EU_" device="R0603" value="10-100k"/>
 <part name="R15" library="rcl" deviceset="R-EU_" device="R0603" value="800k"/>
 <part name="R16" library="rcl" deviceset="R-EU_" device="R0603" value="100k"/>
@@ -16023,7 +16023,7 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <part name="SUPPLY18" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY19" library="supply2" deviceset="GND" device=""/>
 <part name="C_REG" library="rcl" deviceset="C-EU" device="C0805" value="4.7 µF"/>
-<part name="IC3" library="74LVC2G04GW_125" deviceset="74LVC2G04GW,125" device=""/>
+<part name="IC3" library="74LVC2G04GW_125" deviceset="74LVC2G04GW,125" device="" value="74LVC2G04GW"/>
 <part name="VCC_3_3" library="supply1" deviceset="VCC" device="" value="VCC_3_3"/>
 <part name="SUPPLY20" library="supply2" deviceset="GND" device=""/>
 <part name="VCC_3_1" library="supply1" deviceset="VCC" device="" value="VCC_3_3"/>
@@ -16038,14 +16038,14 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <part name="R26" library="rcl" deviceset="R-EU_" device="R0603" value="61"/>
 <part name="R27" library="rcl" deviceset="R-EU_" device="R0603" value="61"/>
 <part name="J1" library="SamacSys_Parts" deviceset="694108106102" device=""/>
-<part name="U$3" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device=""/>
-<part name="U$4" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device=""/>
-<part name="U$5" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device=""/>
-<part name="U$6" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device=""/>
-<part name="U$7" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device=""/>
-<part name="U$8" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device=""/>
-<part name="U$9" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device=""/>
-<part name="U$10" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device=""/>
+<part name="U$3" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device="" value="Relay"/>
+<part name="U$4" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device="" value="Relay"/>
+<part name="U$5" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device="" value="Relay"/>
+<part name="U$6" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device="" value="Relay"/>
+<part name="U$7" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device="" value="Relay"/>
+<part name="U$8" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device="" value="Relay"/>
+<part name="U$9" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device="" value="Relay"/>
+<part name="U$10" library="SamacSys_Parts" deviceset="G6L-1F-TR_DC5-NEW" device="" value="Relay"/>
 <part name="F1" library="rcl" deviceset="R-EU_" device="R0603" value="1A"/>
 <part name="D10" library="diode" deviceset="BAS70-06" device=""/>
 <part name="J2" library="NMJ6HCD2" deviceset="NMJ6HCD2" device=""/>
@@ -16061,6 +16061,8 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <part name="SUPPLY27" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY28" library="supply2" deviceset="GND" device=""/>
 <part name="B1" library="rectifier" deviceset="MB*S" device="" technology="1"/>
+<part name="SUPPLY29" library="supply2" deviceset="GND" device=""/>
+<part name="SUPPLY30" library="supply2" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -16197,6 +16199,8 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <instance part="SUPPLY27" gate="GND" x="183.69" y="-79.01"/>
 <instance part="SUPPLY28" gate="GND" x="218.94" y="-79.46"/>
 <instance part="B1" gate="G$1" x="310.01" y="12.16" rot="MR90"/>
+<instance part="SUPPLY29" gate="GND" x="148.87" y="82.46"/>
+<instance part="SUPPLY30" gate="GND" x="346.47" y="73.35"/>
 </instances>
 <busses>
 </busses>
@@ -16263,7 +16267,7 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <junction x="75.44" y="83.54"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <wire x1="72.64" y1="78.46" x2="72.64" y2="75.21" width="0.1524" layer="91"/>
 <pinref part="R2" gate="G$1" pin="1"/>
@@ -16478,6 +16482,22 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <wire x1="183.69" y1="-76.47" x2="183.69" y2="-75.61" width="0.1524" layer="91"/>
 <wire x1="183.69" y1="-75.61" x2="190.05" y2="-75.61" width="0.1524" layer="91"/>
 <junction x="190.05" y="-75.61"/>
+</segment>
+<segment>
+<pinref part="CN5" gate="A" pin="7"/>
+<pinref part="SUPPLY29" gate="GND" pin="GND"/>
+<wire x1="148.87" y1="92.19" x2="148.87" y2="85" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="SUPPLY30" gate="GND" pin="GND"/>
+<wire x1="346.47" y1="75.89" x2="346.47" y2="82.41" width="0.1524" layer="91"/>
+<pinref part="CN6" gate="A" pin="7"/>
+<wire x1="346.47" y1="82.41" x2="346.48" y2="82.41" width="0.1524" layer="91"/>
+<pinref part="CN6" gate="A" pin="6"/>
+<wire x1="346.48" y1="82.41" x2="353.31" y2="82.41" width="0.1524" layer="91"/>
+<wire x1="353.31" y1="84.95" x2="346.47" y2="84.95" width="0.1524" layer="91"/>
+<wire x1="346.47" y1="84.95" x2="346.47" y2="82.41" width="0.1524" layer="91"/>
+<junction x="346.48" y="82.41"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -16791,7 +16811,7 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <junction x="362.03" y="40.64"/>
 </segment>
 </net>
-<net name="N$56" class="0">
+<net name="N$56" class="1">
 <segment>
 <pinref part="C_BST1" gate="G$1" pin="2"/>
 <wire x1="326.65" y1="32.68" x2="332.25" y2="32.68" width="0.1524" layer="91"/>
