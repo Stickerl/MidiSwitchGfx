@@ -1,5 +1,5 @@
 /*
- * generic_ring_buffer.h
+ * generic_ring_buffer.hpp
  *
  * Created: 2/3/2018 9:19:34 PM
  *  Author: Erwin
@@ -9,141 +9,99 @@
 #ifndef GENERIC_RING_BUFFER_H_
 #define GENERIC_RING_BUFFER_H_
 
+#include <cstdint>
+#include <cstdbool>
 
-#include "stdbool.h"
-#include "string.h"
-
-
-template <uint32_t SIZE>
-
+template <typename type, std::uint32_t SIZE>
 class GenericRingBuffer
 {
 public:
-    GenericRingBuffer()
-    {
+    GenericRingBuffer() {
         clear();
     }
 
-    ~GenericRingBuffer()
-    {
+    ~GenericRingBuffer() {
         clear();
     }
-	
 
-	// copy a number of elements to the buffer; returns false if there is not enought space in the buffer
-	bool copy_to_buffer(type& data, uint32_t cnt)
-	{
-	    bool success = false;
-	    if ((SIZE - get_cnt()) >= cnt)
-	    {
-	        for(uint16_t index = 0; index < cnt; index++)
-	        {
-	            elementToBuffer(data[index]);
-	        }
-	        success = true;
-	    }
-	    return success;
-	}
+    // copy a number of elements to the buffer; returns false if there is not enought space in the buffer
+    bool add(type* data, std::uint32_t cnt = 1) {
+        bool success = false;
+        if ((SIZE - getCnt()) >= cnt) {
+            for(uint16_t index = 0; index < cnt; index++) {
+                incIndex(head);
+                buffer[head] = data[index]; // type needs to implement a copy constructor
+            }
+            success = true;
+        }
+        return success;
+    }
 
-	// read a number of elements from the buffer to the destination; returns false if there is not enougth data in the buffer
-	bool get_from_buffer(type& dest, uint32_t cnt)
-	{
-	    bool success = false;
-	    if (get_cnt() >= cnt)
-	    {
-	         for(uint32_t index = 0; index < cnt; index++)
-	         {
-	             elementFromBuffer(dest[index]);
-	         }
-	         success = true;
-	    }
-	    return success;
-	}
+    // read a number of elements from the buffer to the destination; returns false if there is not enougth data in the buffer
+    bool get(type* dest, std::uint32_t cnt = 1) {
+        bool success = false;
+        if (getCnt() >= cnt) {
+             for(std::uint32_t index = 0; index < cnt; index++) {
+                incIndex(tail);
+                dest[index] = buffer[tail]; // type needs to implement a copy constructor
+             }
+             success = true;
+        }
+        return success;
+    }
 
-	// gets the number of elements in the buffer
-	uint32_t get_cnt()
-	{
-	    uint32_t cnt = 0;
-	    if (head == tail)
-	    {
-	        // buffer is empty
-	    }
-	    else if (head == dec_index(tail))
-	    {
-	        // buffer is full
-	        cnt = SIZE;
-	    }
-	    else if(head > tail)
-	    {
-	        // head - tail bytes in buffer
-	        cnt = head - tail;
-	    }
-	    else
-	    {
-	        // tail > head index
-	        cnt =  (SIZE + 1) - (tail - head);
-	    }
-	    return cnt;
-	}
+    // gets the number of elements in the buffer
+    std::uint32_t getCnt() {
+    	std::uint32_t cnt = 0;
+        if (head == tail) {
+            // buffer is empty
+        }
+        else if (head == decIndex(tail)) {
+            cnt = SIZE; // buffer is full
+        }
+        else if(head > tail) {
+            cnt = head - tail; // head - tail bytes in buffer
+        }
+        else {
+            cnt = (SIZE + 1) - (tail - head); // tail > head index
+        }
+        return cnt;
+    }
 
-	// gets the number of free elements in the buffer
-	uint32_t get_space_left()
-	{
-	    return (SIZE - get_cnt());
-	}
+    // gets the number of free elements in the buffer
+    std::uint32_t getSpaceLeft() {
+        return (SIZE - getCnt());
+    }
 
-	// discards all data in the buffer
-	void clear()
-	{
-	    // reset head and tail => RB_get_cnt returns 0 and buffer assumed to be empty
-	    head = 0;
-	    tail = 0;
-	}
-
+    // discards all data in the buffer
+    void clear() {
+        // reset head and tail => RB_getCnt returns 0 and buffer assumed to be empty
+        head = 0;
+        tail = 0;
+    }
 
 private:
-    uint32_t     head;            // index of most recently added byte
-    uint32_t     tail;            // index of the next byte to read
-    type      	 buffer[SIZE + 1];    // allocate buffer memory
-
+    std::uint32_t head; // index of most recently added byte
+    std::uint32_t tail; // index of the next byte to read
+    type buffer[SIZE + 1]; // allocate buffer memory
 
     // increments a buffer address
-    uint32_t inc_index(uint32_t index)
-    {
-        uint32_t new_index = 0;
-        if (index != (SIZE))
-        {
-            // index is at the end of the buffer => restart
-            new_index = index + 1;
+    void incIndex(std::uint32_t& index) {
+        if(index < (SIZE)) {
+            index++;
         }
-        return new_index;
+        else {
+            index = 0;
+        }
     }
 
     // decrements a buffer address
-    uint32_t dec_index(uint32_t index)
-    {
-        uint32_t new_index = SIZE;
-        if(index != 0)
-        {
-            new_index = index - 1;
+    std::uint32_t decIndex(std::uint32_t index) {
+    	std::uint32_t newIndex = SIZE;
+        if(index != 0) {
+            newIndex = index - 1;
         }
-        return new_index;
-    }
-
-    // adds one byte to the buffer; there is no check if some space is left in the buffer!
-    void elementToBuffer(type& data)
-    {
-        //increment the head address
-        head = inc_index(head);
-        memcpy(&_buffer[head], &data, sizeof(type)); // copy the byte into the buffer memory
-    }
-
-    // gets a element from the buffer; there is no check if the buffer is empty ore not!
-    void elementFromBuffer(type& dest)
-    {
-        //increment the tail address
-        tail = inc_index(tail);
-        memcpy(&dest, &_buffer[_tailIndex], sizeof(type)); // read the element and copy it to the destination
+        return newIndex;
     }
 };
 

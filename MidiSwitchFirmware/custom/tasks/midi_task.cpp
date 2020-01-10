@@ -43,7 +43,7 @@ void midi_task_run(void* params)
     UartIrqBased::Pin midiUart_rx(GPIOA, GPIO_PIN_1, GPIO_AF8_UART4);
     RingBuffer<0> midiTxBuffer; // not used as the tx pin is not routed at the board
     RingBuffer<128> midiRxBuffer;
-    UartIrqBased midiUart({115200, midiTxBuffer, midiRxBuffer, UartIrqBased::UART_4,
+    UartIrqBased midiUart({31250, midiTxBuffer, midiRxBuffer, UartIrqBased::UART_4,
                        midiUart_tx, midiUart_rx, midiUartIrqReg});
     midiUart.start_receive();
 
@@ -60,8 +60,8 @@ void midi_task_run(void* params)
     DigitalOutput outputPin3(GPIOG, GPIO_PIN_12);   // D4
     DigitalOutput outputPin4(GPIOA, GPIO_PIN_6);    // D6
     DigitalOutput outputPin5(GPIOG, GPIO_PIN_11);   // D7
-    DigitalOutput outputPin6(GPIOG, GPIO_PIN_10);   // D8
-    DigitalOutput outputPin7(GPIOA, GPIO_PIN_7);    // D9
+	DigitalOutput outputPin7(GPIOB, GPIO_PIN_9);    // D14
+    DigitalOutput outputPin6(GPIOB, GPIO_PIN_8);    // D15
 
     // register the output pins at the config manager
     cfgManager.registerOutputPin(0, outputPin0);

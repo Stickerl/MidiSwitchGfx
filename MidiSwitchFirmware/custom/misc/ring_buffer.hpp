@@ -20,8 +20,7 @@ public:
 
 	RingBuffer()
 	{
-	    head        = 0;
-	    tail        = 0;
+	    clear();
 	}
 
 	~RingBuffer()

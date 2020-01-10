@@ -48,7 +48,6 @@ using namespace touchgfx;
 #include "stm32f4xx.h"
 
 
-
 /**
  * Define the FreeRTOS task priorities and stack sizes
  */
