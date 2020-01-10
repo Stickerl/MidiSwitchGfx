@@ -5,7 +5,7 @@
  *      Author: Erwin
  */
 
-
+#include "string.h"
 #include "midi_task.h"
 #include "gui_queue.h"
 #include "guiCommunication.hpp"
@@ -20,6 +20,20 @@
     extern "C"{
 #endif
 
+UartIrqs midiUartIrqReg;
+RingBuffer<512> debugBuffer;
+RingBuffer<0> dummy;
+UartIrqBased::Pin debug_tx(GPIOA, GPIO_PIN_2, GPIO_AF7_USART2);
+UartIrqBased::Pin debug_rx(GPIOA, GPIO_PIN_6, GPIO_AF7_USART2);
+UartIrqBased* debugUartRef = NULL;
+
+
+void switchInHook(signed char* taskName){
+	debugBuffer.copy_to_buffer((uint8_t*)taskName, (uint32_t)(strlen((const char*)taskName) + 1));
+	if(NULL != debugUartRef){
+		debugUartRef->start_tx();
+	}
+}
 
 void midi_task_create(void)
 {
@@ -33,17 +47,21 @@ void midi_task_create(void)
 
 void midi_task_run(void* params)
 {
+	UartIrqBased debugUart({115200, debugBuffer, dummy, UartIrqBased::UART_2, debug_tx, debug_rx, midiUartIrqReg});
+	debugUartRef = &debugUart;
+
+
     //DigitalOutput testPin(GPIOG, GPIO_PIN_9);
     uint32_t midiSysTime = 0;
     uint32_t rxCnt = 0;
 
     // configure the midi Uart
-    UartIrqs midiUartIrqReg;
+    //UartIrqs midiUartIrqReg;
     UartIrqBased::Pin midiUart_tx(GPIOA, GPIO_PIN_0, GPIO_AF8_UART4);
     UartIrqBased::Pin midiUart_rx(GPIOA, GPIO_PIN_1, GPIO_AF8_UART4);
     RingBuffer<0> midiTxBuffer; // not used as the tx pin is not routed at the board
     RingBuffer<128> midiRxBuffer;
-    UartIrqBased midiUart({31250, midiTxBuffer, midiRxBuffer, UartIrqBased::UART_4,
+    UartIrqBased midiUart({115200, midiTxBuffer, midiRxBuffer, UartIrqBased::UART_4,
                        midiUart_tx, midiUart_rx, midiUartIrqReg});
     midiUart.start_receive();
 
@@ -60,8 +78,9 @@ void midi_task_run(void* params)
     DigitalOutput outputPin3(GPIOG, GPIO_PIN_12);   // D4
     DigitalOutput outputPin4(GPIOA, GPIO_PIN_6);    // D6
     DigitalOutput outputPin5(GPIOG, GPIO_PIN_11);   // D7
-	DigitalOutput outputPin7(GPIOB, GPIO_PIN_9);    // D14
-    DigitalOutput outputPin6(GPIOB, GPIO_PIN_8);    // D15
+    DigitalOutput outputPin6(GPIOG, GPIO_PIN_10);   // Hardware bug: D15 but should be D8. D15 is used as i2c pin for touch screen
+	DigitalOutput outputPin7(GPIOA, GPIO_PIN_7);    // Hardware bug: D14 but should be D9. D14 is used as i2c pin for touch screen
+
 
     // register the output pins at the config manager
     cfgManager.registerOutputPin(0, outputPin0);
@@ -72,6 +91,7 @@ void midi_task_run(void* params)
     cfgManager.registerOutputPin(5, outputPin5);
     cfgManager.registerOutputPin(6, outputPin6);
     cfgManager.registerOutputPin(7, outputPin7);
+
 
     GuiCommunication guiCom(cfgManager);
     // GuiCommunication has to register in the cfgManager
@@ -84,6 +104,7 @@ void midi_task_run(void* params)
 
     while(1)
     {
+    	midiUart.start_tx();
         midiSysTime++;
         midiDecoder.decode();
         guiCom.run();

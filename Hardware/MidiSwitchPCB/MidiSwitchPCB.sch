@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="10" display="no" altdistance="0.01" altunitdist="mm" altunit="mm"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -15942,8 +15942,8 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 </class>
 </classes>
 <parts>
-<part name="U$2" library="MidiSwitchParts" deviceset="MIDI_CONNECTOR" device=""/>
-<part name="U$1" library="MidiSwitchParts" deviceset="MIDI_CONNECTOR" device=""/>
+<part name="MIDI-THRU" library="MidiSwitchParts" deviceset="MIDI_CONNECTOR" device=""/>
+<part name="MIDI-IN" library="MidiSwitchParts" deviceset="MIDI_CONNECTOR" device=""/>
 <part name="OK1" library="6N138S" deviceset="6N138S" device=""/>
 <part name="D1" library="diode" deviceset="BAS70" device=""/>
 <part name="R1" library="rcl" deviceset="R-EU_" device="R0603" value="220"/>
@@ -16069,8 +16069,8 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <plain>
 </plain>
 <instances>
-<instance part="U$2" gate="G$1" x="13.14" y="53.42"/>
-<instance part="U$1" gate="G$1" x="12.5" y="82.6"/>
+<instance part="MIDI-THRU" gate="G$1" x="13.14" y="53.42"/>
+<instance part="MIDI-IN" gate="G$1" x="12.5" y="82.6"/>
 <instance part="OK1" gate="G$1" x="57.82" y="83.54"/>
 <instance part="D1" gate="1" x="43.32" y="82.01" rot="R90"/>
 <instance part="R1" gate="G$1" x="37.53" y="88.6"/>
@@ -16207,7 +16207,7 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <nets>
 <net name="N$3" class="3">
 <segment>
-<pinref part="U$1" gate="G$1" pin="P$4"/>
+<pinref part="MIDI-IN" gate="G$1" pin="P$4"/>
 <wire x1="25.5" y1="85.6" x2="28.2" y2="85.6" width="0.1524" layer="91"/>
 <wire x1="28.2" y1="85.6" x2="31.2" y2="88.6" width="0.1524" layer="91"/>
 <wire x1="31.2" y1="88.6" x2="32.45" y2="88.6" width="0.1524" layer="91"/>
@@ -16230,7 +16230,7 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <segment>
 <wire x1="45.12" y1="78.46" x2="43.33" y2="78.44" width="0.1524" layer="91"/>
 <wire x1="43.33" y1="78.44" x2="43.32" y2="79.47" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="P$5"/>
+<pinref part="MIDI-IN" gate="G$1" pin="P$5"/>
 <wire x1="25.5" y1="79.6" x2="31.52" y2="79.6" width="0.1524" layer="91"/>
 <wire x1="31.52" y1="79.6" x2="31.55" y2="79.56" width="0.1524" layer="91"/>
 <wire x1="43.33" y1="78.44" x2="32.82" y2="78.44" width="0.1524" layer="91"/>
@@ -16282,11 +16282,11 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 </segment>
 <segment>
 <wire x1="25.5" y1="91.6" x2="29.5" y2="91.6" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="P$7"/>
+<pinref part="MIDI-IN" gate="G$1" pin="P$7"/>
 <wire x1="29.5" y1="91.6" x2="29.5" y2="73.61" width="0.1524" layer="91"/>
 <wire x1="29.5" y1="73.61" x2="29.5" y2="73.6" width="0.1524" layer="91"/>
 <wire x1="25.5" y1="73.6" x2="29.5" y2="73.6" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="P$6"/>
+<pinref part="MIDI-IN" gate="G$1" pin="P$6"/>
 <pinref part="SUPPLY2" gate="GND" pin="GND"/>
 <junction x="29.5" y="73.61"/>
 </segment>
@@ -16502,7 +16502,7 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 </net>
 <net name="N$5" class="0">
 <segment>
-<pinref part="U$2" gate="G$1" pin="P$4"/>
+<pinref part="MIDI-THRU" gate="G$1" pin="P$4"/>
 <pinref part="R5" gate="G$1" pin="1"/>
 <wire x1="26.14" y1="56.42" x2="28.42" y2="56.42" width="0.1524" layer="91"/>
 </segment>
@@ -16511,7 +16511,7 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <segment>
 <pinref part="R4" gate="G$1" pin="2"/>
 <wire x1="26.14" y1="50.42" x2="28.28" y2="50.42" width="0.1524" layer="91"/>
-<pinref part="U$2" gate="G$1" pin="P$5"/>
+<pinref part="MIDI-THRU" gate="G$1" pin="P$5"/>
 </segment>
 </net>
 <net name="N$11" class="0">

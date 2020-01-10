@@ -188,7 +188,8 @@ standard names. */
 #ifndef SEMI_LOAD_MEASUREMENT
 // To measure mcu load by measure time used in the dummy idle task
 #define traceTASK_SWITCHED_OUT() xTaskCallApplicationTaskHook( pxCurrentTCB, (void*)1 )
-#define traceTASK_SWITCHED_IN() xTaskCallApplicationTaskHook( pxCurrentTCB, (void*)0 )
+#define traceTASK_SWITCHED_IN() switchInHook( pxCurrentTCB->pcTaskName )
+//#define traceTASK_SWITCHED_IN() xTaskCallApplicationTaskHook( pxCurrentTCB, (void*)0 )
 #endif // SEMI_LOAD_MEASUREMENT
 #ifdef __cplusplus
 }

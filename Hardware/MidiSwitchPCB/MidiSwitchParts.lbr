@@ -132,18 +132,18 @@
 <devicesets>
 <deviceset name="MIDI_CONNECTOR">
 <gates>
-<gate name="G$1" symbol="MIDI_CONNECTOR_SYM" x="0" y="0"/>
+<gate name="MIDI" symbol="MIDI_CONNECTOR_SYM" x="0" y="0"/>
 </gates>
 <devices>
 <device name="" package="MIDI_CONNECTOR_PAC">
 <connects>
-<connect gate="G$1" pin="P$1" pad="P1"/>
-<connect gate="G$1" pin="P$2" pad="P2"/>
-<connect gate="G$1" pin="P$3" pad="P3"/>
-<connect gate="G$1" pin="P$4" pad="P4"/>
-<connect gate="G$1" pin="P$5" pad="P5"/>
-<connect gate="G$1" pin="P$6" pad="P6"/>
-<connect gate="G$1" pin="P$7" pad="P7"/>
+<connect gate="MIDI" pin="P$1" pad="P1"/>
+<connect gate="MIDI" pin="P$2" pad="P2"/>
+<connect gate="MIDI" pin="P$3" pad="P3"/>
+<connect gate="MIDI" pin="P$4" pad="P4"/>
+<connect gate="MIDI" pin="P$5" pad="P5"/>
+<connect gate="MIDI" pin="P$6" pad="P6"/>
+<connect gate="MIDI" pin="P$7" pad="P7"/>
 </connects>
 <technologies>
 <technology name=""/>

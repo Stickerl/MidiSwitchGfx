@@ -32,6 +32,8 @@
  * any third party, arising from your use of this software.
  *
  *****************************************************************************/
+
+
 #include <touchgfx/hal/HAL.hpp>
 #include <touchgfx/hal/BoardConfiguration.hpp>
 #include <touchgfx/canvas_widget_renderer/CanvasWidgetRenderer.hpp>
@@ -62,6 +64,7 @@ static void GUITask(void* params)
 {
     touchgfx::HAL::getInstance()->taskEntry();
 }
+
 
 int main(void)
 {

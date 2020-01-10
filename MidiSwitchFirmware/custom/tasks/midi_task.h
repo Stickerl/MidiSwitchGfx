@@ -26,7 +26,7 @@
 #ifdef __cplusplus
     extern "C"{
 #endif
-
+void switchInHook(signed char* taskName);
 void midi_task_create(void);
 
 void midi_task_run(void* params);
