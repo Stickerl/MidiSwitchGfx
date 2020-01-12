@@ -5,7 +5,7 @@
  *      Author: Erwin
  */
 
-#include "string.h"
+
 #include "midi_task.h"
 #include "gui_queue.h"
 #include "guiCommunication.hpp"
@@ -20,20 +20,6 @@
     extern "C"{
 #endif
 
-UartIrqs midiUartIrqReg;
-RingBuffer<512> debugBuffer;
-RingBuffer<0> dummy;
-UartIrqBased::Pin debug_tx(GPIOA, GPIO_PIN_2, GPIO_AF7_USART2);
-UartIrqBased::Pin debug_rx(GPIOA, GPIO_PIN_6, GPIO_AF7_USART2);
-UartIrqBased* debugUartRef = NULL;
-
-
-void switchInHook(signed char* taskName){
-	debugBuffer.copy_to_buffer((uint8_t*)taskName, (uint32_t)(strlen((const char*)taskName) + 1));
-	if(NULL != debugUartRef){
-		debugUartRef->start_tx();
-	}
-}
 
 void midi_task_create(void)
 {
@@ -47,21 +33,17 @@ void midi_task_create(void)
 
 void midi_task_run(void* params)
 {
-	UartIrqBased debugUart({115200, debugBuffer, dummy, UartIrqBased::UART_2, debug_tx, debug_rx, midiUartIrqReg});
-	debugUartRef = &debugUart;
-
-
     //DigitalOutput testPin(GPIOG, GPIO_PIN_9);
     uint32_t midiSysTime = 0;
     uint32_t rxCnt = 0;
 
     // configure the midi Uart
-    //UartIrqs midiUartIrqReg;
+    UartIrqs midiUartIrqReg;
     UartIrqBased::Pin midiUart_tx(GPIOA, GPIO_PIN_0, GPIO_AF8_UART4);
     UartIrqBased::Pin midiUart_rx(GPIOA, GPIO_PIN_1, GPIO_AF8_UART4);
     RingBuffer<0> midiTxBuffer; // not used as the tx pin is not routed at the board
     RingBuffer<128> midiRxBuffer;
-    UartIrqBased midiUart({115200, midiTxBuffer, midiRxBuffer, UartIrqBased::UART_4,
+    UartIrqBased midiUart({31250, midiTxBuffer, midiRxBuffer, UartIrqBased::UART_4,
                        midiUart_tx, midiUart_rx, midiUartIrqReg});
     midiUart.start_receive();
 
@@ -104,7 +86,6 @@ void midi_task_run(void* params)
 
     while(1)
     {
-    	midiUart.start_tx();
         midiSysTime++;
         midiDecoder.decode();
         guiCom.run();
